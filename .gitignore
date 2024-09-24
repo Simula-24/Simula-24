@@ -12,3 +12,17 @@ _deps
 CMakeUserPresets.json
 ~$*.docx
 .vs/
+*.obj
+out
+build
+*.vcx*
+*.sln
+
+thirdparty/pdcurses/Debug
+thirdparty/pdcurses/*.dir
+thirdparty/pdcurses/Release
+thirdparty/pdcurses/x64
+*.exp
+*.res
+*.lib
+*.dll

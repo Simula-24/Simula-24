@@ -50,7 +50,7 @@ UTF8OPT		= -DPDC_FORCE_UTF8
 INFOPT		= -DHAVE_NO_INFOEX
 !endif
 
-SHL_LD = link $(LDFLAGS) -nologo -dll -machine:$(PLATFORM) -out:pdcurses.dll
+SHL_LD = link $(LDFLAGS) -nologo -dll -machine:$(PLATFORM) -out:./pdcurses.dll
 
 LINK		= link.exe -nologo -subsystem:windows
 
