@@ -82,6 +82,15 @@ public:
     constexpr T& copy();
 
 
+    /// Copy to the <i>data section offset</i>
+    void copydata(const T* source, size_t n);
+
+    /// @brief
+    ///    Copy to the data section + offset
+    ///    Note that this will copy relative to the offset
+    ///    
+    void copydata(const T* source, size_t n, size_t offset);
+
     ///
     /// @brief
     ///     Resize the buffer
@@ -333,6 +342,19 @@ inline constexpr T& copy_on_write<T>::copy()
     return *(m_ptr + DATA_OFFSET);
 }
 
+template<class T>
+void copy_on_write<T>::copydata(const T* source, size_t n)
+{
+    create_copy();
+    ::memcpy(get_data(), source, (n * sizeof(T)));
+}
+
+template<class T>
+void copy_on_write<T>::copydata(const T* source, size_t n, size_t offset)
+{
+    create_copy();
+    ::memcpy(get_data() + (offset * sizeof(T)), source, (n * sizeof(T)));
+}
 
 
 } // simula24
