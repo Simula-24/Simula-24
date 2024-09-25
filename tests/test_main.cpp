@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <gtest/gtest.h>
+#include "simula24/simula24_tests.h"
 
 int main(int argc, char** argv)
 {
