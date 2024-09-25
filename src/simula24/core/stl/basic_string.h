@@ -185,9 +185,10 @@ public:
     /// get a reference to the last character
     constexpr T& back() { return m_chars.at_m(length() - 2); }
 
-    copy_on_write<T> m_chars;
 
 private:
+    
+    copy_on_write<T> m_chars;
     /// Our buffer. COW happens implicitly
     size_t m_length;
 
