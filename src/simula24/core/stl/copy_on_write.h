@@ -294,10 +294,13 @@ void copy_on_write<T>::resize(size_t n)
 
     if (old_size > 0)
     {
+        // if this is a larger buffer, copy all of the old data
         if (n > old_size)
-            ::memcpy(get_data(), old_data, old_size);
+            copydata(old_data, old_size);
+        // otherwise, only copy the remaining data
         else
-            ::memcpy(get_data(), old_data, n);
+            copydata(old_data, n);
+
     }
     //if (rc == 1)
     //    simula24::free_static(old_buffer);
