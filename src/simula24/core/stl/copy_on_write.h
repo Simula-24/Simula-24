@@ -2,6 +2,7 @@
 #define SIMULA24_CORE_STL_COPY_ON_WRITE_H_
 
 #include <simula24/core/memory/memory.h>
+#include <simula24/core/stl/utility.h>
 #include <stdint.h>
 #include <string.h>
 namespace simula24
