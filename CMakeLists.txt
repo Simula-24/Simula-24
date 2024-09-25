@@ -10,11 +10,24 @@ set(GAME_NAME "station-game")
 
 set(CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/")
+
 project(${GAME_NAME} VERSION 0.1)
 
+option(ENABLE_TESTS "Enable Tests" OFF)
+
+set(MIRI_LIBRARIES)
+
+if(ENABLE_TESTS)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/test/")
+    add_subdirectory("tests")
+else()
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/")
+    add_subdirectory("src/main/")
+
+endif()
+
 add_executable(${GAME_NAME}
-    src/main/main.cpp
+    ${MAIN_SOURCES}
 )
 
 if(WIN32)
@@ -23,10 +36,21 @@ if(WIN32)
         "${CMAKE_SOURCE_DIR}/thirdparty/SDL2/include/"
     )
 
-    target_link_libraries(${GAME_NAME}
+    set(MIRI_LIBRARIES ${MIRI_LIBRARIES}
         "${CMAKE_SOURCE_DIR}/build/pdcurses.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2main.lib"
     )
 
 endif()
+
+
+
+if(ENABLE_TESTS)
+    set(MIRI_LIBRARIES ${MIRI_LIBRARIES} PUBLIC GTest::gtest_main)
+    include(GoogleTest)
+    gtest_discover_tests(${GAME_NAME})
+endif()
+
+
+target_link_libraries(${GAME_NAME} PRIVATE ${MIRI_LIBRARIES})
