@@ -8,7 +8,7 @@
 
 TEST(stl_test, array_test_primatives)
 {
-    simula24::array<int> test;
+    stl::array<int> test;
     test.resize(20);
     for (int i = 0; i < 20; i++)
         test.push_back(i);
@@ -28,7 +28,7 @@ TEST(stl_test, array_test_primatives)
 
 TEST(stl_test, array_test_adt)
 {
-    simula24::array<simula24::string> test;
+    stl::array<stl::string> test;
 
     char testdata[][10] =
     {

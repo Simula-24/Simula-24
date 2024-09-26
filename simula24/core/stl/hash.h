@@ -43,7 +43,7 @@ class hash<string>
 public:
     static uint32_t run(const string& str, uint32_t hash = HASH_SEED)
     {
-        return simula24::hash<const char*>::run(str.c_str(), hash);
+        return stl::hash<const char*>::run(str.c_str(), hash);
     }
 };
 template<>
@@ -84,7 +84,7 @@ class hash<int>
 public:
     static uint32_t run(int v, uint32_t hash = HASH_SEED)
     {
-        return simula24::hash<uint32_t>::run((uint32_t)v, hash);
+        return stl::hash<uint32_t>::run((uint32_t)v, hash);
     }
 };
 

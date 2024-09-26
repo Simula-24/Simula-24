@@ -15,8 +15,8 @@ struct _test
 
 TEST(stl_test, cow_test_primitive)
 {
-    simula24::copy_on_write<int> x;
-    simula24::copy_on_write<int> y;
+    stl::copy_on_write<int> x;
+    stl::copy_on_write<int> y;
     EXPECT_EQ(x.get_total_size(), 0);
     x.resize(10);
     
@@ -50,8 +50,8 @@ TEST(stl_test, cow_test_primitive)
 
 TEST(stl_test, cow_test_adt)
 {
-    simula24::copy_on_write<_test> x;
-    simula24::copy_on_write<_test> y;
+    stl::copy_on_write<_test> x;
+    stl::copy_on_write<_test> y;
     EXPECT_EQ(x.get_total_size(), 0);
 
     x.resize(10);

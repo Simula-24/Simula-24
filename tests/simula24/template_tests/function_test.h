@@ -10,11 +10,11 @@ static int getSpecialNumber() { return 1234; }
 TEST(stl_test, function_ptr_test)
 {
 
-    simula24::function<int()> test = &getSpecialNumber;
+    stl::function<int()> test = &getSpecialNumber;
 
     EXPECT_EQ(test(), 1234);
 
-    simula24::function<int(int)> test2 = [](int x) -> int {
+    stl::function<int(int)> test2 = [](int x) -> int {
         return x * x;
         };
 

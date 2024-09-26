@@ -7,7 +7,7 @@
 
 TEST(stl_test, unordered_map_primative)
 {
-    simula24::unordered_map<int, int> test;
+    stl::unordered_map<int, int> test;
 
     for (int i = 0; i < 10; i++)
     {
@@ -30,7 +30,7 @@ TEST(stl_test, unordered_map_primative)
 
 TEST(stl_test, unordered_map_adt)
 {
-    simula24::unordered_map<simula24::string, simula24::string> test;
+    stl::unordered_map<stl::string, stl::string> test;
 
     test.insert({ "name", "bob" });
     test.insert({ "age", "75.1" });
@@ -47,7 +47,7 @@ TEST(stl_test, unordered_map_adt)
 
 TEST(stl_test, unordered_map_remove_primitive)
 {
-    simula24::unordered_map<int, double> test;
+    stl::unordered_map<int, double> test;
 
     for (int i = 0; i < 10; i++)
         test.insert({ i, (double)(i / 3) });
@@ -63,7 +63,7 @@ TEST(stl_test, unordered_map_remove_primitive)
 
 TEST(stl_test, unordered_map_remove_adt)
 {
-    simula24::unordered_map<simula24::string, simula24::string> test;
+    stl::unordered_map<stl::string, stl::string> test;
     test["bob"] = "person";
     test["name"] = "a";
     test["cat_name"] = "cat";
