@@ -6,6 +6,7 @@
 #include <core/log/log.h>
 #include <core/log/sink/ConsoleSink.h>
 #include <core/error/seh.h>
+#include <locale.h>
 
 using namespace simula24;
 
@@ -14,10 +15,12 @@ int main(int argc, char** argv)
     DebugLoggers::init();
     
     setSEHHandler();
-
+    setlocale(LC_ALL, "");
     ENGINE_INFO("SEH Handler set");
     initscr();
     resize_term(30,120);
+    
+    PDC_set_title("Simula24");
     noecho();
     cbreak();
     curs_set(0);
@@ -33,8 +36,14 @@ int main(int argc, char** argv)
                 shouldrun = false;
         }
 
-        wborder(mainw, '▓', '|', '-', '-', 0, 0, 0, 0);
+        wborder(mainw,
+            0x2502, 0x2502, 
+            0x2500, 0x2500, 
+            0x250C, 0x2510, 
+            0x2514, 0x2518  
+        );
         wrefresh(mainw);
+        mvaddch(20, 20, L'♘');
         
         refresh();
         
