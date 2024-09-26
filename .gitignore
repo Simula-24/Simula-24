@@ -24,6 +24,4 @@ thirdparty/pdcurses/Release
 thirdparty/pdcurses/x64
 *.exp
 *.res
-*.lib
-*.dll
 *.bkp

@@ -1,4 +1,4 @@
-#include <cstdio>
+﻿#include <cstdio>
 #include <SDL.h>
 #include <curses.h>
 
@@ -23,10 +23,19 @@ int main(int argc, char** argv)
     curs_set(0);
     WINDOW* mainw = newwin(10, 10, 0,0);
 
-    while (true)
+    SDL_Event event;
+    bool shouldrun = true;
+    while (shouldrun)
     {
-        wborder(mainw, '|', '|', '-', '-', 0, 0, 0, 0);
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+                shouldrun = false;
+        }
+
+        wborder(mainw, '▓', '|', '-', '-', 0, 0, 0, 0);
         wrefresh(mainw);
+        
         refresh();
         
     }
