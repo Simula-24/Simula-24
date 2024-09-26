@@ -20,10 +20,10 @@ if(ENABLE_TESTS)
     add_subdirectory("tests")
 else()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/")
-    add_subdirectory("src/main/")
+    add_subdirectory("simula24/main/")
 endif()
 
-add_subdirectory(src)
+add_subdirectory(simula24)
 add_executable(miri_game
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
@@ -53,4 +53,7 @@ endif()
 
 
 target_link_libraries(miri_game PRIVATE ${MIRI_LIBRARIES})
-target_include_directories(miri_game PUBLIC "${CMAKE_SOURCE_DIR}/src")
+target_include_directories(miri_game PUBLIC 
+    "${CMAKE_SOURCE_DIR}/"
+    "${CMAKE_SOURCE_DIR}/simula24/"
+)
