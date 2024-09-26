@@ -74,7 +74,7 @@ public:
     shared_ptr& operator=(shared_ptr&& other)
     {
 
-        _int_store = simula24::move(other._int_store);
+        _int_store = stl::move(other._int_store);
         other._int_store->_refcount++;
         return *this;
 

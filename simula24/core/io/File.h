@@ -1,9 +1,9 @@
 #ifndef CORE_IO_FILE_H_
 #define CORE_IO_FILE_H_
 
-#include <simula24/core/error/error.h>
-#include <simula24/types.h>
-#include <simula24/core/stl/string.h>
+#include <core/error/error.h>
+#include <core/types.h>
+#include <core/stl/string.h>
 
 
 namespace simula24

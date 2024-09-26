@@ -9,7 +9,7 @@ endif()
 set(CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 
-project(miri_game VERSION 0.1)
+project(simula24 VERSION 0.1)
 
 option(ENABLE_TESTS "Enable Tests" OFF)
 
@@ -23,14 +23,14 @@ else()
     add_subdirectory("simula24/main/")
 endif()
 
-add_subdirectory(simula24)
-add_executable(miri_game
+add_subdirectory("simula24")
+add_executable(simula24
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
 )
 
 if(WIN32)
-    target_include_directories(miri_game PRIVATE
+    target_include_directories(simula24 PRIVATE
         "${CMAKE_SOURCE_DIR}/thirdparty/PDCurses/"
         "${CMAKE_SOURCE_DIR}/thirdparty/SDL2/include/"
     )
@@ -48,12 +48,12 @@ endif()
 if(ENABLE_TESTS)
     set(MIRI_LIBRARIES ${MIRI_LIBRARIES} PUBLIC GTest::gtest_main)
     include(GoogleTest)
-    gtest_discover_tests(miri_game)
+    gtest_discover_tests(simula24)
 endif()
 
 
-target_link_libraries(miri_game PRIVATE ${MIRI_LIBRARIES})
-target_include_directories(miri_game PUBLIC 
+target_link_libraries(simula24 PRIVATE ${MIRI_LIBRARIES})
+target_include_directories(simula24 PUBLIC 
     "${CMAKE_SOURCE_DIR}/"
     "${CMAKE_SOURCE_DIR}/simula24/"
 )

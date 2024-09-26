@@ -55,7 +55,7 @@ public:
     template <class Fn>
     function(Fn fn)
     {
-        m_functor = simula24::make_unique<CallableWrapper<Fn, Ret, Args...>>(stl::move(fn));
+        m_functor = stl::make_unique<CallableWrapper<Fn, Ret, Args...>>(stl::move(fn));
     }
 
     function() {}
