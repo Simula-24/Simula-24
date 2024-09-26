@@ -5,7 +5,7 @@
 #include <simula24/core/stl/copy_on_write.h>
 #include <simula24/core/stl/iterator.h>
 
-namespace simula24
+namespace stl
 {
 
 
@@ -23,8 +23,8 @@ class array
 {
 public:
 
-    using const_iterator = simula24::generic_const_iterator<T>;
-    using iterator = simula24::generic_iterator<T>;
+    using const_iterator = stl::generic_const_iterator<T>;
+    using iterator = stl::generic_iterator<T>;
 
 
 

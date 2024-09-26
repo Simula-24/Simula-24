@@ -25,14 +25,14 @@ class FileSink : public BaseSink
 {
 public:
     static constexpr int DEFAULT_FLUSH_RATE = 10;
-    FileSink(const simula24::string& filename, int flushRate = DEFAULT_FLUSH_RATE);
+    FileSink(const stl::string& filename, int flushRate = DEFAULT_FLUSH_RATE);
     FileSink(const char* filename, int flushRate = DEFAULT_FLUSH_RATE);
 
     ~FileSink();
 
     bool supportsColor() override { return false; }
 
-    void log(const simula24::string& msg) override;
+    void log(const stl::string& msg) override;
 
     void flush() override;
 
@@ -42,7 +42,7 @@ private:
 
     FILE* m_out;
 
-    simula24::array<simula24::string> m_logCache;
+    stl::array<stl::string> m_logCache;
 
     bool openFile(const char* name);
 };

@@ -3,7 +3,7 @@
 
 using simula24::FileSink;
 
-FileSink::FileSink(const simula24::string& filename, int flushRate)
+FileSink::FileSink(const stl::string& filename, int flushRate)
     : FileSink(filename.c_str(), flushRate)
 {
 }
@@ -26,7 +26,7 @@ FileSink::~FileSink()
     m_logCache.resize(m_curFlushInterval);
 }
 
-void FileSink::log(const simula24::string& msg)
+void FileSink::log(const stl::string& msg)
 {
     m_logCache[m_curFlushInterval] = msg;
     ++m_curFlushInterval;

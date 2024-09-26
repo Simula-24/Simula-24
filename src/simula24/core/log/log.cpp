@@ -28,7 +28,7 @@ void Logger::log(LogLevel ll, const char* msg, ...)
         return;
     assert(m_sink);
 
-    simula24::string output;
+    stl::string output;
 
     output.resize(
         // 10 for max size of lognamemap var
@@ -54,7 +54,7 @@ void Logger::logMemorySection(const void* start, int length, const char* msg, ..
 {
     assert(m_sink);
 
-    simula24::string output;
+    stl::string output;
 
     output.resize(
         // 10 for max size of lognamemap var
@@ -126,7 +126,7 @@ void Logger::logMemorySection(const void* start, int length, const char* msg, ..
     delete[] buffer;
 }
 
-void Logger::writeMetaData(simula24::string& output)
+void Logger::writeMetaData(stl::string& output)
 {
     char timeBuffer[25];
 
@@ -144,7 +144,7 @@ void Logger::writeMetaData(simula24::string& output)
 
 }
 
-void Logger::writeLogLevel(LogLevel ll, simula24::string& output)
+void Logger::writeLogLevel(LogLevel ll, stl::string& output)
 {
     output += "[";
 
@@ -161,7 +161,7 @@ void Logger::writeLogLevel(LogLevel ll, simula24::string& output)
     output += "] ";
 }
 
-void Logger::writeUserMessage(simula24::string& output, const char* message, va_list args)
+void Logger::writeUserMessage(stl::string& output, const char* message, va_list args)
 {
     char temp[256] = { 0 };
     vsnprintf(temp, 256, message, args);

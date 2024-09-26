@@ -14,7 +14,7 @@ class BaseSink
 {
 public:
     virtual bool supportsColor() = 0;
-    virtual void log(const simula24::string& msg) = 0;
+    virtual void log(const stl::string& msg) = 0;
     virtual void flush() = 0;
     virtual ~BaseSink() {}
 };

@@ -5,7 +5,7 @@
 #include <simula24/core/stl/utility.h>
 #include <stdint.h>
 #include <string.h>
-namespace simula24
+namespace stl
 {
 ///    
 /// @brief 

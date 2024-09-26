@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/memory/memory.h>
-namespace simula24
+namespace stl
 {
 
 /// @brief
@@ -177,7 +177,7 @@ shared_ptr<T> make_shared(Args&&... args)
     T* nt = (T*)simula24::alloc_static(sizeof(T));
 
     return shared_ptr<T>(
-        new (nt) T(simula24::forward<Args>(args)...)
+        new (nt) T(stl::forward<Args>(args)...)
     );
 }
 
@@ -236,7 +236,7 @@ public:
 
     unique_ptr& operator=(unique_ptr&& other)
     {
-        m_ptr = simula24::move(other.m_ptr);
+        m_ptr = stl::move(other.m_ptr);
         other.m_ptr = nullptr;
 
         return *this;
@@ -269,12 +269,12 @@ unique_ptr<T> make_unique(Args... args)
     T* nt = (T*)simula24::alloc_static(sizeof(T));
 
     return unique_ptr<T>(
-        new (nt) T(simula24::forward<Args>(args)...)
+        new (nt) T(stl::forward<Args>(args)...)
     );
 }
 
 
 
-} // simula24
+} // stl
 
 #endif // CORE_simula24_SMART_PTR_H_

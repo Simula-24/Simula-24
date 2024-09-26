@@ -17,7 +17,7 @@ public:
     
     bool supportsColor() override { return true; }
 
-    void log(const simula24::string& msg) override;
+    void log(const stl::string& msg) override;
 
     void flush() override;
 };

@@ -5,7 +5,7 @@
 #include "string.h"
 
 
-namespace simula24
+namespace stl
 {
 
 static constexpr uint32_t HASH_PRIME = 0x01000193;

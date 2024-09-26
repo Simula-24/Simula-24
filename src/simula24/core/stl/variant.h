@@ -3,7 +3,7 @@
 
 #include <type_traits>
 #include <simula24/core/stl/utility.h>
-namespace simula24
+namespace stl
 {
 
 template <typename... Types>
@@ -58,7 +58,7 @@ public:
         bool = typelist_contains<T, typelist<Types...> >() >
     void set(T&& val)
     {
-        new (&m_varStorage.data) T(simula24::forward<T>(val));
+        new (&m_varStorage.data) T(stl::forward<T>(val));
         m_idx = find < T, 0, Types...>();
     }
 
@@ -69,7 +69,7 @@ public:
         bool = typelist_contains<T, typelist<Types...> >() >
     void operator=(T&& val)
     {
-        new (&m_varStorage.data) T(simula24::forward<T>(val));
+        new (&m_varStorage.data) T(stl::forward<T>(val));
         m_idx = find < T, 0, Types...>();
         //return *this;
     }

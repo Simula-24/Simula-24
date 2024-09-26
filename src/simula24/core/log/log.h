@@ -42,8 +42,8 @@ class Logger
 {
 public:
 
-    Logger(const simula24::string& name)
-        : m_name(simula24::move(name)), m_sink{ nullptr }, m_lowestLevel(LogLevel::INFO)
+    Logger(const stl::string& name)
+        : m_name(name.c_str()), m_sink{ nullptr }, m_lowestLevel(LogLevel::INFO)
     {}
     Logger(const char* name) : m_name(name), m_sink{ nullptr } {}
     ~Logger();
@@ -88,49 +88,49 @@ public:
 
         if (m_sink)
             delete m_sink;
-        m_sink = new SinkType(simula24::forward<ConstructionArgs>(args)...);
+        m_sink = new SinkType(stl::forward<ConstructionArgs>(args)...);
     }
 
     /// fwds to Log with LogLevel::DEBUG
     template<class... Args>
     constexpr void debug(const char* message, Args&&... args)
     {
-        log(LogLevel::DEBUG, message, simula24::forward<Args>(args)...);
+        log(LogLevel::DEBUG, message, stl::forward<Args>(args)...);
     }
 
     /// fwds to Log with LogLevel::INFO
     template <class... Args>
     constexpr void info(const char* message, Args&&... args)
     {
-        log(LogLevel::INFO, message, simula24::forward<Args>(args)...);
+        log(LogLevel::INFO, message, stl::forward<Args>(args)...);
     }
 
     /// fwds to Log with LogLevel::WARNING
     template <class... Args>
     constexpr void warning(const char* message, Args&&... args)
     {
-        log(LogLevel::WARNING, message, simula24::forward<Args>(args)...);
+        log(LogLevel::WARNING, message, stl::forward<Args>(args)...);
     }
 
     /// fwds to Log with LogLevel::ERROR
     template <class... Args>
     constexpr void error(const char* message, Args&&... args)
     {
-        log(LogLevel::ERROR_, message, simula24::forward<Args>(args)...);
+        log(LogLevel::ERROR_, message, stl::forward<Args>(args)...);
     }
 
     /// fwds to Log with LogLevel::CRITICAL
     template <class... Args>
     constexpr void critical(const char* message, Args&&... args)
     {
-        log(LogLevel::CRITICAL, message, simula24::forward<Args>(args)...);
+        log(LogLevel::CRITICAL, message, stl::forward<Args>(args)...);
     }
 
 private:
 
     BaseSink* m_sink;
 
-    string m_name;
+    stl::string m_name;
     
     LogLevel m_lowestLevel;
 
@@ -144,13 +144,13 @@ private:
     };
 
     /// Add current time + logger name
-    void writeMetaData(string& output);
+    void writeMetaData(stl::string& output);
 
     /// write the log level (in color if supported, see @ref BaseSink::supportsColor())
-    void writeLogLevel(LogLevel ll, string& output);
+    void writeLogLevel(LogLevel ll, stl::string& output);
 
     /// Add the users formatted arguments to the output, uses vsnprintf
-    void writeUserMessage(string& output, const char* message, va_list args);
+    void writeUserMessage(stl::string& output, const char* message, va_list args);
 
 };
 

@@ -3,7 +3,7 @@
 
 using simula24::ConsoleSink;
 
-void ConsoleSink::log(const simula24::string& str)
+void ConsoleSink::log(const stl::string& str)
 {
     fprintf(stderr, str.c_str());
 }

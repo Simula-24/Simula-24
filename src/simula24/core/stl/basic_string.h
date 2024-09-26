@@ -6,7 +6,7 @@
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/stl/copy_on_write.h>
 
-namespace simula24
+namespace stl
 {
 
 
@@ -28,7 +28,7 @@ public:
     }
 
     basic_string(const basic_string&& other)
-        : m_chars(simula24::move(other.m_chars)), m_length(simula24::move(other.m_length))
+        : m_chars(stl::move(other.m_chars)), m_length(stl::move(other.m_length))
     {
 
     }
@@ -50,8 +50,8 @@ public:
     {
 
 
-        m_length = simula24::move(other.length());
-        m_chars = simula24::move(other.m_chars);
+        m_length = stl::move(other.length());
+        m_chars = stl::move(other.m_chars);
 
         return *this;
     }

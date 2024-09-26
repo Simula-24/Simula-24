@@ -5,7 +5,7 @@
 #include <simula24/core/stl/utility.h>
 #include <type_traits>
 
-namespace simula24
+namespace stl
 {
 
 ///
@@ -29,14 +29,14 @@ template <class Fn, class RetType, class... Args >
 class CallableWrapper : public Callable<RetType, Args...>
 {
 public:
-    explicit CallableWrapper(Fn fn) : m_fn(simula24::move(fn)) {}
+    explicit CallableWrapper(Fn fn) : m_fn(stl::move(fn)) {}
 
     RetType invoke(Args&&... args) override
     {
         if constexpr (std::is_same_v<RetType, void>)
-            m_fn(simula24::forward<Args>(args)...);
+            m_fn(stl::forward<Args>(args)...);
         else
-            return m_fn(simula24::forward<Args>(args)...);
+            return m_fn(stl::forward<Args>(args)...);
     }
 private:
     Fn m_fn;
@@ -55,7 +55,7 @@ public:
     template <class Fn>
     function(Fn fn)
     {
-        m_functor = simula24::make_unique<CallableWrapper<Fn, Ret, Args...>>(simula24::move(fn));
+        m_functor = simula24::make_unique<CallableWrapper<Fn, Ret, Args...>>(stl::move(fn));
     }
 
     function() {}
@@ -70,13 +70,13 @@ public:
     Ret operator()(Args&&...args)
     {
         if constexpr (std::is_same_v<Ret, void>)
-            m_functor->invoke(simula24::forward<Args>(args)...);
+            m_functor->invoke(stl::forward<Args>(args)...);
         else
-            return  m_functor->invoke(simula24::forward<Args>(args)...);
+            return  m_functor->invoke(stl::forward<Args>(args)...);
     }
 
 private:
-    simula24::unique_ptr<Callable<Ret, Args...>> m_functor;
+    stl::unique_ptr<Callable<Ret, Args...>> m_functor;
 };
 
 

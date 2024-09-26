@@ -3,7 +3,7 @@
 
 #include <type_traits>
 
-namespace simula24
+namespace stl
 {
 
 /// disable qualifier warning

@@ -7,7 +7,7 @@
 #include <simula24/core/stl/hash.h>
 
 #include <new>
-namespace simula24
+namespace stl
 {
 template <class U, class T, class H>
 class unordered_map;
@@ -29,7 +29,7 @@ struct displaced_pair
     }
 
     displaced_pair(const K&& _k, const V&& _v)
-        : first(simula24::move(_k)), second(simula24::move(_v))
+        : first(stl::move(_k)), second(stl::move(_v))
     {}
 
     displaced_pair& operator=(const displaced_pair& o)
@@ -51,15 +51,15 @@ struct displaced_pair
 ///     
 ///     The API is basically the same as std::unordered_map
 /// 
-template <class K, class V, class Hash = simula24::hash<K> >
+template <class K, class V, class Hash = stl::hash<K> >
 class unordered_map
 {
 public:
     using hashing_function = Hash;
-    using kv_map_t = simula24::displaced_pair<K, V>;
+    using kv_map_t = stl::displaced_pair<K, V>;
 
-    using const_iterator = simula24::generic_const_iterator<kv_map_t>;
-    using iterator = simula24::generic_iterator<kv_map_t>;
+    using const_iterator = stl::generic_const_iterator<kv_map_t>;
+    using iterator = stl::generic_iterator<kv_map_t>;
 
     unordered_map() : m_data{}, m_element_count(0), m_size(1) { reserve(1); }
     ~unordered_map();
@@ -258,7 +258,7 @@ V& unordered_map<K, V, Hash>::operator[](const K& key)
 template<class K, class V, class Hash>
 V& unordered_map<K, V, Hash>::operator[](K&& key)
 {
-    K value = simula24::move(key);
+    K value = stl::move(key);
     return this->operator[](value);
 }
 

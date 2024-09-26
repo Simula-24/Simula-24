@@ -2,52 +2,52 @@
 
 #include <simula24/core/stl/string.h>
 
-bool simula24::operator==(const char* str1, const simula24::string& str2)
+bool stl::operator==(const char* str1, const stl::string& str2)
 {
     return strcmp(str1, str2.c_str()) == 0;
 }
 
-bool simula24::operator==(const simula24::string& str1, const simula24::string& str2)
+bool stl::operator==(const stl::string& str1, const stl::string& str2)
 {
     return strcmp(str1.c_str(), str2.c_str()) == 0;
 }
 
-bool simula24::operator!=(const char* str1, const simula24::string& str2)
+bool stl::operator!=(const char* str1, const stl::string& str2)
 {
     return strcmp(str1, str2.c_str()) != 0;
 }
 
-bool simula24::operator>(const char* str1, const simula24::string& str2)
+bool stl::operator>(const char* str1, const stl::string& str2)
 {
     return strcmp(str1, str2.c_str()) > 0;
 }
 
-bool simula24::operator<(const char* str1, const simula24::string& str2)
+bool stl::operator<(const char* str1, const stl::string& str2)
 {
     return strcmp(str1, str2.c_str()) < 0;
 }
 
-simula24::string simula24::operator+(const char* str1, const simula24::string& str2)
+stl::string stl::operator+(const char* str1, const stl::string& str2)
 {
-    simula24::string temp = str2;
+    stl::string temp = str2;
     temp += str1;
     return temp;
 }
 
-simula24::string simula24::operator+(const simula24::string& str1, const simula24::string& str2)
+stl::string stl::operator+(const stl::string& str1, const stl::string& str2)
 {
-    simula24::string temp = str1;
+    stl::string temp = str1;
     temp += str2;
     return temp;
 
 }
 
-bool simula24::is_integer(const simula24::string& str)
+bool stl::is_integer(const stl::string& str)
 {
-    return simula24::is_integer(str.c_str());
+    return stl::is_integer(str.c_str());
 }
 
-bool simula24::is_integer(const char* str)
+bool stl::is_integer(const char* str)
 {
     const char* rawStr = str;
 
@@ -61,12 +61,12 @@ bool simula24::is_integer(const char* str)
     return true;
 }
 
-bool simula24::is_float(const simula24::string& str)
+bool stl::is_float(const stl::string& str)
 {
     return is_float(str.c_str());
 }
 
-bool simula24::is_float(const char* str)
+bool stl::is_float(const char* str)
 {
     const char* rawStr = str;
 

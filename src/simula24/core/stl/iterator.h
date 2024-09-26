@@ -1,7 +1,7 @@
 #ifndef SIMULA24_CORE_STL_ITERATOR_H_
 #define SIMULA24_CORE_STL_ITERATOR_H_
 
-namespace simula24
+namespace stl
 {
 ///
 /// @brief 
