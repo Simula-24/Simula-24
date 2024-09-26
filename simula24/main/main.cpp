@@ -1,16 +1,17 @@
 #include <cstdio>
 #include <curses.h>
-#include <simula24/core/log/log.h>
-#include <simula24/core/log/sink/ConsoleSink.h>
-#include <simula24/core/error/seh.h>
-#include <utility>
+
+#include <core/log/log.h>
+#include <core/log/sink/ConsoleSink.h>
+#include <core/error/seh.h>
+
+using namespace simula24;
+
 int main(int argc, char** argv)
 {
-    simula24::setSEHHandler();
-    simula24::Logger l("hello");
-    l.setSink<simula24::ConsoleSink>();
-    l.info("hlelo ni");
-    l.setLogFilter(simula24::LogLevel::WARNING);
-    l.info("hlelo ni");
-    l.warning("hlelo ni");
+    DebugLoggers::init();
+    
+    setSEHHandler();
+
+    ENGINE_INFO("SEH Handler set");
 }

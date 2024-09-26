@@ -5,6 +5,7 @@
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/log/colors.h>
 #include <simula24/core/log/sink/BaseSink.h>
+#include <core/stl/smart_ptr.h>
 #include <stdarg.h>
 #include <type_traits>
 
@@ -155,7 +156,25 @@ private:
 };
 
 
+class DebugLoggers
+{
+public:
+    static void init();
+    static stl::shared_ptr<Logger>& getEngineLogger() { return m_engineLogger; }
+private:
+    static stl::shared_ptr<Logger> m_engineLogger;
+};
+
 } // simula24
+
+
+#define ENGINE_INFO(...)       simula24::DebugLoggers::getEngineLogger()->info(__VA_ARGS__) 
+#define ENGINE_DEBUG(...)      simula24::DebugLoggers::getEngineLogger()->debug(__VA_ARGS__) 
+#define ENGINE_WARNING(...)    simula24::DebugLoggers::getEngineLogger()->warning(__VA_ARGS__)     
+#define ENGINE_ERROR(...)      simula24::DebugLoggers::getEngineLogger()->error(__VA_ARGS__) 
+#define ENGINE_CRITICAL(...)   simula24::DebugLoggers::getEngineLogger()->critical(__VA_ARGS__)     
+
+
 
 
 #endif //SIMULA24_CORE_LOG_LOG_H_
