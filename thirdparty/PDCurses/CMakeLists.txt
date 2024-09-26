@@ -5,7 +5,10 @@ project(pdcurses)
 file(GLOB_RECURSE PDCURSES_SOURCES "${CMAKE_SOURCE_DIR}/pdcurses/*.c")
 file(GLOB_RECURSE PDCURSES_SDL2_SOURCES "${CMAKE_SOURCE_DIR}/sdl2/*.c")
 
-add_library(pdcurses SHARED
+set(RUNTIME_OUTPUT_DIRECTORY "Debug")
+set(ARCHIVE_OUTPUT_DIRECTORY "Debug")
+
+add_library(pdcurses STATIC
     ${PDCURSES_SOURCES}
     ${PDCURSES_SDL2_SOURCES}
 )
@@ -20,3 +23,4 @@ target_link_libraries(pdcurses
     "../SDL2/lib/x64/SDL2"
     "../SDL2/lib/x64/SDL2main"
 )
+

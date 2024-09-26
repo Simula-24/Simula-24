@@ -9,5 +9,5 @@ cmake .
 Log-Info "Building PDCurses..."
 cmake --build .
 Log-Info "Done. Copying Files"
-cp Debug/* $buildloc
+cp Debug/pdcurses.* $buildloc
 cd $curdir
