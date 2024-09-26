@@ -3,6 +3,7 @@
 
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/stl/copy_on_write.h>
+#include <simula24/core/stl/iterator.h>
 
 namespace simula24
 {

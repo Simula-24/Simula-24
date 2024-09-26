@@ -1,11 +1,14 @@
 #include <cstdio>
 #include <curses.h>
-#include <simula24/core/stl/copy_on_write.h>
-#include <simula24/core/stl/utility.h>
-#include <simula24/core/stl/smart_ptr.h>
+#include <simula24/core/log/log.h>
+#include <simula24/core/log/sink/ConsoleSink.h>
 #include <utility>
 int main(int argc, char** argv)
 {
-    simula24::shared_ptr<int> x = simula24::make_shared<int>(1);
-    printf("%d\n",*x);
+    simula24::Logger l("hello");
+    l.setSink<simula24::ConsoleSink>();
+    l.info("hlelo ni");
+    l.setLogFilter(simula24::LogLevel::WARNING);
+    l.info("hlelo ni");
+    l.warning("hlelo ni");
 }
