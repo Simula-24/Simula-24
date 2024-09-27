@@ -13,7 +13,7 @@ project(simula24 VERSION 0.1)
 
 option(ENABLE_TESTS "Enable Tests" OFF)
 
-set(MIRI_LIBRARIES)
+set(SIMULA24_LIBRARIES)
 
 if(ENABLE_TESTS)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/test/")
@@ -36,25 +36,30 @@ if(WIN32)
         "${CMAKE_SOURCE_DIR}/thirdparty/SDL2_ttf/include/"
     )
 
-    set(MIRI_LIBRARIES ${MIRI_LIBRARIES}
+    set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES}
         "${CMAKE_SOURCE_DIR}/build/pdcurses.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2_ttf.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2main.lib"
     )
     add_compile_options("/wd9025")
+elseif(UNIX)
+    find_package(SDL2 REQUIRED)
+    target_include_directories(simula24 PRIVATE ${SDL2_INCLUDE_DIRS})
+    set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} ${SDL2_LIBRARIES} "ncursesw")
+
 endif()
 
 
 
 if(ENABLE_TESTS)
-    set(MIRI_LIBRARIES ${MIRI_LIBRARIES} PUBLIC GTest::gtest_main)
+    set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} PUBLIC GTest::gtest_main)
     include(GoogleTest)
     gtest_discover_tests(simula24)
 endif()
 
 
-target_link_libraries(simula24 PRIVATE ${MIRI_LIBRARIES})
+target_link_libraries(simula24 PRIVATE ${SIMULA24_LIBRARIES})
 target_include_directories(simula24 PUBLIC 
     "${CMAKE_SOURCE_DIR}/"
     "${CMAKE_SOURCE_DIR}/simula24/"
