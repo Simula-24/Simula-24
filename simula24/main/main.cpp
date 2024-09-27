@@ -34,6 +34,43 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    SDL_Renderer* r = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
+
+    SDL_Texture* image;
+    SDL_Surface* loadedTexture;
+    loadedTexture = IMG_Load("../data/tileset/cp437/cp437.png");
+
+    if (!loadedTexture)
+    {
+        ENGINE_ERROR("Failed to load image: %s", IMG_GetError());
+        return -1;
+    }
+
+    image = SDL_CreateTextureFromSurface(r, loadedTexture);
+    SDL_FreeSurface(loadedTexture);
+    SDL_Rect smily = { .x = 10, .y = 0, .w = 10, .h = 10 };
+    SDL_Rect ssmily = { .x = 10, .y = 1, .w = 20, .h = 20 };
+    SDL_Event event;
+    bool shouldQuit = false;
+    while (!shouldQuit)
+    {
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+            {
+                shouldQuit = true;
+                break;
+            }
+        }
+        
+        SDL_RenderClear(r);
+        
+        
+        SDL_RenderCopy(r, image, &smily, NULL);
+
+        SDL_RenderPresent(r);
+    }
+
 
     SDL_Quit();
 
