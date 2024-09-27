@@ -11,15 +11,20 @@ C++20 and CMake the primary tools in this project.
 ### Pull Requests
 Steps for submitting a pull request
 1. Fork the Repo
-2. Make a new branch
+2. Make a new branch based off of the current dev branch
+    a. `git switch -c <new branch>`
+    b. `git remote add upstream https://github.com/raging-loon/Simula-24`
+    c. `git fetch upstream`
 3. Make your changes + tests
 4. Make sure your changes actually work
 5. Run the unit test build
 6. Submit a pull request. Be clear with your description.
 7. Wait
 7. Wait some more
-8. Pat yourself on the back for making an OSS contribution. Linus would be proud.
-
+8. Pat yourself on the back for making an OSS contribution. Linus would be proud.9. Delete your local branch
+    a. `git branch -D <new branch>`
+10. Rebase with the current dev branch
+    b. `git pull --rebase upstream <current dev branch>`
 ### General
 
 - 4 spaces - make sure your editor replaces tabs with spaces
