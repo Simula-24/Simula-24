@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/memory/memory.h>
+
+#include <new>
 namespace stl
 {
 

@@ -2,10 +2,18 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "log.h"
-
+#include "sink/ConsoleSink.h"
 #include <cassert>
 
 using simula24::Logger;
+
+stl::shared_ptr<Logger> simula24::DebugLoggers::m_engineLogger;
+
+void simula24::DebugLoggers::init()
+{
+    m_engineLogger = stl::make_shared<Logger>("ENGINE");
+    m_engineLogger->setSink<ConsoleSink>();
+}
 
 static const char* LogNameMap[5] =
 {

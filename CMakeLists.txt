@@ -33,14 +33,16 @@ if(WIN32)
     target_include_directories(simula24 PRIVATE
         "${CMAKE_SOURCE_DIR}/thirdparty/PDCurses/"
         "${CMAKE_SOURCE_DIR}/thirdparty/SDL2/include/"
+        "${CMAKE_SOURCE_DIR}/thirdparty/SDL2_ttf/include/"
     )
 
     set(MIRI_LIBRARIES ${MIRI_LIBRARIES}
         "${CMAKE_SOURCE_DIR}/build/pdcurses.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2.lib"
+        "${CMAKE_SOURCE_DIR}/build/SDL2_ttf.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2main.lib"
     )
-
+    add_compile_options("/wd9025")
 endif()
 
 
