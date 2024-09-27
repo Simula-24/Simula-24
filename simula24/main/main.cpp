@@ -5,6 +5,7 @@
 
 #include <core/log/log.h>
 #include <core/log/sink/ConsoleSink.h>
+#include <core/log/sink/FileSink.h>
 #include <core/error/seh.h>
 #include <locale.h>
 
@@ -13,7 +14,6 @@ using namespace simula24;
 int main(int argc, char** argv)
 {
     DebugLoggers::init();
-    
     setSEHHandler();
     setlocale(LC_ALL, "");
     ENGINE_INFO("SEH Handler set");

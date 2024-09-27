@@ -43,11 +43,41 @@ class Logger
 {
 public:
 
-    Logger(const stl::string& name)
+    /// the init-list code duplication IS necessary otherwise setSink will NOT work.
+    explicit Logger(const stl::string& name)
         : m_name(name.c_str()), m_sink{ nullptr }, m_lowestLevel(LogLevel::INFO)
     {}
-    Logger(const char* name) : m_name(name), m_sink{ nullptr } {}
+    explicit Logger(const char* name) : m_name(name), m_sink{ nullptr }, m_lowestLevel(LogLevel::INFO) {}
     ~Logger();
+
+    ///
+    /// @brief 
+    ///     Construct a logger with a sink
+    /// 
+    template <class SinkType>
+    static Logger createLogger(const stl::string& name)
+        requires(std::is_base_of_v<simula24::BaseSink, SinkType>)
+    {
+        Logger newLogger(name);
+        newLogger.setSink<SinkType>();
+        return newLogger;
+    }
+
+    ///
+    /// @brief 
+    ///     Construct a logger with a sink and pass arguments to the sink's constructor
+    /// 
+    template <class SinkType, class... ConstructionArgs>
+    static Logger createLogger(const stl::string& name, ConstructionArgs&&... args)
+        requires(std::is_base_of_v<simula24::BaseSink, SinkType>)
+    {
+        Logger newLogger(name);
+        newLogger.setSink<SinkType>(args...);
+        return newLogger;
+    }
+
+    Logger(const Logger& ) = default;
+    Logger& operator=(const Logger& ) = default;
 
     ///
     /// @brief
