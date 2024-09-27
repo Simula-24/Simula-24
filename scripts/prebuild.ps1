@@ -22,3 +22,6 @@ cp thirdparty/SDL2/lib/x64/*.lib $buildloc
 cp thirdparty/SDL2/lib/x64/*.dll $buildloc
 cp thirdparty/SDL2_ttf/lib/x64/*.lib $buildloc
 cp thirdparty/SDL2_ttf/lib/x64/*.dll $buildloc
+
+cp thirdparty/SDL2_image/lib/x64/*.lib $buildloc
+cp thirdparty/SDL2_image/lib/x64/*.dll $buildloc

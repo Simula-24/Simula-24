@@ -1,11 +1,8 @@
 ﻿#include <cstdio>
 #include <SDL.h>
-#include <curses.h>
-
-
+#include <SDL_image.h>
 #include <core/log/log.h>
 #include <core/log/sink/ConsoleSink.h>
-#include <core/log/sink/FileSink.h>
 #include <core/error/seh.h>
 #include <locale.h>
 
@@ -14,40 +11,31 @@ using namespace simula24;
 int main(int argc, char** argv)
 {
     DebugLoggers::init();
-    //setSEHHandler();
-    setlocale(LC_ALL, "");
+    setSEHHandler();
     ENGINE_INFO("SEH Handler set");
-    initscr();
-    //resize_term(30,120);
-    
-    //PDC_set_title("Simula24");
-    noecho();
-    cbreak();
-    curs_set(0);
-    WINDOW* mainw = newwin(10, 10, 0,0);
 
-    SDL_Event event;
-    bool shouldrun = true;
-    while (shouldrun)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
     {
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-                shouldrun = false;
-        }
-
-        wborder(mainw,
-            0x2502, 0x2502, 
-            0x2500, 0x2500, 
-            0x250C, 0x2510, 
-            0x2514, 0x2518  
-        );
-        wrefresh(mainw);
-        mvaddch(20, 20, L'▒');
-        
-        refresh();
-        
+        ENGINE_ERROR("Failed to initialize SDL: %s", SDL_GetError());
+        return -1;
     }
+
+    if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
+    {
+        ENGINE_ERROR("Failed to initializes SDL_Image: %s", IMG_GetError());
+        return -1;
+    }
+    SDL_Window* mainWindow = SDL_CreateWindow("Simula 24", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
+
+    if (!mainWindow)
+    {
+        ENGINE_ERROR("Failed to create window: %s", SDL_GetError());
+        SDL_Quit();
+        return -1;
+    }
+
+
+    SDL_Quit();
 
     return 0;
 
