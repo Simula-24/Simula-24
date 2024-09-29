@@ -16,7 +16,7 @@ option(ENABLE_TESTS "Enable Tests" OFF)
 set(SIMULA24_LIBRARIES)
 
 if(ENABLE_TESTS)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/test/")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/")
     add_subdirectory("tests")
 else()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/")

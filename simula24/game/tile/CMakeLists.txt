@@ -1,0 +1,5 @@
+set(TILE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/TileSheetParser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TileSheet.cpp
+    PARENT_SCOPE
+)

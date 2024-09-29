@@ -1,45 +1,4 @@
-cp437.png:
-    height: 160
-    width: 160
-    sprite_height: 10
-    sprite_width: 10
-    index:
-        BLANK 
-        SMILY
-        SMILY_INV
-        HEART
-        DIAMOND
-        CLUB
-        SPADE
-        OVAL
-        OVAL_INV
-        TORUS
-        TORUS_INV
-        MALE
-        FEMALE
-        SING_NOTE
-        MULT_NOTE
-        STAR
-        TRI_LEFT
-        TRI_RIGHT
-        UP_DOWN
-        DUAL_EXCLAM
-        PARAGRAPH
-        SQUIGGLE
-        BLOCK
-        UP_DOWN2
-        UP
-        DOWN
-        RIGHT
-        LEFT
-        LEG
-        LEFT_RIGHT
-        TRI_UP
-        TRI_DOWN
-        BLANK2
-        EXCLAM
-        DQUOTE
-        OCTOTHORPE
-        DOLLAR
-        PERCENT
-        AMPERSAND
+[cp437.png]
+    size=160x160
+    tile_size=10x10
+    comment="Original IBM character set"
