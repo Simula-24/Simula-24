@@ -7,8 +7,7 @@ using simula24::TileSheet;
 using simula24::Status;
 
 
-TileConfig::TileConfig(SDL_Renderer* r)
-    : m_renderer(r)
+TileConfig::TileConfig()
 {
 }
 
@@ -36,11 +35,6 @@ Status TileConfig::load(const stl::string& configFileName)
     if(!parseConfig(contents))
         return ERR_INVALID_PARAMETER;
     return OK;
-}
-
-stl::shared_ptr<TileSheet> TileConfig::getNextSheet()
-{
-    return stl::shared_ptr<TileSheet>();
 }
 
 bool simula24::TileConfig::extractDimensions(const stl::string& source, int& w_out, int& h_out)

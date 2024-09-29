@@ -74,7 +74,7 @@ private:
 template <class T, bool linked_list = false>
 struct generic_const_iterator
 {
-    generic_const_iterator(T* elem) : element(elem) {}
+    generic_const_iterator(const T* elem) : element(elem) {}
     generic_const_iterator() {}
     generic_const_iterator(const generic_const_iterator& o) : element(o.element) {}
 
@@ -118,7 +118,7 @@ struct generic_const_iterator
         return iterator(element);
     }
 private:
-    T* element = nullptr;
+    const T* element = nullptr;
 };
 
 

@@ -34,13 +34,21 @@ class TileConfig
 {
 public:
 
-    TileConfig(SDL_Renderer* );
+    using TileCfgIter =  stl::array<TileSheetConfig>::iterator;
+    using CTileCfgIter = stl::array<TileSheetConfig>::const_iterator;
+
+    TileConfig();
     ~TileConfig();
 
     /// Load and parse a config file
     Status load(const stl::string& configFileName);
 
-    stl::shared_ptr<TileSheet> getNextSheet();
+    TileCfgIter getConfigIterBegin() { return m_sheetConfigs.begin(); }
+    TileCfgIter getConfigIterEnd() { return m_sheetConfigs.end(); }
+
+    CTileCfgIter getCConfigIterBegin() const { return m_sheetConfigs.cbegin(); }
+    CTileCfgIter getCConfigIterEnd() const { return m_sheetConfigs.cend(); }
+
 
 private:
     /// Extract the width and height using this format: <h>x<w> or <h>X<w>
@@ -50,9 +58,6 @@ private:
     bool parseConfig(const stl::string& cfg);
 
     stl::array<TileSheetConfig> m_sheetConfigs;
-    // TODO: this should be placed in TextureManager
-    //       when it is constructed
-    SDL_Renderer* m_renderer;
 };
 
 }

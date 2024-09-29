@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
     //SDL_Renderer* r = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
 
-    TileConfig tsp(nullptr);
+    TileConfig tsp;
     if (tsp.load("../data/tileset/cp437/tileset.inf") != OK)
         printf("faile : (\n");
     
