@@ -68,89 +68,60 @@ bool simula24::TileSheetParser::extractDimensions(const stl::string& source, int
     return true;
 }
 
-bool TileSheetParser::parseConfig2(const stl::string& cfg)
-{
-    TileSheetConfig tsc{};
-    enum ParseStatus
-    {
-        NONE,
-        PARSING_NAME,
-        PARSING_DIMENSIONS_TILE_SIZE,
-        PARSING_DIMENSIONS_IMAGE_SIZE
-    };
-
-    ParseStatus ps = NONE;
-    
-    const char* cur = cfg.c_str();
-    stl::string dimensionsStr;
-    int nameStart = 0;
-
-    while(cur != &cfg.back())
-    {
-        if (*cur == '[')
-        {
-            ps = PARSING_NAME;
-            cur++;
-            nameStart = (cur - cfg.c_str());
-            continue;
-        }
-
-        if (*cur == ']')
-        {
-            ps = NONE;
-            tsc.filename = cfg.substr(nameStart, (cur - cfg.c_str()));
-            tsc.filename += '\0';
-            cur++;
-            continue;
-        }
-
-        if (ps == PARSING_NAME)
-        {
-            cur++; 
-            continue;
-        }
-        else if (ps == PARSING_DIMENSIONS_TILE_SIZE || ps == PARSING_DIMENSIONS_IMAGE_SIZE)
-        {
-            if (*cur == '\n' || *cur == '\r')
-            {
-                dimensionsStr += '\0';
-                if(ps == PARSING_DIMENSIONS_IMAGE_SIZE)
-                    extractDimensions(dimensionsStr, tsc.imageWidth, tsc.imageHeight);
-                else if (ps == PARSING_DIMENSIONS_TILE_SIZE)
-                    extractDimensions(dimensionsStr, tsc.tileWidth, tsc.tileHeight);
-                ps = NONE;
-                dimensionsStr.setPos(0);
-            }
-            else
-                dimensionsStr += *cur;
-        }
-        else if (strncmp(cur, "tile_size=", 10) == 0)
-        {
-            ps = PARSING_DIMENSIONS_TILE_SIZE;
-            cur += 10;
-            continue;
-        }
-        
-        else if (strncmp(cur, "size=", 5) == 0)
-        {
-            ps = PARSING_DIMENSIONS_IMAGE_SIZE;
-            cur += 5;
-            continue;
-        }
-        cur++;
-    }
-
-    printf("%s\n", tsc.filename.c_str());
-
-    return true;
-}
-
 bool TileSheetParser::parseConfig(const stl::string& cfg)
 {
     TileSheetConfig tsc{};
 
     int nameStart = cfg.find('[');
     int nameEnd = cfg.find(']');
+
+    if (nameStart == stl::string::npos || nameEnd == stl::string::npos)
+        return false;
+
+    tsc.filename = cfg.substr(nameStart + 1, nameEnd);
+
+
+    // make sure we dont start ON a newline
+    int pos = cfg.find(nameEnd,'\n') + 1;
+
+    while (pos < cfg.length())
+    {
+        ///
+        /// Essentially we are taking something like
+        ///     key=value
+        /// Finding the position of '=' and '\n'
+        /// And extracting both using substrings
+        ///     key=value\n
+        ///pos~~^  ^     ^~~nextnl
+        ///        \ nexteq
+        /// 
+        int nexteq = cfg.find(pos, '=');
+        int nextnl = cfg.find(pos, '\n');
+
+        if (nexteq == stl::string::npos || nextnl == stl::string::npos)
+            break;
+
+        // strip whitespace
+        while (cfg[pos] == ' ' && pos < cfg.length())
+            ++pos;
+
+        stl::string keyName = cfg.substr(pos, nexteq).c_str();
+        stl::string value = cfg.substr(nexteq + 1, nextnl);
+        
+        if (keyName == "tile_size")
+        {
+            if (!extractDimensions(value, tsc.tileWidth, tsc.tileHeight))
+                return false;
+        }
+
+        else if (keyName == "size")
+        {
+            if (!extractDimensions(value, tsc.imageWidth, tsc.imageHeight))
+                return false;
+        }
+        // skip over newline
+        pos = nextnl + 1;
+    }
 
     return true;
 }

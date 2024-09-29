@@ -37,13 +37,16 @@ public:
     TileSheetParser(SDL_Renderer* );
     ~TileSheetParser();
 
+    /// Load and parse a config file
     Status load(const stl::string& configFileName);
 
     stl::shared_ptr<TileSheet> getNextSheet();
 
 private:
+    /// Extract the width and height using this format: <h>x<w> or <h>X<w>
     bool extractDimensions(const stl::string& source, int& w_out, int& h_out);
-    bool parseConfig2(const stl::string& cfg);
+
+    /// Parse the configuration file
     bool parseConfig(const stl::string& cfg);
 
     stl::array<TileSheetConfig> m_sheetConfigs;
