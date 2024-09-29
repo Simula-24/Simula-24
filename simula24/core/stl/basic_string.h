@@ -162,7 +162,22 @@ public:
         return m_length;
     }
 
+    /// 
+    /// @brief
+    ///     Find first occurense of 'ch'
+    ///     
+    /// @returns index of ch or npos if not found
+    /// 
     size_t find(T ch) const;
+
+    /// 
+    /// @brief
+    ///     Find first occurense of 'ch' starting at offset
+    ///     
+    /// @returns index of ch or npos if not found
+    /// 
+    size_t find(size_t offset, T ch) const;
+
     /// get reference character at pos
     constexpr T& operator[](size_t pos) { return m_chars.at_m(pos); }
 
@@ -234,7 +249,17 @@ size_t basic_string<T>::find(T ch) const
     return npos;
 }
 
+template <class T>
+size_t basic_string<T>::find(size_t offset, T ch) const
+{
+    for (size_t i = offset; i < m_length; i++)
+    {
+        if (m_chars.at(i) == ch)
+            return i;
+    }
 
+    return npos;
+}
 
 } // simula24
 
