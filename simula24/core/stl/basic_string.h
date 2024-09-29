@@ -162,6 +162,7 @@ public:
         return m_length;
     }
 
+    size_t find(T ch) const;
     /// get reference character at pos
     constexpr T& operator[](size_t pos) { return m_chars.at_m(pos); }
 
@@ -221,7 +222,17 @@ basic_string<T> basic_string<T>::substr(size_t pos, size_t count) const
     return newString;
 }
 
-
+template <class T>
+size_t basic_string<T>::find(T ch) const
+{
+    for (size_t i = 0; i < m_length; i++)
+    {
+        if (m_chars.at(i) == ch)
+            return i;
+    }
+    
+    return npos;
+}
 
 
 

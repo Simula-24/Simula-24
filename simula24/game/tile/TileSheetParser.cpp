@@ -68,7 +68,7 @@ bool simula24::TileSheetParser::extractDimensions(const stl::string& source, int
     return true;
 }
 
-bool TileSheetParser::parseConfig(const stl::string& cfg)
+bool TileSheetParser::parseConfig2(const stl::string& cfg)
 {
     TileSheetConfig tsc{};
     enum ParseStatus
@@ -143,4 +143,14 @@ bool TileSheetParser::parseConfig(const stl::string& cfg)
     printf("%s\n", tsc.filename.c_str());
 
     return true;
+}
+
+bool TileSheetParser::parseConfig(const stl::string& cfg)
+{
+    TileSheetConfig tsc{};
+
+    int nameStart = cfg.find('[');
+    int nameEnd = cfg.find(']');
+
+
 }

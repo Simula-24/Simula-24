@@ -43,6 +43,7 @@ public:
 
 private:
     bool extractDimensions(const stl::string& source, int& w_out, int& h_out);
+    bool parseConfig2(const stl::string& cfg);
     bool parseConfig(const stl::string& cfg);
 
     stl::array<TileSheetConfig> m_sheetConfigs;

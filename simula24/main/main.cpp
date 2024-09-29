@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     TileSheetParser tsp(nullptr);
     if (tsp.load("../data/tileset/cp437/tileset.inf") != OK)
         printf("faile : (\n");
-
+    
     SDL_Quit();
 
     return 0;
