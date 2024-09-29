@@ -1,22 +1,22 @@
-#include "TileSheetParser.h"
+#include "TileConfig.h"
 
 #include <game/tile/TileSheet.h>
 #include <stdio.h>
-using simula24::TileSheetParser;
+using simula24::TileConfig;
 using simula24::TileSheet;
 using simula24::Status;
 
 
-TileSheetParser::TileSheetParser(SDL_Renderer* r)
+TileConfig::TileConfig(SDL_Renderer* r)
     : m_renderer(r)
 {
 }
 
-TileSheetParser::~TileSheetParser()
+TileConfig::~TileConfig()
 {
 }
 
-Status TileSheetParser::load(const stl::string& configFileName)
+Status TileConfig::load(const stl::string& configFileName)
 {
     File config;
     Status s = config.open(configFileName, File::READ);
@@ -38,12 +38,12 @@ Status TileSheetParser::load(const stl::string& configFileName)
     return OK;
 }
 
-stl::shared_ptr<TileSheet> TileSheetParser::getNextSheet()
+stl::shared_ptr<TileSheet> TileConfig::getNextSheet()
 {
     return stl::shared_ptr<TileSheet>();
 }
 
-bool simula24::TileSheetParser::extractDimensions(const stl::string& source, int& w_out, int& h_out)
+bool simula24::TileConfig::extractDimensions(const stl::string& source, int& w_out, int& h_out)
 {
     int pivot = 0;
     
@@ -68,7 +68,7 @@ bool simula24::TileSheetParser::extractDimensions(const stl::string& source, int
     return true;
 }
 
-bool TileSheetParser::parseConfig(const stl::string& cfg)
+bool TileConfig::parseConfig(const stl::string& cfg)
 {
     TileSheetConfig tsc{};
 

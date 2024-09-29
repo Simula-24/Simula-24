@@ -30,12 +30,12 @@ struct TileSheetConfig
 /// NOTE: we might need a texture manager class 
 ///       due to how SDL_Renderer is shared/used
 /// 
-class TileSheetParser
+class TileConfig
 {
 public:
 
-    TileSheetParser(SDL_Renderer* );
-    ~TileSheetParser();
+    TileConfig(SDL_Renderer* );
+    ~TileConfig();
 
     /// Load and parse a config file
     Status load(const stl::string& configFileName);
