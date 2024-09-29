@@ -1,3 +1,3 @@
-	#!/bin/bash
+#!/bin/bash
 
-cloc --exclude-dir="CMakeFiles,_deps,thirdparty,.vs" ./src --include-ext=cpp,h,c,glsl
+cloc --exclude-dir="CMakeFiles,_deps,thirdparty,.vs" ./simula24 --include-ext=cpp,h,c,glsl
