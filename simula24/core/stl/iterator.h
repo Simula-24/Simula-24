@@ -58,6 +58,27 @@ struct generic_iterator
         return element != o.element;
     }
 
+    constexpr bool operator>(const generic_iterator& o)
+    {
+        return element > o.element;
+    }
+
+    constexpr bool operator<(const generic_iterator& o)
+    {
+        return element < o.element;
+    }
+
+    constexpr bool operator<=(const generic_iterator& o)
+    {
+        return element <= o.element;
+    }
+
+    constexpr bool operator>=(const generic_iterator& o)
+    {
+        return element >= o.element;
+    }
+
+
     operator generic_iterator() const
     {
         return generic_iterator(element);
@@ -111,6 +132,26 @@ struct generic_const_iterator
     inline bool operator!=(const generic_const_iterator& o)
     {
         return element != o.element;
+    }
+
+    constexpr bool operator>(const generic_const_iterator& o)
+    {
+        return element > o.element;
+    }
+
+    constexpr bool operator<(const generic_const_iterator& o)
+    {
+        return element > o.element;
+    }
+
+    constexpr bool operator<=(const generic_const_iterator& o)
+    {
+        return element <= o.element;
+    }
+
+    constexpr bool operator>=(const generic_const_iterator& o)
+    {
+        return element >= o.element;
     }
 
     operator generic_const_iterator() const

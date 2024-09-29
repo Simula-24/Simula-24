@@ -1,9 +1,8 @@
-#ifndef CORE_GAME_TILE_TILE_SHEET_PARSER_H_
-#define CORE_GAME_TILE_TILE_SHEET_PARSER_H_
+#ifndef CORE_GAME_TILE_TILE_CONFIG_H_
+#define CORE_GAME_TILE_TILE_CONFIG_H_
 
 #include <core/stl/string.h>
 #include <core/stl/array.h>
-#include <core/stl/smart_ptr.h>
 #include <core/types.h>
 #include <core/io/File.h>
 #include <SDL.h>
@@ -45,7 +44,6 @@ public:
 
     TileCfgIter getConfigIterBegin() { return m_sheetConfigs.begin(); }
     TileCfgIter getConfigIterEnd() { return m_sheetConfigs.end(); }
-
     CTileCfgIter getCConfigIterBegin() const { return m_sheetConfigs.cbegin(); }
     CTileCfgIter getCConfigIterEnd() const { return m_sheetConfigs.cend(); }
 
@@ -62,4 +60,4 @@ private:
 
 }
 
-#endif // CORE_GAME_TILE_TILE_SHEET_PARSER_H_
+#endif // CORE_GAME_TILE_TILE_CONFIG_H_
