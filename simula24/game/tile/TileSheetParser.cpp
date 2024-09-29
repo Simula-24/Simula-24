@@ -31,18 +31,34 @@ stl::shared_ptr<TileSheet> TileSheetParser::getNextSheet()
     if (m_cfgIter > m_cfgIterEnd)
         return stl::shared_ptr<TileSheet>();
     
-    if(!generateTileCoordinates(*m_cfgIter))
+    auto ts = stl::make_shared<TileSheet>();
+
+    if(!generateTileCoordinates(*m_cfgIter, *ts))
         return stl::shared_ptr<TileSheet>();
 
     if (m_cfgIter <= m_cfgIterEnd)
         ++m_cfgIter;
 
-    return stl::make_shared<TileSheet>(1);
+    return ts;
 }
 
-bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc)
+bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc, TileSheet& dest)
 {
-    printf("hello niga\n");
+    SDL_Rect rect;
+    for (int y = 0; y < tsc.imageHeight; y += tsc.tileHeight)
+    {
+        for (int x = 0; x < tsc.imageWidth; x += tsc.tileWidth)
+        {
+            rect = {
+                .x = x,
+                .y = y,
+                .w = tsc.tileWidth,
+                .h = tsc.tileHeight
+            };
+            dest.addTile(rect);
+        }
+    }
+
     return true;
 }
 

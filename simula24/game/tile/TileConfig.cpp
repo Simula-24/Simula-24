@@ -117,5 +117,6 @@ bool TileConfig::parseConfig(const stl::string& cfg)
         pos = nextnl + 1;
     }
 
+    m_sheetConfigs.push_back(tsc);
     return true;
 }

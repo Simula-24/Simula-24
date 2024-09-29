@@ -22,7 +22,7 @@ public:
 
 private:
 
-    bool generateTileCoordinates(const TileSheetConfig& tsc);
+    bool generateTileCoordinates(const TileSheetConfig& tsc, TileSheet& dest);
 
     TileConfig m_tcfg;
     TileConfig::TileCfgIter m_cfgIter;
