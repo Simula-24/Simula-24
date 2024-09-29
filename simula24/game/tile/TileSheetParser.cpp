@@ -152,5 +152,5 @@ bool TileSheetParser::parseConfig(const stl::string& cfg)
     int nameStart = cfg.find('[');
     int nameEnd = cfg.find(']');
 
-
+    return true;
 }
