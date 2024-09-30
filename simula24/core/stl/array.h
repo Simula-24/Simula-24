@@ -123,11 +123,11 @@ public:
     constexpr T& back() { return m_data.at_m(m_index - 1); }
 
 
-    inline iterator begin() { return iterator(&operator[](0)); }
-    inline iterator end() { return iterator(&operator[](m_index)); }
+    constexpr iterator begin() { return iterator(&operator[](0)); }
+    constexpr iterator end() { return iterator(&operator[](m_index)); }
 
-    inline const_iterator cbegin() const { return const_iterator(&operator[](0)); }
-    inline const_iterator cend()   const { return const_iterator(&operator[](m_index)); }
+    constexpr const_iterator cbegin() const { return const_iterator(&operator[](0)); }
+    constexpr const_iterator cend()   const { return const_iterator(&operator[](m_index)); }
 
 private:
     /// Holds our data. 

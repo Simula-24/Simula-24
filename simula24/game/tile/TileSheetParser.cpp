@@ -1,14 +1,11 @@
-#include "TileSheetParser.h"
-
-#include <game/tile/TileSheet.h>
+#include <game/tile/TileSheetParser.h>
 #include <stdio.h>
-using simula24::TileSheetParser;
-using simula24::TileSheet;
 using simula24::Status;
+using simula24::TileSheet;
+using simula24::TileSheetParser;
 
-
-TileSheetParser::TileSheetParser(SDL_Renderer* r)
-    : m_renderer(r)
+TileSheetParser::TileSheetParser()
+    : m_isGood(false), m_cfgIter(nullptr)
 {
 }
 
@@ -16,141 +13,52 @@ TileSheetParser::~TileSheetParser()
 {
 }
 
-Status TileSheetParser::load(const stl::string& configFileName)
+Status TileSheetParser::loadConfig(const stl::string& name)
 {
-    File config;
-    Status s = config.open(configFileName, File::READ);
-    if (s != Status::OK)
-        return s;
-
-    stl::string contents;
-    contents.resize(config.getSize() + 1);
-
-    config.read(contents.data(), config.getSize());
+    Status stat = m_tcfg.load(name);
+    if (stat == OK)
+    {
+        m_isGood = true;
+        m_cfgIter = m_tcfg.getConfigIterBegin();
+        m_cfgIterEnd = m_tcfg.getConfigIterEnd();
+    }
     
-    contents.setPos(config.getSize());
-    
-    contents += '\0';
-    printf("%s\n",contents.c_str());
-
-    if(!parseConfig(contents))
-        return ERR_INVALID_PARAMETER;
-    return OK;
+    return stat;
 }
 
 stl::shared_ptr<TileSheet> TileSheetParser::getNextSheet()
 {
-    return stl::shared_ptr<TileSheet>();
+    if (m_cfgIter > m_cfgIterEnd)
+        return stl::shared_ptr<TileSheet>();
+    
+    auto ts = stl::make_shared<TileSheet>();
+
+    if(!generateTileCoordinates(*m_cfgIter, *ts))
+        return stl::shared_ptr<TileSheet>();
+
+    if (m_cfgIter <= m_cfgIterEnd)
+        ++m_cfgIter;
+
+    return ts;
 }
 
-bool simula24::TileSheetParser::extractDimensions(const stl::string& source, int& w_out, int& h_out)
+bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc, TileSheet& dest)
 {
-    int pivot = 0;
-    
-    char width[10];
-
-    for (int i = 0; i < source.length(); i++) 
+    SDL_Rect rect;
+    for (int y = 0; y < tsc.imageHeight; y += tsc.tileHeight)
     {
-        if (source[i] == 'x' || source[i] == 'X')
+        for (int x = 0; x < tsc.imageWidth; x += tsc.tileWidth)
         {
-            pivot = i;
-            break;
+            rect = {
+                .x = x,
+                .y = y,
+                .w = tsc.tileWidth,
+                .h = tsc.tileHeight
+            };
+            dest.addTile(rect);
         }
     }
 
-    strncpy(width, source.c_str(), pivot);
-    width[pivot] = '\0';
-    
-    w_out = atoi(width);
-    h_out = atoi(source.c_str() + pivot + 1);
-
-    printf("%d x %d\n", w_out, h_out);
     return true;
 }
 
-bool TileSheetParser::parseConfig2(const stl::string& cfg)
-{
-    TileSheetConfig tsc{};
-    enum ParseStatus
-    {
-        NONE,
-        PARSING_NAME,
-        PARSING_DIMENSIONS_TILE_SIZE,
-        PARSING_DIMENSIONS_IMAGE_SIZE
-    };
-
-    ParseStatus ps = NONE;
-    
-    const char* cur = cfg.c_str();
-    stl::string dimensionsStr;
-    int nameStart = 0;
-
-    while(cur != &cfg.back())
-    {
-        if (*cur == '[')
-        {
-            ps = PARSING_NAME;
-            cur++;
-            nameStart = (cur - cfg.c_str());
-            continue;
-        }
-
-        if (*cur == ']')
-        {
-            ps = NONE;
-            tsc.filename = cfg.substr(nameStart, (cur - cfg.c_str()));
-            tsc.filename += '\0';
-            cur++;
-            continue;
-        }
-
-        if (ps == PARSING_NAME)
-        {
-            cur++; 
-            continue;
-        }
-        else if (ps == PARSING_DIMENSIONS_TILE_SIZE || ps == PARSING_DIMENSIONS_IMAGE_SIZE)
-        {
-            if (*cur == '\n' || *cur == '\r')
-            {
-                dimensionsStr += '\0';
-                if(ps == PARSING_DIMENSIONS_IMAGE_SIZE)
-                    extractDimensions(dimensionsStr, tsc.imageWidth, tsc.imageHeight);
-                else if (ps == PARSING_DIMENSIONS_TILE_SIZE)
-                    extractDimensions(dimensionsStr, tsc.tileWidth, tsc.tileHeight);
-                ps = NONE;
-                dimensionsStr.setPos(0);
-            }
-            else
-                dimensionsStr += *cur;
-        }
-        else if (strncmp(cur, "tile_size=", 10) == 0)
-        {
-            ps = PARSING_DIMENSIONS_TILE_SIZE;
-            cur += 10;
-            continue;
-        }
-        
-        else if (strncmp(cur, "size=", 5) == 0)
-        {
-            ps = PARSING_DIMENSIONS_IMAGE_SIZE;
-            cur += 5;
-            continue;
-        }
-        cur++;
-    }
-
-    printf("%s\n", tsc.filename.c_str());
-
-    return true;
-}
-
-bool TileSheetParser::parseConfig(const stl::string& cfg)
-{
-    TileSheetConfig tsc{};
-
-    int nameStart = cfg.find('[');
-    int nameEnd = cfg.find(']');
-
-    return true;
-}

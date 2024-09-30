@@ -1,57 +1,37 @@
-#ifndef CORE_GAME_TILE_TILE_SHEET_PARSER_H_
-#define CORE_GAME_TILE_TILE_SHEET_PARSER_H_
+#ifndef GAME_TILE_TILE_SHEET_PARSER_H_
+#define GAME_TILE_TILE_SHEET_PARSER_H_
 
+#include "TileConfig.h"
 #include <core/stl/string.h>
-#include <core/stl/array.h>
 #include <core/stl/smart_ptr.h>
-#include <core/types.h>
-#include <core/io/File.h>
-#include <SDL.h>
-
-#include <game/tile/TileSheet.h>
 
 namespace simula24
 {
 
-/// @brief Represents data found in tileset.inf
-struct TileSheetConfig
-{
-    stl::string filename;
-    int imageHeight;
-    int imageWidth;
-    int tileHeight;
-    int tileWidth;
-};
-
-///
-/// @brief
-///     Handles parsing of a tile sheet + its config
-///
-/// NOTE: we might need a texture manager class 
-///       due to how SDL_Renderer is shared/used
-/// 
 class TileSheetParser
 {
 public:
-
-    TileSheetParser(SDL_Renderer* );
+    TileSheetParser();
     ~TileSheetParser();
 
-    Status load(const stl::string& configFileName);
+    Status loadConfig(const stl::string& name);
 
     stl::shared_ptr<TileSheet> getNextSheet();
 
-private:
-    bool extractDimensions(const stl::string& source, int& w_out, int& h_out);
-    bool parseConfig2(const stl::string& cfg);
-    bool parseConfig(const stl::string& cfg);
+    bool good() const { return m_isGood; }
 
-    stl::array<TileSheetConfig> m_sheetConfigs;
-    // TODO: this should be placed in TextureManager
-    //       when it is constructed
-    SDL_Renderer* m_renderer;
+private:
+
+    bool generateTileCoordinates(const TileSheetConfig& tsc, TileSheet& dest);
+
+    TileConfig m_tcfg;
+    TileConfig::TileCfgIter m_cfgIter;
+    TileConfig::TileCfgIter m_cfgIterEnd;
+
+    bool m_isGood;
 };
 
-}
+} // simula24
 
-#endif // CORE_GAME_TILE_TILE_SHEET_PARSER_H_
+
+#endif // GAME_TILE_TILE_SHEET_PARSER_H_

@@ -17,7 +17,7 @@ namespace simula24
 class TileSheet
 {
 public:
-    TileSheet(size_t numTiles);
+    TileSheet();
     ~TileSheet();
 
     const SDL_Rect& getTile(size_t id) const;
@@ -29,6 +29,7 @@ public:
             m_sheet = texture;
     }
 
+    size_t getNumTiles() { return m_tiles.size(); }
 
 private:
 

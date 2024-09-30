@@ -58,6 +58,27 @@ struct generic_iterator
         return element != o.element;
     }
 
+    constexpr bool operator>(const generic_iterator& o)
+    {
+        return element > o.element;
+    }
+
+    constexpr bool operator<(const generic_iterator& o)
+    {
+        return element < o.element;
+    }
+
+    constexpr bool operator<=(const generic_iterator& o)
+    {
+        return element <= o.element;
+    }
+
+    constexpr bool operator>=(const generic_iterator& o)
+    {
+        return element >= o.element;
+    }
+
+
     operator generic_iterator() const
     {
         return generic_iterator(element);
@@ -74,7 +95,7 @@ private:
 template <class T, bool linked_list = false>
 struct generic_const_iterator
 {
-    generic_const_iterator(T* elem) : element(elem) {}
+    generic_const_iterator(const T* elem) : element(elem) {}
     generic_const_iterator() {}
     generic_const_iterator(const generic_const_iterator& o) : element(o.element) {}
 
@@ -113,12 +134,32 @@ struct generic_const_iterator
         return element != o.element;
     }
 
+    constexpr bool operator>(const generic_const_iterator& o)
+    {
+        return element > o.element;
+    }
+
+    constexpr bool operator<(const generic_const_iterator& o)
+    {
+        return element > o.element;
+    }
+
+    constexpr bool operator<=(const generic_const_iterator& o)
+    {
+        return element <= o.element;
+    }
+
+    constexpr bool operator>=(const generic_const_iterator& o)
+    {
+        return element >= o.element;
+    }
+
     operator generic_const_iterator() const
     {
         return iterator(element);
     }
 private:
-    T* element = nullptr;
+    const T* element = nullptr;
 };
 
 

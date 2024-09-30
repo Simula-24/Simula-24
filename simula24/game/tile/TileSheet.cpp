@@ -3,10 +3,9 @@
 using simula24::TileSheet;
 
 
-TileSheet::TileSheet(size_t numTiles)
+TileSheet::TileSheet()
     : m_sheet(nullptr)
 {
-    m_tiles.resize(numTiles);
 }
 
 TileSheet::~TileSheet()
