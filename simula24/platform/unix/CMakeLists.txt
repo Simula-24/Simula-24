@@ -1,5 +1,6 @@
 set(UNIX_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/seh.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 
     PARENT_SCOPE
 )

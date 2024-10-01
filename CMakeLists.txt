@@ -27,7 +27,7 @@ add_subdirectory("simula24")
 add_executable(simula24
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
-)
+ "simula24/platform/unix/unixplatformtypes.h")
 
 if(WIN32)
     target_include_directories(simula24 PRIVATE
