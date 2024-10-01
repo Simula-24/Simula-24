@@ -50,11 +50,11 @@ struct displaced_pair
         displacement = o.displacement;
         return *this;
     }
+    ~displaced_pair() {
+    }
 private:
     DisplacementType displacement;
 
-    ~displaced_pair() {
-    }
 
 };
 #pragma pack(pop)
