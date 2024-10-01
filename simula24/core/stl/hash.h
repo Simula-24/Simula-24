@@ -17,7 +17,6 @@ class hash
 public:
     static uint32_t run()
     {
-        static_assert(false);
     }
 };
 
