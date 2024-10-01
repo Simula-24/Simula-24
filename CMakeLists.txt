@@ -27,7 +27,7 @@ add_subdirectory("simula24")
 add_executable(simula24
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
-)
+ "simula24/platform/unix/unixplatformtypes.h")
 
 if(WIN32)
     target_include_directories(simula24 PRIVATE
@@ -46,8 +46,9 @@ if(WIN32)
 elseif(UNIX)
     find_package(SDL2 REQUIRED)
     target_include_directories(simula24 PRIVATE ${SDL2_INCLUDE_DIRS})
+    target_compile_options(simula24 PRIVATE "-ggdb")
     set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} ${SDL2_LIBRARIES} "ncursesw" "SDL2_image")
-
+    
 endif()
 
 
