@@ -67,6 +67,11 @@ void File::close()
 size_t File::getSize() const
 {
     assert(m_isOpen == true);
+    int cursor = ftell(m_file);
+    fseek(m_file, 0L, SEEK_END);
+    int size = ftell(m_file);
+    fseek(m_file, cursor, SEEK_SET);
+    return (size_t)(size);
 }
 
 Status File::read(void* out, size_t _sz_of_1, size_t n, size_t* bytesRead)

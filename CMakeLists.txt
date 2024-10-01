@@ -46,7 +46,7 @@ if(WIN32)
 elseif(UNIX)
     find_package(SDL2 REQUIRED)
     target_include_directories(simula24 PRIVATE ${SDL2_INCLUDE_DIRS})
-    target_compile_options(simula24 PRIVATE "$<$<CONFIG:DEBUG>:${-ggdb}>")
+    target_compile_options(simula24 PRIVATE "-ggdb")
     set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} ${SDL2_LIBRARIES} "ncursesw" "SDL2_image")
     
 endif()
