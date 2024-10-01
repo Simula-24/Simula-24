@@ -81,7 +81,8 @@ Status File::read(void* out, size_t _sz_of_1, size_t n, size_t* bytesRead)
         return ERR_FILE_IO;
     }
 
-    *bytesRead = bytes;
+    if (bytesRead)
+        *bytesRead = bytes;
 
     return OK;
 }
@@ -97,8 +98,8 @@ Status File::read(void* out, size_t numBytes, size_t* bytesRead)
         *bytesRead = 0;
         return ERR_FILE_IO;
     }
-
-    *bytesRead = bytes;
+    if(bytesRead)
+        *bytesRead = bytes;
 
     return OK;
 }
