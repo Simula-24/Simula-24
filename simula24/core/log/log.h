@@ -191,8 +191,10 @@ class DebugLoggers
 public:
     static void init();
     static stl::shared_ptr<Logger>& getEngineLogger() { return m_engineLogger; }
+    static stl::shared_ptr<Logger>& getClientLogger() { return m_clientLogger; }
 private:
     static stl::shared_ptr<Logger> m_engineLogger;
+    static stl::shared_ptr<Logger> m_clientLogger;
 };
 
 } // simula24
@@ -202,9 +204,12 @@ private:
 #define ENGINE_DEBUG(...)      simula24::DebugLoggers::getEngineLogger()->debug(__VA_ARGS__) 
 #define ENGINE_WARNING(...)    simula24::DebugLoggers::getEngineLogger()->warning(__VA_ARGS__)     
 #define ENGINE_ERROR(...)      simula24::DebugLoggers::getEngineLogger()->error(__VA_ARGS__) 
-#define ENGINE_CRITICAL(...)   simula24::DebugLoggers::getEngineLogger()->critical(__VA_ARGS__)     
+#define ENGINE_CRITICAL(...)   simula24::DebugLoggers::getEngineLogger()->critical(__VA_ARGS__)
 
-
-
+#define CLIENT_INFO(...)       simula24::DebugLoggers::getClientLogger()->info(__VA_ARGS__) 
+#define CLIENT_DEBUG(...)      simula24::DebugLoggers::getClientLogger()->debug(__VA_ARGS__) 
+#define CLIENT_WARNING(...)    simula24::DebugLoggers::getClientLogger()->warning(__VA_ARGS__)     
+#define CLIENT_ERROR(...)      simula24::DebugLoggers::getClientLogger()->error(__VA_ARGS__) 
+#define CLIENT_CRITICAL(...)   simula24::DebugLoggers::getClientLogger()->critical(__VA_ARGS__)
 
 #endif //SIMULA24_CORE_LOG_LOG_H_
