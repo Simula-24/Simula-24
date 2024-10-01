@@ -10,9 +10,17 @@ bool AppWindowMgr::createWindow(U32 name, const stl::string& title, int w, int h
     AppWindow nwin;
     if (nwin.create(title, w, h, x, y))
     {
-        //m_windows.insert({ name, nwin });
+        m_windows.insert({ name, nwin });
         return true;
     }
 
     return false;
+}
+
+AppWindow* AppWindowMgr::getAppWindow(U32 name)
+{
+    auto iter = m_windows.find(name);
+    if (iter != m_windows.end())
+        return &iter->second;
+    return nullptr;
 }

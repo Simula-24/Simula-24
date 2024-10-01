@@ -10,7 +10,7 @@
 #include <game/tile/TileSheetParser.h>
 
 #include <graphics/Graphics.h>
-
+#include <graphics/AppWindowMgr.h>
 using namespace simula24;
 
 int main(int argc, char** argv)
@@ -22,7 +22,6 @@ int main(int argc, char** argv)
     Graphics::get().init();
 
     SDL_Window* mainWindow = SDL_CreateWindow("Simula 24", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
-
     if (!mainWindow)
     {
         ENGINE_ERROR("Failed to create window: %s", SDL_GetError());
@@ -56,7 +55,7 @@ int main(int argc, char** argv)
     {
         while (SDL_PollEvent(&event))
         {
-            if (event.type == SDL_QUIT)
+            if (event.type == SDL_QUIT) 
             {
                 shouldQuit = true;
                 break;

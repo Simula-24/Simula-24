@@ -39,6 +39,14 @@ bool AppWindow::create(const stl::string& name, int w, int h, int x, int y)
         return false;
     }
 
+    m_dimensions = {
+        .x = x,
+        .y = y,
+        .w = w,
+        .h = h
+    };
+    m_name = name;
+
     return true;
 
 }

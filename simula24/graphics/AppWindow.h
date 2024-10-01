@@ -20,19 +20,33 @@ public:
     AppWindow() 
         : m_window(nullptr), m_renderer(nullptr) {}
     
+    AppWindow(const AppWindow&) = default;
+    AppWindow& operator=(const AppWindow&) = default;
+
     AppWindow(AppWindow&&);
     AppWindow& operator=(AppWindow&&);
 
+    ~AppWindow() { destroy(); }
     
-    bool create(const stl::string& name, int w, int h, int x, int y);
+    bool create(const stl::string& name, int w, int h,
+        int x = SDL_WINDOWPOS_UNDEFINED, 
+        int y = SDL_WINDOWPOS_UNDEFINED);
+
     void destroy();
 
-
-
+    __forceinline void clear() { SDL_RenderClear(m_renderer); }
+    
+    __forceinline void copyTexture(SDL_Texture* tex, const SDL_Rect* source, const SDL_Rect* dest = nullptr) { SDL_RenderCopy(m_renderer, tex, source, dest); }
+    
+    __forceinline void present() { SDL_RenderPresent(m_renderer); }
 private:
     SDL_Window* m_window;
+    
     SDL_Renderer* m_renderer;
-
+    
+    SDL_Rect m_dimensions;
+    
+    stl::string m_name;
 };
 
 
