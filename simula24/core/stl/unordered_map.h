@@ -5,7 +5,7 @@
 #include <simula24/core/stl/copy_on_write.h>
 #include <simula24/core/stl/iterator.h>
 #include <simula24/core/stl/hash.h>
-
+#include <cassert>
 #include <new>
 namespace stl
 {

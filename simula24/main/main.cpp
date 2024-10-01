@@ -29,7 +29,6 @@ int main(int argc, char** argv)
         SDL_Quit();
         return -1;
     }
-
     SDL_Renderer* r = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
 
     TileSheetParser tsp;
