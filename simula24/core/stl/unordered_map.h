@@ -9,8 +9,14 @@
 #include <new>
 namespace stl
 {
+
 template <class U, class T, class H>
 class unordered_map;
+
+template <class U>
+class unordered_map_iterator;
+
+constexpr int UMAP_EMPTY_SLOT = -1;
 
 ///
 /// @brief
@@ -20,11 +26,16 @@ class unordered_map;
 template <class K, class V, typename DisplacementType = int32_t>
 struct displaced_pair
 {
+    template <class I, class J, class T>
+    friend class unordered_map;
+
+    template <class I>
+    friend class unordered_map_iterator;
+
     K first;
     V second;
-    DisplacementType displacement;
     displaced_pair(const K& _k, const V& _v)
-        : first(_k), second(_v), displacement(-1)
+        : first(_k), second(_v), displacement(UMAP_EMPTY_SLOT)
     {
     }
 
@@ -36,9 +47,11 @@ struct displaced_pair
     {
         first = o.first;
         second = o.second;
-
+        displacement = o.displacement;
         return *this;
     }
+private:
+    DisplacementType displacement;
 
 
 
@@ -58,10 +71,10 @@ public:
     using hashing_function = Hash;
     using kv_map_t = stl::displaced_pair<K, V>;
 
-    using const_iterator = stl::generic_const_iterator<kv_map_t>;
-    using iterator = stl::generic_iterator<kv_map_t>;
+    using const_iterator = stl::unordered_map_iterator<const kv_map_t>;
+    using iterator = stl::unordered_map_iterator<kv_map_t>;
 
-    unordered_map() : m_data{}, m_element_count(0), m_size(1) { reserve(1); }
+    unordered_map() : m_data{}, m_size(1), m_element_count(0) { reserve(1); }
     ~unordered_map();
     /// Insert new value
     void insert(const kv_map_t& nkv);
@@ -85,7 +98,7 @@ public:
         int idx = index_of(key);
         if (idx == -1) return end();
 
-        return iterator(&m_data.at_m(idx));
+        return new_iterator(&m_data.at_m(idx));
     }
 
     /// returns an iterator containing key's value
@@ -95,7 +108,7 @@ public:
         int idx = index_of(key);
         if (idx == -1) return cend();
 
-        return const_iterator(&m_data.at(idx));
+        return new_const_iterator(&m_data.at(idx));
     }
 
     ///
@@ -129,21 +142,30 @@ public:
     void reserve(size_t n);
 
 
-    inline iterator begin() { return iterator(&m_data.at_m(0)); }
+    inline iterator begin() { return new_iterator(&m_data.at_m(0)); }
 
-    inline iterator end() { return iterator(&m_data.at_m(m_element_count)); }
+    inline iterator end() { return new_iterator(&m_data.at_m(m_size)); }
 
-    inline const_iterator cbegin() const { return const_iterator(&m_data.at(0)); }
+    inline const_iterator cbegin() const { return new_const_iterator(&m_data.at(0)); }
 
-    inline const_iterator cend() const { return const_iterator(&m_data.at(m_element_count)); }
+    inline const_iterator cend() const { return new_const_iterator(&m_data.at(m_element_count)); }
 
+    constexpr unordered_map_iterator<const kv_map_t> new_const_iterator(const kv_map_t* target) const
+    {
+        return unordered_map_iterator<const kv_map_t>(target, &m_data.at(0), &m_data.at(m_size));
+    }
+
+    constexpr unordered_map_iterator<kv_map_t> new_iterator(kv_map_t* target)
+    {
+        return unordered_map_iterator<kv_map_t>(target, &m_data.at(0), &m_data.at(m_size));
+    }
     /// get the index of 'key'. 
     /// @returns -1 on failure
     int index_of(const K& key) const;
-public:
-    copy_on_write<kv_map_t> m_data;
+
 private:
 
+    copy_on_write<kv_map_t> m_data;
     size_t m_size;
     size_t m_element_count;
     void swap(uint32_t old_index, uint32_t new_index, uint32_t probelen);
@@ -154,16 +176,6 @@ private:
 template<class K, class V, class Hash>
 unordered_map<K, V, Hash>::~unordered_map()
 {
-    /*  for (int i = 0; i < m_element_count; i++)
-      {
-          auto* p = m_data.at_pc(i);
-          if (p->displacement == -1)
-              continue;
-          if constexpr (!std::is_trivially_destructible_v<V>)
-              p->second.~V();
-          if constexpr (!std::is_trivially_destructible_v<K>)
-              p->first.~K();
-      }*/
 }
 
 template<class K, class V, class Hash>
@@ -182,7 +194,7 @@ void unordered_map<K, V, Hash>::insert(const kv_map_t& nkv)
     {
 
         // if the object does not exist, emplcae it here
-        if (m_data.at(index).displacement == -1)
+        if (m_data.at(index).displacement == UMAP_EMPTY_SLOT)
         {
             auto* _new = &m_data.at_m(index);
             _new->first = nkv.first;
@@ -226,12 +238,11 @@ V& unordered_map<K, V, Hash>::at(const K& key)
 {
     uint32_t hash = hashing_function::run(key);
     unsigned int index = hash % m_size;
-    unsigned int displacement = 0;
 
     for (unsigned int i = 0; i < m_size; i++)
     {
-        assert(m_data.at(index).displacement != -1);
-        if (m_data.at(index).displacement != -1 && m_data.at(index).first == key)
+        assert(m_data.at(index).displacement != UMAP_EMPTY_SLOT);
+        if (m_data.at(index).displacement != UMAP_EMPTY_SLOT && m_data.at(index).first == key)
             return m_data.at_m(index).second;
 
         index = (index + 1) % m_size;
@@ -287,7 +298,7 @@ size_t unordered_map<K, V, Hash>::erase(const K& k)
         idx = (idx + 1) % m_size;
         ++iters;
     }
-    target->displacement = -1;
+    target->displacement = UMAP_EMPTY_SLOT;
     --m_element_count;
     return 1;
 }
@@ -309,7 +320,7 @@ void unordered_map<K, V, Hash>::resize(size_t n)
 
     // mark all slots as overwrite-able
     for (size_t i = 0; i < n; i++)
-        m_data.at_m(i).displacement = -1;
+        m_data.at_m(i).displacement = UMAP_EMPTY_SLOT;
 
     for (size_t i = 0; i < old_size; i++)
         insert(copy.at(i));
@@ -328,7 +339,7 @@ void unordered_map<K, V, Hash>::reserve(size_t n)
     m_size = n;
     // mark all slots as overwriteable
     for (size_t i = 0; i < n; i++)
-        m_data.at_m(i).displacement = -1;
+        m_data.at_m(i).displacement = UMAP_EMPTY_SLOT;
 
 }
 
@@ -338,7 +349,7 @@ int unordered_map<K, V, Hash>::index_of(const K& key) const
     uint32_t index = hashing_function::run(key) % m_size;
     for (int i = 0; i < m_element_count; i++)
     {
-        if (m_data.at(index).displacement != -1 && m_data.at(index).first == key)
+        if (m_data.at(index).displacement != UMAP_EMPTY_SLOT && m_data.at(index).first == key)
             return index;
         index = (index + 1) % m_size;
 
@@ -358,13 +369,86 @@ void unordered_map<K, V, Hash>::swap(uint32_t old_index, uint32_t new_index, uin
 
     old->first = _new->first;
     old->second = _new->second;
-    old->displacement = _new->displacement == -1 ? -1 : _new->displacement;
+    old->displacement = _new->displacement == UMAP_EMPTY_SLOT ? UMAP_EMPTY_SLOT : _new->displacement;
 
     _new->first = temp.first;
     _new->second = temp.second;
     _new->displacement = probelen;
 }
 
+///
+/// @brief
+///     Custom Iterator for stl::unordered_map
+/// 
+///     This iterator will skip over any EMPTY_SLOTs
+///     
+template <class T>
+class unordered_map_iterator
+{
+public:
+    constexpr unordered_map_iterator(T* elem, const T* start, const T* end) 
+        : m_element(elem), m_start(start), m_end(end) 
+    { 
+        find_start(); 
+    }
+    
+    constexpr unordered_map_iterator() 
+        : m_element(nullptr), m_start(nullptr), m_end(nullptr) {}
+    
+    constexpr unordered_map_iterator(const unordered_map_iterator& o)
+        : m_element(o.m_element), m_start(o.m_start), m_end(o.m_end) {}
+    
+    unordered_map_iterator& operator++()
+    {
+        while (++m_element < m_end)
+        {
+            if (m_element->displacement != UMAP_EMPTY_SLOT)
+                break;
+        }
+
+        return *this;
+    }
+
+    unordered_map_iterator& operator--()
+    {
+        while (--m_element > m_start)
+        {
+            if (m_element->displacement != UMAP_EMPTY_SLOT)
+                break;
+        }
+
+        return *this;
+    }
+
+    constexpr T& operator*() { return *m_element; }
+    constexpr T* operator->() { return m_element; }
+
+    inline bool operator==(const unordered_map_iterator& o) const
+    {
+        return m_element == o.m_element;
+    }
+
+    inline bool operator!=(const unordered_map_iterator& o) const
+    {
+        return m_element != o.m_element;
+    }
+
+    operator unordered_map_iterator() const
+    {
+        return unordered_map_iterator(m_element);
+    }
+private:
+
+    void find_start()
+    {
+        while (m_element->displacement == UMAP_EMPTY_SLOT && m_element < m_end)
+            ++m_element;
+    }
+
+    T* m_element;
+    const T* m_start;
+    const T* m_end;
+};
 
 } // simula24
 
