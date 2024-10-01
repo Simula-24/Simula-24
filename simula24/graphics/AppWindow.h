@@ -34,11 +34,11 @@ public:
 
     void destroy();
 
-    __forceinline void clear() { SDL_RenderClear(m_renderer); }
+    inline void clear() { SDL_RenderClear(m_renderer); }
     
-    __forceinline void copyTexture(SDL_Texture* tex, const SDL_Rect* source, const SDL_Rect* dest = nullptr) { SDL_RenderCopy(m_renderer, tex, source, dest); }
+    inline void copyTexture(SDL_Texture* tex, const SDL_Rect* source, const SDL_Rect* dest = nullptr) { SDL_RenderCopy(m_renderer, tex, source, dest); }
     
-    __forceinline void present() { SDL_RenderPresent(m_renderer); }
+    inline void present() { SDL_RenderPresent(m_renderer); }
 
     // TODO: delete after texmanager
     inline SDL_Renderer* getRenderer() { return m_renderer; }

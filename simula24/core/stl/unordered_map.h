@@ -249,7 +249,6 @@ V& unordered_map<K, V, Hash>::at(const K& key)
         index = (index + 1) % m_size;
 
     }
-    abort();
 }
 
 template<class K, class V, class Hash>
