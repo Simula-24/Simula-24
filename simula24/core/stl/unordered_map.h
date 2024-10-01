@@ -53,7 +53,8 @@ struct displaced_pair
 private:
     DisplacementType displacement;
 
-
+    ~displaced_pair() {
+    }
 
 };
 #pragma pack(pop)

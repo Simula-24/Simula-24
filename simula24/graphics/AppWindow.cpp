@@ -31,7 +31,7 @@ bool AppWindow::create(const stl::string& name, int w, int h, int x, int y)
         return false;
     }
 
-    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
 
     if (!m_renderer)
     {
@@ -46,17 +46,23 @@ bool AppWindow::create(const stl::string& name, int w, int h, int x, int y)
         .h = h
     };
     m_name = name;
-
+    SDL_ShowWindow(m_window);
     return true;
 
 }
 
 void AppWindow::destroy()
 {
-    // SDL does null checks for us
-    SDL_DestroyWindow(m_window);
-    m_window = nullptr;
-
+    if (m_window)
+    {
+        SDL_DestroyWindow(m_window);
+        m_window = nullptr;
+    }
+    
+    if (m_renderer)
+    {
     SDL_DestroyRenderer(m_renderer);
     m_renderer = nullptr;
+
+    }
 }

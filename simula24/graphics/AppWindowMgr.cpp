@@ -1,7 +1,6 @@
 #include "AppWindowMgr.h"
 
 #include <SDL.h>
-
 using simula24::AppWindow;
 using simula24::AppWindowMgr;
 
@@ -10,7 +9,7 @@ bool AppWindowMgr::createWindow(U32 name, const stl::string& title, int w, int h
     AppWindow nwin;
     if (nwin.create(title, w, h, x, y))
     {
-        m_windows.insert({ name, nwin });
+        m_windows[name] = AppWindow{ stl::move(nwin) };
         return true;
     }
 

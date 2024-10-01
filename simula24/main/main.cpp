@@ -20,15 +20,13 @@ int main(int argc, char** argv)
     ENGINE_INFO("SEH Handler set");
 
     Graphics::get().init();
-
-    SDL_Window* mainWindow = SDL_CreateWindow("Simula 24", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
-    if (!mainWindow)
-    {
-        ENGINE_ERROR("Failed to create window: %s", SDL_GetError());
-        SDL_Quit();
+    AppWindowMgr wmgr;
+    AppWindow* mainWindow = nullptr;
+    if (!wmgr.createWindow('id', "Simula 24", 800, 600))
         return -1;
-    }
-    SDL_Renderer* r = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
+
+    mainWindow = wmgr.getAppWindow('id');
+    SDL_Renderer* r = mainWindow->getRenderer();
 
     TileSheetParser tsp;
     if (tsp.loadConfig("../data/tileset/cp437/tileset.inf") != OK)
