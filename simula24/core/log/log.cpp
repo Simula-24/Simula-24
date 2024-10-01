@@ -8,11 +8,14 @@
 using simula24::Logger;
 
 stl::shared_ptr<Logger> simula24::DebugLoggers::m_engineLogger;
+stl::shared_ptr<Logger> simula24::DebugLoggers::m_clientLogger;
 
 void simula24::DebugLoggers::init()
 {
     m_engineLogger = stl::make_shared<Logger>("ENGINE");
     m_engineLogger->setSink<ConsoleSink>();
+    m_clientLogger = stl::make_shared<Logger>("CLIENT");
+    m_clientLogger->setSink<ConsoleSink>();
 }
 
 static const char* LogNameMap[5] =

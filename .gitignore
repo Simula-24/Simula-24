@@ -17,7 +17,7 @@ out
 build
 *.vcx*
 *.sln
-
+.vscode
 thirdparty/pdcurses/Debug
 thirdparty/pdcurses/*.dir
 thirdparty/pdcurses/Release
