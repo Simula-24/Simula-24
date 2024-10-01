@@ -19,7 +19,7 @@ class AppWindowMgr
 public:
 
     AppWindowMgr() {}
-
+    ~AppWindowMgr();
     bool createWindow(U32 id, const stl::string& title, int w, int h, 
             int x = SDL_WINDOWPOS_UNDEFINED, int y = SDL_WINDOWPOS_UNDEFINED);
     AppWindow* getAppWindow(U32 id);

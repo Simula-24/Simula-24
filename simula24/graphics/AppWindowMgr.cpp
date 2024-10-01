@@ -4,6 +4,14 @@
 using simula24::AppWindow;
 using simula24::AppWindowMgr;
 
+AppWindowMgr::~AppWindowMgr()
+{
+    for (auto& i : m_windows)
+    {
+        i.second.~AppWindow();
+    }
+}
+
 bool AppWindowMgr::createWindow(U32 name, const stl::string& title, int w, int h, int x, int y)
 {
     AppWindow nwin;
