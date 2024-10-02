@@ -33,7 +33,7 @@ public:
         : m_current_size(size), m_idx(0) 
     {
         m_heap.resize(size);
-        for (size_t i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
             m_heap.at_m(i).priority = EMPTY_CHILD;
     }
 
@@ -52,6 +52,11 @@ public:
         if (m_idx == 0)
             return {};
         m_idx--;
+        if (m_idx == 0)
+        {
+            return m_heap.at(m_idx);
+        }
+
         std::swap(m_heap.at_m(0), m_heap.at_m(m_idx));
         sift_down(0);
         pq_pair p = m_heap.at(m_idx);
@@ -128,7 +133,7 @@ private:
     }
 
     size_t m_current_size;
-    size_t m_idx;
+    I32 m_idx;
     stl::copy_on_write<pq_pair> m_heap;
 };
 
