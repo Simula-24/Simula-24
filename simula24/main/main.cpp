@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 
         SDL_RenderClear(r);
         for(int i = 0; i < sheet->getNumTiles(); i++)
-            SDL_RenderCopy(r, image, &sheet->getTile(46), &sheet->getTile(i));
+            SDL_RenderCopy(r, image, &sheet->getTile(219), &sheet->getTile(i));
 
         SDL_RenderPresent(r);
     }
