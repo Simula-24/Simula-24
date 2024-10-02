@@ -27,7 +27,8 @@ add_subdirectory("simula24")
 add_executable(simula24
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
- "simula24/platform/unix/unixplatformtypes.h")
+    "simula24/core/stl/priority_queue.h"
+ "simula24/core/stl/max_heap.h")
 
 if(WIN32)
     target_include_directories(simula24 PRIVATE

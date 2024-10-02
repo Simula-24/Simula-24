@@ -11,6 +11,7 @@
 
 #include <graphics/Graphics.h>
 #include <graphics/AppWindowMgr.h>
+#include <core/stl/priority_queue.h>
 using namespace simula24;
 
 int main(int argc, char** argv)
@@ -18,7 +19,7 @@ int main(int argc, char** argv)
     DebugLoggers::init();
     setSEHHandler();
     ENGINE_INFO("SEH Handler set");
-
+    
     Graphics::get().init();
     AppWindowMgr wmgr;
     AppWindow* mainWindow = nullptr;
