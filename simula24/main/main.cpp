@@ -13,6 +13,8 @@
 #include <graphics/AppWindowMgr.h>
 #include <graphics/TextureManager.h>
 #include <core/stl/priority_queue.h>
+#include <game/map/ObjectMap.h>
+#include <game/object/ObjectTable.h>
 using namespace simula24;
 
 int main(int argc, char** argv)
@@ -37,6 +39,26 @@ int main(int argc, char** argv)
 
     SDL_Texture* image = mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
 
+
+    ObjectMap om(80, 60);
+    ObjectTable ot;
+    
+    int f = ot.insert("ferrite_wall", 219, false);
+    printf("%d\n", ot.getTileId(f));
+    om.set(1, 1, f);
+    om.set(2, 1, f);
+    om.set(3, 1, f);
+    om.set(4, 1, f);
+    om.set(4, 2, f);
+    om.set(4, 3, f);
+    om.set(4, 4, f);
+    om.set(3, 4, f);
+    om.set(2, 4, f);
+    om.set(1, 4, f);
+    om.set(1, 3, f);
+    om.set(1, 2, f);
+
+
     SDL_Event event;
     bool shouldQuit = false;
     while (!shouldQuit)
@@ -50,10 +72,22 @@ int main(int argc, char** argv)
             }
         }
 
-        mainWindow->clear();
-        for(int i = 0; i < sheet->getNumTiles(); i++)
-            mainWindow->copyTexture(image, &sheet->getTile(219), &sheet->getTile(i));
+        for (int i = 0; i < 80; i++)
+        {
+            for (int j = 0; j < 60; j++)
+            {
+                SDL_Rect g;
+                g.w = 10;
+                g.h = 10;
+                g.y = i + (10 * i);
+                g.x = j + (10 * j);
+                if (om.get(i, j) != -1)
+                {
+                    mainWindow->copyTexture(image, &sheet->getTile(ot.getTileId(om.get(i,j))), &g);
+                }
+            }
 
+        }
         mainWindow->present();
     }
 

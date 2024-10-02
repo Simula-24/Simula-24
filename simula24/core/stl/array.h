@@ -47,7 +47,7 @@ public:
     /// Fill with T
     void fill(T value)
     {
-        auto _end = m_data.get_num_data();
+        auto _end = m_data.get_size();
         for (size_t i = 0; i < _end; i++)
         {
             m_data.at_m(i) = value;
@@ -56,7 +56,7 @@ public:
 
     void fill_remaining(T value)
     {
-        auto _end = m_data.get_num_data();
+        auto _end = m_data.get_size();
 
         for (size_t i = m_index; i < _end; i++)
         {
@@ -113,7 +113,7 @@ public:
 
 
     constexpr size_t size() const { return m_index; }
-    constexpr size_t max_size() const { return m_data.get_num_data(); }
+    constexpr size_t max_size() const { return m_data.get_size(); }
 
 
     constexpr const T& front() const { return m_data.at(0); }
