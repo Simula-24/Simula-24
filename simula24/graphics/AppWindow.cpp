@@ -6,15 +6,21 @@ using simula24::AppWindow;
 
 AppWindow::AppWindow(AppWindow&& other)
     : m_window(std::exchange(other.m_window, nullptr)),
-    m_renderer(std::exchange(other.m_renderer, nullptr))
+    m_renderer(std::exchange(other.m_renderer, nullptr)),
+    m_texManager(std::move(other.m_texManager)),
+    m_dimensions(std::move(other.m_dimensions)),
+    m_name(std::move(other.m_name))
 {
-    
+
 }
 
 AppWindow& AppWindow::operator=(AppWindow&& other)
 {
     m_window   = std::exchange(other.m_window, nullptr);
     m_renderer = std::exchange(other.m_renderer, nullptr);
+    m_texManager = std::move(other.m_texManager);
+    m_dimensions = std::move(other.m_dimensions);
+    m_name = std::move(other.m_name);
     return *this;
 }
 
@@ -46,7 +52,11 @@ bool AppWindow::create(const stl::string& name, int w, int h, int x, int y)
         .h = h
     };
     m_name = name;
+
+    m_texManager.setRenderer(m_renderer);
+    
     SDL_ShowWindow(m_window);
+    ENGINE_INFO("Created new window: (name:\"%s\" w:%d h:%d x:%d y:%d)", name.c_str(), w, h, x, y );
     return true;
 
 }
