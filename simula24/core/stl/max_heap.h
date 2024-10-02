@@ -9,9 +9,15 @@
 namespace simula24
 {
 
+///
+/// @brief
+///     A simple implementation of a max heap
+/// 
 class max_heap
 {
 public:
+    
+    constexpr static I32 EMPTY_CHILD = -1;
 
     max_heap() : m_current_size(0), m_idx(0) {}
     
@@ -19,8 +25,8 @@ public:
         : m_current_size(size), m_idx(0)
     {
         m_data.resize(size);
-        U32 zero = 0;
-        m_data.copydata(&zero, m_current_size);
+        I32 n = EMPTY_CHILD;
+        m_data.copydata((U32*)&n, m_current_size);
     }
 
     constexpr U32 get_left_child(U32 pos)
@@ -41,6 +47,13 @@ public:
     {
         return (m_idx / 2 <= pos) && (pos < m_idx);
     }
+
+
+    ///
+    /// @brief
+    ///     Ensures that this stays a max-heap by shifting new elements
+    ///     To their proper positions
+    /// 
     void sift_up(U32 n)
     {
         while (n > 0)
@@ -53,6 +66,10 @@ public:
         }
     }
 
+    ///
+    /// @brief
+    ///     Ensures that any removals don't destroy the tree
+    /// s
     void sift_down(U32 index)
     {
         while (!is_leaf(index))
@@ -66,8 +83,9 @@ public:
             index = left;
         }
     }
-
-    void insert(U32 n)
+   
+    /// @brief push a new item
+    void push(U32 n)
     {
         resize_if(m_idx >= m_current_size);
         
@@ -76,6 +94,7 @@ public:
         m_idx++;
     }
 
+    /// @brief pop an item
     U32 pop()
     {
         if (m_idx == 0)
