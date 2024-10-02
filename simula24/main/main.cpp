@@ -11,6 +11,7 @@
 
 #include <graphics/Graphics.h>
 #include <graphics/AppWindowMgr.h>
+#include <graphics/TextureManager.h>
 #include <core/stl/priority_queue.h>
 using namespace simula24;
 
@@ -27,7 +28,6 @@ int main(int argc, char** argv)
         return -1;
 
     mainWindow = wmgr.getAppWindow('id');
-    SDL_Renderer* r = mainWindow->getRenderer();
 
     TileSheetParser tsp;
     if (tsp.loadConfig("../data/tileset/cp437/tileset.inf") != OK)
@@ -35,19 +35,8 @@ int main(int argc, char** argv)
 
     auto sheet = tsp.getNextSheet();
 
+    SDL_Texture* image = mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
 
-    SDL_Texture* image;
-    SDL_Surface* loadedTexture;
-    loadedTexture = IMG_Load("../data/tileset/cp437/cp437.png");
-
-    if (!loadedTexture)
-    {
-        ENGINE_ERROR("Failed to load image: %s", IMG_GetError());
-        return -1; 
-    }
-
-    image = SDL_CreateTextureFromSurface(r, loadedTexture);
-    SDL_FreeSurface(loadedTexture);
     SDL_Event event;
     bool shouldQuit = false;
     while (!shouldQuit)
@@ -61,11 +50,11 @@ int main(int argc, char** argv)
             }
         }
 
-        SDL_RenderClear(r);
+        mainWindow->clear();
         for(int i = 0; i < sheet->getNumTiles(); i++)
-            SDL_RenderCopy(r, image, &sheet->getTile(219), &sheet->getTile(i));
+            mainWindow->copyTexture(image, &sheet->getTile(219), &sheet->getTile(i));
 
-        SDL_RenderPresent(r);
+        mainWindow->present();
     }
 
     Graphics::get().terminate();
