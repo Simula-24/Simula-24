@@ -1,5 +1,5 @@
-#ifndef CORE_GAME_TILE_TILE_SHEET_H_
-#define CORE_GAME_TILE_TILE_SHEET_H_
+#ifndef CORE_GRAPHICS_TILE_TILE_SHEET_H_
+#define CORE_GRAPHICS_TILE_TILE_SHEET_H_
 
 #include <SDL.h>
 #include <core/stl/array.h>
@@ -41,4 +41,4 @@ private:
 
 }
 
-#endif // CORE_GAME_TILE_TILE_SHEET_H_
+#endif // CORE_GRAPHICS_TILE_TILE_SHEET_H_
