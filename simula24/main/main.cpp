@@ -3,7 +3,7 @@
 #include <core/error/seh.h>
 
 #include <graphics/Graphics.h>
-#include <app/Application.h>
+#include <Application.h>
 using namespace simula24;
 
 int main(int argc, char** argv)

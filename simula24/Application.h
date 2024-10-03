@@ -7,7 +7,7 @@
 #include <core/stl/smart_ptr.h>
 
 #include <smcore/map/ObjectMap.h>
-#include <app/object/ObjectTable.h>
+#include <objectmanager/object/ObjectTable.h>
 
 namespace simula24
 {
