@@ -89,12 +89,12 @@ public:
         m_index--;
     }
 
-    T& operator[](size_t index)
+    constexpr T& operator[](size_t index)
     {
         return m_data.at_m(index);
     }
 
-    const T& operator[](size_t index) const
+    constexpr const T& operator[](size_t index) const
     {
         return m_data.at(index);
     }

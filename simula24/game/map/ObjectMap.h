@@ -13,11 +13,14 @@ public:
         : m_szx(sizex), m_szy(sizey)
     {
         m_oidMap.resize(sizex * sizey);
-        m_oidMap.fill_remaining(-1);
+        m_oidMap.fill(-1);
     }
     
-    inline void set(int x, int y, int id) { m_oidMap[y * m_szx + x] = id; }
-    inline int get(int x, int y) { return m_oidMap[y * m_szx + x]; }
+    constexpr void set(int x, int y, int id) { m_oidMap[y * m_szx + x] = id; }
+    constexpr int get(int x, int y) const { return m_oidMap[y * m_szx + x]; }
+
+    constexpr size_t getSizeX() const { return m_szx; }
+    constexpr size_t getSizeY() const { return m_szy; }
 
 private:
     stl::array<int> m_oidMap;
