@@ -1,5 +1,5 @@
-#ifndef GAME_ENTITY_CIVILIAN_H_
-#define GAME_ENTITY_CIVILIAN_H_
+#ifndef SMCORE_ENTITY_CIVILIAN_H_
+#define SMCORE_ENTITY_CIVILIAN_H_
 
 #include <math/Point.h>
 

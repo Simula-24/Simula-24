@@ -1,6 +1,6 @@
 #include "TileConfig.h"
 
-#include <game/tile/TileSheet.h>
+#include <graphics/tile/TileSheet.h>
 #include <stdio.h>
 using simula24::TileConfig;
 using simula24::TileSheet;

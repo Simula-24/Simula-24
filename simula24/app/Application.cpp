@@ -3,7 +3,7 @@
 #include <graphics/Graphics.h>
 #include <core/log/log.h>
 #include <cassert>
-#include <game/tile/TileSheetParser.h>
+#include <graphics/tile/TileSheetParser.h>
 #include <SDL.h>
 
 using simula24::Application;

@@ -1,5 +1,5 @@
-#ifndef GAME_TILE_TILE_SHEET_PARSER_H_
-#define GAME_TILE_TILE_SHEET_PARSER_H_
+#ifndef GRAPHICS_TILE_TILE_SHEET_PARSER_H_
+#define GRAPHICS_TILE_TILE_SHEET_PARSER_H_
 
 #include "TileConfig.h"
 #include <core/stl/string.h>
@@ -34,4 +34,4 @@ private:
 } // simula24
 
 
-#endif // GAME_TILE_TILE_SHEET_PARSER_H_
+#endif // GRAPHICS_TILE_TILE_SHEET_PARSER_H_

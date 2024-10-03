@@ -1,5 +1,5 @@
-#ifndef GAME_OBJECT_OBJECT_TABLE_H_
-#define GAME_OBJECT_OBJECT_TABLE_H_
+#ifndef APP_OBJECT_OBJECT_TABLE_H_
+#define APP_OBJECT_OBJECT_TABLE_H_
 
 #include <core/stl/string.h>
 #include <core/stl/array.h>

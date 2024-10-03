@@ -1,4 +1,4 @@
-#include <game/tile/TileSheetParser.h>
+#include <graphics/tile/TileSheetParser.h>
 #include <stdio.h>
 using simula24::Status;
 using simula24::TileSheet;

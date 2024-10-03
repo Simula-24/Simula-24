@@ -1,5 +1,5 @@
-#ifndef GAME_MAP_OBJECT_MAP_H_
-#define GAME_MAP_OBJECT_MAP_H_
+#ifndef SMCORE_MAP_OBJECT_MAP_H_
+#define SMCORE_MAP_OBJECT_MAP_H_
 
 #include <core/stl/array.h>
 

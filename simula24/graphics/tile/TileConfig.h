@@ -1,5 +1,5 @@
-#ifndef CORE_GAME_TILE_TILE_CONFIG_H_
-#define CORE_GAME_TILE_TILE_CONFIG_H_
+#ifndef GRAPHICS_TILE_TILE_CONFIG_H_
+#define GRAPHICS_TILE_TILE_CONFIG_H_
 
 #include <core/stl/string.h>
 #include <core/stl/array.h>
@@ -7,7 +7,7 @@
 #include <core/io/File.h>
 #include <SDL.h>
 
-#include <game/tile/TileSheet.h>
+#include <graphics/tile/TileSheet.h>
 
 namespace simula24
 {
@@ -60,4 +60,4 @@ private:
 
 }
 
-#endif // CORE_GAME_TILE_TILE_CONFIG_H_
+#endif // CORE_GRAPHICS_TILE_TILE_CONFIG_H_

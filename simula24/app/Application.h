@@ -1,13 +1,13 @@
-#ifndef GAME_APPLICATION_H_
-#define GAME_APPLICATION_H_
+#ifndef APP_APPLICATION_H_
+#define APP_APPLICATION_H_
 
 #include <graphics/AppWindowMgr.h>
 #include <core/error/error.h>
-#include <game/tile/TileSheet.h>
+#include <graphics/tile/TileSheet.h>
 #include <core/stl/smart_ptr.h>
 
-#include <game/map/ObjectMap.h>
-#include <game/object/ObjectTable.h>
+#include <smcore/map/ObjectMap.h>
+#include <app/object/ObjectTable.h>
 
 namespace simula24
 {

@@ -7,6 +7,7 @@
 #include <simula24/core/stl/hash.h>
 #include <cassert>
 #include <new>
+#include <cstdlib>
 namespace stl
 {
 
