@@ -14,7 +14,7 @@ struct Point
 {
     int x;
     int y;
-    
+    constexpr Point() {}
     constexpr Point(int _x, int _y) : x(_x), y(_y) {}
     
     constexpr Point(const Point& p) : x(p.x), y(p.y) {}

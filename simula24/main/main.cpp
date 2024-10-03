@@ -15,6 +15,8 @@
 #include <core/stl/priority_queue.h>
 #include <game/map/ObjectMap.h>
 #include <game/object/ObjectTable.h>
+#include <game/entity/Civilian.h>
+
 using namespace simula24;
 
 int main(int argc, char** argv)
@@ -39,12 +41,13 @@ int main(int argc, char** argv)
 
     SDL_Texture* image = mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
 
+    Civilian civ;
+    civ.setLocation({ 9,9 });
 
     ObjectMap om(80, 60);
     ObjectTable ot;
     
     int f = ot.insert("ferrite_wall", 219, false);
-    printf("%d\n", ot.getTileId(f));
     om.set(1, 1, f);
     om.set(2, 1, f);
     om.set(3, 1, f);
@@ -88,6 +91,10 @@ int main(int argc, char** argv)
             }
 
         }
+        Point p = civ.getLocation();
+        SDL_Rect rec = { .x = p.x + (10 * p.x), .y = p.y + (10 * p.y), .w = 10, .h = 10};
+        mainWindow->copyTexture(image, &sheet->getTile(1), &rec);
+
         mainWindow->present();
     }
 
