@@ -6,10 +6,10 @@ using simula24::Simulation;
 
 Simulation::Simulation() : m_objectMap(80, 60)
 {
-    m_civvie.setLocation({ 1,1 });
+    m_civvie.setLocation({ 0,0 });
     m_pathIndex = 0;
     int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
-    OM::getObjectTable().insert("hooman", 1, false);
+    OM::getObjectTable().insert("hooman", 2, false);
     m_objectMap.set(1, 1, f);
     m_objectMap.set(2, 1, f);
     m_objectMap.set(3, 1, f);

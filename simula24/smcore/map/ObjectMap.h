@@ -23,6 +23,7 @@ public:
     constexpr size_t getSizeY() const { return m_szy; }
 
     stl::array<Point> getNeighbors(Point& n) const;
+    int getNeighbors(Point& n, stl::array<Point>&) const;
 private:
     stl::array<int> m_oidMap;
     size_t m_szx;

@@ -50,7 +50,6 @@ Status Application::init()
 
 void Application::run()
 {
-    getc(stdin);
     SDL_Event event;
     while (m_shouldRun)
     {
