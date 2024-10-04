@@ -5,7 +5,7 @@
 #include <cassert>
 #include <graphics/tile/TileSheetParser.h>
 #include <SDL.h>
-
+#include <objectmanager/ObjectManager.h>
 using simula24::Application;
 using simula24::Status;
 
@@ -47,8 +47,8 @@ Status Application::init()
 
     m_mainTexture = m_mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
 
-
-    int f = m_objectTable.insert("ferrite_wall", 219, false);
+    
+    int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
     m_objectMap.set(1, 1, f);
     m_objectMap.set(2, 1, f);
     m_objectMap.set(3, 1, f);
@@ -97,7 +97,13 @@ void Application::update()
             g.x = j + (10 * j);
             if (m_objectMap.get(i, j) != -1)
             {
-                m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(m_objectTable.getTileId(m_objectMap.get(i, j))), &g);
+                m_mainWindow->copyTexture(m_mainTexture, 
+                    &m_mainTileSheet->getTile(
+                        OM::getObjectTable().getTileId(
+                            m_objectMap.get(i, j)
+                        )
+                    ), 
+                &g);
             }
         }
 

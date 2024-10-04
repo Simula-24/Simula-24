@@ -18,9 +18,6 @@ public:
     U32 getTileId(int id);
     const stl::string& getName(int id);
 
-
-
-
 private:
     stl::array<bool> m_passableList;
     stl::array<stl::string> m_names;

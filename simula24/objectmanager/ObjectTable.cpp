@@ -9,7 +9,7 @@ int ObjectTable::insert(const stl::string& name, U32 tileID, bool isPassable)
     m_names.push_back(name);
     m_tileIDs.push_back(tileID);
     m_passableList.push_back(isPassable);
-    return m_names.size()-1;
+    return (int)(m_names.size()-1);
 }
 
 bool ObjectTable::isPassable(int id)
@@ -18,7 +18,7 @@ bool ObjectTable::isPassable(int id)
 }
 U32 ObjectTable::getTileId(int id)
 {
-    return m_tileIDs[id];
+    return m_tileIDs[(size_t)id];
 }
 const stl::string&  ObjectTable::getName(int id)
 {
