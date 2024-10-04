@@ -41,19 +41,7 @@ Status Application::init()
     m_rendermgr.setWindow(m_mainWindow);
     m_rendermgr.addTileSheet("../data/tileset/cp437/tileset.inf");
     
-    int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
-    m_objectMap.set(1, 1, f);
-    m_objectMap.set(2, 1, f);
-    m_objectMap.set(3, 1, f);
-    m_objectMap.set(4, 1, f);
-    m_objectMap.set(4, 2, f);
-    m_objectMap.set(4, 3, f);
-    m_objectMap.set(4, 4, f);
-    m_objectMap.set(3, 4, f);
-    m_objectMap.set(2, 4, f);
-    m_objectMap.set(1, 4, f);
-    m_objectMap.set(1, 3, f);
-    m_objectMap.set(1, 2, f);
+  
     m_shouldRun = true;
 
     return OK;
@@ -72,7 +60,9 @@ void Application::run()
                 break;
             }
         }
-        m_rendermgr.renderFromObjectMap(m_objectMap);
+        m_rendermgr.renderFromObjectMap(m_activeSim.getObjectMap());
+
+        m_rendermgr.present();
     }
 }
 

@@ -10,9 +10,13 @@ namespace simula24
 class Simulation
 {
 public:
+    Simulation();
+    const ObjectMap& getObjectMap() const { return m_objectMap; }
 
 private:
-    stl::array<Civilian> m_civlist;
+    Civilian m_civvie;
+    stl::array<Point> m_path;
+    size_t m_pathIndex;
     ObjectMap m_objectMap;
 };
 

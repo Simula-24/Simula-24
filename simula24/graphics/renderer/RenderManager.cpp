@@ -64,5 +64,4 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
         }
 
     }
-    m_mainWindow->present();
 }

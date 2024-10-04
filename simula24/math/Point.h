@@ -40,6 +40,7 @@ bool operator>(const Point& l, const Point& r);
 template<>
 class stl::hash<simula24::Point>
 {
+public:
     static uint32_t run(const simula24::Point& p)
     {
         return (stl::hash<uint32_t>().run((uint32_t)p.x)) ^ 

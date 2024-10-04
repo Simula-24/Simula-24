@@ -28,6 +28,12 @@ public:
     void addTileSheet(const stl::string& configLoc);
 
     void renderFromObjectMap(const ObjectMap& om);
+
+    inline void present() 
+    { 
+        assert(m_mainWindow);
+        m_mainWindow->present(); 
+    }
     
 private:
 
@@ -39,6 +45,10 @@ private:
 
     int m_globTileWidth;
     int m_globTileHeight;
+
+    int m_tilesPerRow;
+    int m_tilesPerColumn;
+
 };
 
 
