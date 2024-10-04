@@ -38,15 +38,8 @@ Status Application::init()
 
     m_mainWindow = m_wm.getAppWindow('main');
 
-    assert(m_mainWindow);
-
-    TileSheetParser tsp;
-    if (tsp.loadConfig("../data/tileset/cp437/tileset.inf") != OK)
-        return FAILED;
-    m_mainTileSheet = tsp.getNextSheet();
-
-    m_mainTexture = m_mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
-
+    m_rendermgr.setWindow(m_mainWindow);
+    m_rendermgr.addTileSheet("../data/tileset/cp437/tileset.inf");
     
     int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
     m_objectMap.set(1, 1, f);
@@ -79,35 +72,7 @@ void Application::run()
                 break;
             }
         }
-
-        update();
+        m_rendermgr.renderFromObjectMap(m_objectMap);
     }
-}
-
-void Application::update()
-{
-    for (int i = 0; i < 80; i++)
-    {
-        for (int j = 0; j < 60; j++)
-        {
-            SDL_Rect g;
-            g.w = 10;
-            g.h = 10;
-            g.y = i + (10 * i);
-            g.x = j + (10 * j);
-            if (m_objectMap.get(i, j) != -1)
-            {
-                m_mainWindow->copyTexture(m_mainTexture, 
-                    &m_mainTileSheet->getTile(
-                        OM::getObjectTable().getTileId(
-                            m_objectMap.get(i, j)
-                        )
-                    ), 
-                &g);
-            }
-        }
-
-    }
-    m_mainWindow->present();
 }
 

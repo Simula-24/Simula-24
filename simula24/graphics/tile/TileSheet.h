@@ -30,7 +30,8 @@ public:
     }
 
     size_t getNumTiles() { return m_tiles.size(); }
-
+    int getTileWidth() { return m_tiles[0].w; }
+    int getTileHeight() { return m_tiles[0].h; }
 private:
 
     stl::array<SDL_Rect> m_tiles;
