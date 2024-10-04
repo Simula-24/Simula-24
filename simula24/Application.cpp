@@ -5,6 +5,7 @@
 #include <cassert>
 #include <graphics/tile/TileSheetParser.h>
 #include <SDL.h>
+#include <stdio.h>
 #include <objectmanager/ObjectManager.h>
 using simula24::Application;
 using simula24::Status;
@@ -49,6 +50,7 @@ Status Application::init()
 
 void Application::run()
 {
+    getc(stdin);
     SDL_Event event;
     while (m_shouldRun)
     {
@@ -60,9 +62,11 @@ void Application::run()
                 break;
             }
         }
+        m_mainWindow->clear();
+        m_activeSim.update();
         m_rendermgr.renderFromObjectMap(m_activeSim.getObjectMap());
-
         m_rendermgr.present();
+        Sleep(500);
     }
 }
 

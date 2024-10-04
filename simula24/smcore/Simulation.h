@@ -12,7 +12,7 @@ class Simulation
 public:
     Simulation();
     const ObjectMap& getObjectMap() const { return m_objectMap; }
-
+    void update();
 private:
     Civilian m_civvie;
     stl::array<Point> m_path;
