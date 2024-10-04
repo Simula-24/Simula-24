@@ -6,7 +6,7 @@ using simula24::Simulation;
 
 Simulation::Simulation() : m_objectMap(80, 60)
 {
-    m_civvie.setLocation({ 0,0 });
+    m_civvie.setLocation({ 15,15 });
     m_pathIndex = 0;
     int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
     m_objectMap.set(1, 1, f);
@@ -21,5 +21,5 @@ Simulation::Simulation() : m_objectMap(80, 60)
     m_objectMap.set(1, 4, f);
     m_objectMap.set(1, 3, f);
     m_objectMap.set(1, 2, f);
-    AStarPathFind(m_civvie.getLocation(), { 50,40 }, m_path, m_objectMap);
+    AStarPathFind(m_civvie.getLocation(), { 20,20 }, m_path, m_objectMap);
 }
