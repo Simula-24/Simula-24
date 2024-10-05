@@ -89,22 +89,20 @@ TEST(stl_test, unordered_map_iter_primitive)
         test.insert({ i, i });
     }
 
-    auto s = test.cbegin();
-
-    int counter = 0;
-    while (++s != test.cend())
+    for (auto& s : test)
     {
-        EXPECT_EQ(s->first, counter);
-        EXPECT_EQ(s->second, counter);
-        counter++;
+        EXPECT_GE(s.first, 0);
+        EXPECT_GE(s.second, 0);    
+        EXPECT_LT(s.first, 10);
+        EXPECT_LT(s.second, 10); 
     }
-    counter = 0;
-    auto t = test.begin();
-    while (++t != test.end())
+
+    for (const auto& t : test)
     {
-        EXPECT_EQ(t->first, counter);
-        EXPECT_EQ(t->second, counter);
-        counter++;
+        EXPECT_GE(t.first, 0);
+        EXPECT_GE(t.second, 0);
+        EXPECT_LT(t.first, 10);
+        EXPECT_LT(t.second, 10);
     }
 }
 

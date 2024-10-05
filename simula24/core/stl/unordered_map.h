@@ -1,6 +1,6 @@
 #ifndef SIMULA24_CORE_STL_UNORDERED_MAP_H_
 #define SIMULA24_CORE_STL_UNORDERED_MAP_H_
-
+#include <type_traits>
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/stl/copy_on_write.h>
 #include <simula24/core/stl/iterator.h>
@@ -8,6 +8,7 @@
 #include <cassert>
 #include <new>
 #include <cstdlib>
+#include <string.h>
 namespace stl
 {
 
@@ -23,7 +24,6 @@ constexpr int UMAP_EMPTY_SLOT = -1;
 /// @brief
 ///     A specialized KV pair for maps/tables using PSLs
 /// 
-#pragma pack(push, 1)
 template <class K, class V, typename DisplacementType = int32_t>
 struct displaced_pair
 {
@@ -58,7 +58,6 @@ private:
 
 
 };
-#pragma pack(pop)
 
 ///
 /// @brief
@@ -76,7 +75,7 @@ public:
     using const_iterator = stl::unordered_map_iterator<const kv_map_t>;
     using iterator = stl::unordered_map_iterator<kv_map_t>;
 
-    unordered_map() : m_data{}, m_size(1), m_element_count(0) { reserve(1); }
+    unordered_map() : m_data{}, m_size(0), m_element_count(0) { }
     ~unordered_map();
     /// Insert new value
     void insert(const kv_map_t& nkv);
@@ -256,13 +255,15 @@ V& unordered_map<K, V, Hash>::at(const K& key)
 template<class K, class V, class Hash>
 V& unordered_map<K, V, Hash>::operator[](const K& key)
 {
-
-    bool exists = index_of(key) != -1;
+    bool exists = false;
+    if (m_size == 0)
+        goto ____key_insertion_on_zero_length;
+    exists =  index_of(key) != -1 ;
 
     if (exists)
         return m_data.at_m(index_of(key)).second;
 
-
+____key_insertion_on_zero_length:
     insert({ key, V() });
     return m_data.at_m(index_of(key)).second;
 
@@ -312,6 +313,9 @@ void unordered_map<K, V, Hash>::resize(size_t n)
     copy_on_write<kv_map_t> copy = m_data;
     // resize, our old data is in m_data
     m_data.resize(n);
+
+    ::memset(&m_data.at_m(0), 0, n * sizeof(kv_map_t));
+
     auto old_size = m_size;
     if (n < old_size)
         old_size = n;
@@ -388,6 +392,7 @@ template <class T>
 class unordered_map_iterator
 {
 public:
+    using BaseType = std::remove_pointer<T>;
     constexpr unordered_map_iterator(T* elem, const T* start, const T* end) 
         : m_element(elem), m_start(start), m_end(end) 
     { 
@@ -443,8 +448,8 @@ private:
 
     void find_start()
     {
-        while (m_element->displacement == UMAP_EMPTY_SLOT && m_element < m_end)
-            ++m_element;
+        if (m_element->displacement == UMAP_EMPTY_SLOT)
+            this->operator++();
     }
 
     T* m_element;

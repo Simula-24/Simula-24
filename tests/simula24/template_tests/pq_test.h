@@ -9,7 +9,7 @@
 
 TEST(stl_test, priority_queue_primative)
 {
-    simula24::priority_queue<int> test(10);
+    stl::priority_queue<int> test(10);
     std::vector<int> s{ 76,4,6,24,93,2,5,8,72, 1 };
     std::make_heap(s.begin(), s.end());
 
@@ -33,7 +33,7 @@ TEST(stl_test, priority_queue_primative)
 
 TEST(stl_test, priority_queue_adt)
 {
-    simula24::priority_queue<stl::string> test(10);
+    stl::priority_queue<stl::string> test(10);
     std::vector<int> s{ 76,4,6,24,93,2,5,8,72, 1 };
     std::make_heap(s.begin(), s.end());
 
