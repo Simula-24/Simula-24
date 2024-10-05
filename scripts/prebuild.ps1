@@ -5,10 +5,12 @@ $curdir = Get-Location
 $buildloc = "$curdir/build"
 mkdir -Force "$buildloc/" | out-null
 Log-Info "Copying Files..."
-cp thirdparty/SDL2/lib/x64/*.lib $buildloc
-cp thirdparty/SDL2/lib/x64/*.dll $buildloc
-cp thirdparty/SDL2_ttf/lib/x64/*.lib $buildloc
-cp thirdparty/SDL2_ttf/lib/x64/*.dll $buildloc
 
-cp thirdparty/SDL2_image/lib/x64/*.lib $buildloc
-cp thirdparty/SDL2_image/lib/x64/*.dll $buildloc
+$sdl_lib_locs = @('SDL2', 'SDL2_ttf', 'SDL2_image')
+
+foreach($lib in $sdl_lib_locs)
+{
+    Log-Info "Copying $lib binaries..."
+    cp thirdparty/$lib/lib/x64/*.lib $buildloc
+    cp thirdparty/$lib/lib/x64/*.dll $buildloc
+}
