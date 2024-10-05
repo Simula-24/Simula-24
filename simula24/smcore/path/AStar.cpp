@@ -29,11 +29,15 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, stl::array<Po
     stl::priority_queue<Point> frontier(100);
     std::unordered_map<Point, Point> came_from;
     std::unordered_map<Point, int> cost_so_far;
+    
     frontier.push(start, 0);
     came_from.insert({ start, start });
     cost_so_far.insert({ start, 0 });
+
     stl::array<Point> n;
+    
     n.resize(10);
+    
     while (!frontier.empty())
     {
         Point cur = frontier.pop().object;

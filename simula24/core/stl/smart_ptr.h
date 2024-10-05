@@ -50,7 +50,7 @@ public:
     shared_ptr() : _int_store(nullptr) {}
 
     template <class U>
-    shared_ptr(U* _new)
+    explicit shared_ptr(U* _new)
     {
         _int_store = new RefCountContainer{ ._ptr = _new, ._refcount = 1 };
     }
@@ -103,7 +103,7 @@ public:
     ///     Convert between a convertable type
     /// 
     template<class U>
-    shared_ptr(const shared_ptr<U>& other, std::enable_if_t<std::is_convertible_v<U*, T*>, int> = 0)
+    explicit shared_ptr(const shared_ptr<U>& other, std::enable_if_t<std::is_convertible_v<U*, T*>, int> = 0)
         : _int_store(((shared_ptr<T>&)other)._int_store)
     {
         _int_store->_refcount++;
@@ -123,12 +123,12 @@ public:
         return x;
     }
 
-    bool isSame(const shared_ptr& other)
+    bool isSame(const shared_ptr& other) const
     {
         return other._int_store == _int_store;
     }
 
-    bool isValid() { return _int_store != nullptr; }
+    bool isValid() const { return _int_store != nullptr; }
 
     ///
     /// @brief
