@@ -435,10 +435,10 @@ public:
         return m_element != o.m_element;
     }
 
-    operator unordered_map_iterator() const
-    {
-        return unordered_map_iterator(m_element);
-    }
+    //operator unordered_map_iterator() const
+    //{
+    //    return unordered_map_iterator(m_element);
+    //}
 private:
 
     void find_start()

@@ -79,10 +79,10 @@ struct generic_iterator
     }
 
 
-    operator generic_iterator() const
+   /* operator generic_iterator() const
     {
         return generic_iterator(element);
-    }
+    }*/
 private:
     T* element = nullptr;
 };
@@ -154,10 +154,10 @@ struct generic_const_iterator
         return element >= o.element;
     }
 
-    operator generic_const_iterator() const
-    {
-        return iterator(element);
-    }
+    //operator generic_const_iterator() const
+    //{
+    //    return iterator(element);
+    //}
 private:
     const T* element = nullptr;
 };

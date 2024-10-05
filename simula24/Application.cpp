@@ -7,6 +7,8 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <objectmanager/ObjectManager.h>
+#include <thread>
+#include <chrono>
 using simula24::Application;
 using simula24::Status;
 
@@ -65,7 +67,7 @@ void Application::run()
         m_activeSim.update();
         m_rendermgr.renderFromObjectMap(m_activeSim.getObjectMap());
         m_rendermgr.present();
-        Sleep(100);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 

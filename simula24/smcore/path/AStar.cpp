@@ -63,6 +63,12 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, stl::array<Po
         out.push_back(it);
         it = came_from[it];
     }
-    std::reverse(out.begin(), out.end());
+
+    auto outb = out.begin();
+    auto oute = out.end();
+
+    while (outb != oute && outb != --oute)
+        std::iter_swap(++outb, oute);
+
 ;    return true;
 }
