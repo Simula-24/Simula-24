@@ -24,6 +24,9 @@ public:
 
     stl::array<Point> getNeighbors(Point& n) const;
     int getNeighbors(Point& n, stl::array<Point>&) const;
+
+    int getPassableNeighbors(Point& n, stl::array<Point>&) const;
+
 private:
     stl::array<int> m_oidMap;
     size_t m_szx;

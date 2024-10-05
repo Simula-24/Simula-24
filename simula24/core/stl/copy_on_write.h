@@ -64,7 +64,7 @@ public:
     }
 
     /// data[where] without a copy
-    __forceinline const T& at(size_t where) const;
+    constexpr const T& at(size_t where) const;
 
     /// data[where] with a copy
     T& at_m(size_t where);
@@ -319,7 +319,7 @@ void copy_on_write<T>::create_empty()
 }
 
 template<class T>
-__forceinline const T& copy_on_write<T>::at(size_t where) const
+constexpr const T& copy_on_write<T>::at(size_t where) const
 {
     const T* _ptr = get_data();
     return _ptr[where];

@@ -40,7 +40,7 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, stl::array<Po
         if (cur == end)
             break;
         
-        int x = map.getNeighbors(cur, n);
+        int x = map.getPassableNeighbors(cur, n);
         
         for (int i = 0; i < x; i++)
         {

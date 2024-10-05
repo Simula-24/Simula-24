@@ -65,7 +65,7 @@ void Application::run()
         m_activeSim.update();
         m_rendermgr.renderFromObjectMap(m_activeSim.getObjectMap());
         m_rendermgr.present();
-        Sleep(500);
+        Sleep(100);
     }
 }
 
