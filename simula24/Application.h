@@ -7,8 +7,9 @@
 #include <core/stl/smart_ptr.h>
 
 #include <smcore/map/ObjectMap.h>
-#include <app/object/ObjectTable.h>
-
+#include <objectmanager/ObjectTable.h>
+#include <graphics/renderer/RenderManager.h>
+#include <smcore/Simulation.h>
 namespace simula24
 {
 
@@ -29,15 +30,14 @@ private:
 private:
     AppWindowMgr m_wm;
     AppWindow* m_mainWindow;
-    /// it might look dumb, but this is just a pre-pre-alpha 
-    SDL_Texture* m_mainTexture;
-    stl::shared_ptr<TileSheet> m_mainTileSheet;
 
     ObjectMap m_objectMap;
     ObjectTable m_objectTable;
 
     bool m_shouldRun{ false };
 
+    RenderManager m_rendermgr;
+    Simulation m_activeSim;
 };
 
 

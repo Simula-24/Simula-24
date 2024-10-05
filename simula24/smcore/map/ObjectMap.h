@@ -2,7 +2,7 @@
 #define SMCORE_MAP_OBJECT_MAP_H_
 
 #include <core/stl/array.h>
-
+#include <math/Point.h>
 namespace simula24
 {
 
@@ -21,6 +21,11 @@ public:
 
     constexpr size_t getSizeX() const { return m_szx; }
     constexpr size_t getSizeY() const { return m_szy; }
+
+    stl::array<Point> getNeighbors(Point& n) const;
+    int getNeighbors(Point& n, stl::array<Point>&) const;
+
+    int getPassableNeighbors(Point& n, stl::array<Point>&) const;
 
 private:
     stl::array<int> m_oidMap;

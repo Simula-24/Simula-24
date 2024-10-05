@@ -29,8 +29,9 @@ public:
             m_sheet = texture;
     }
 
-    size_t getNumTiles() { return m_tiles.size(); }
-
+    size_t getNumTiles() const { return m_tiles.size(); }
+    int getTileWidth() const { return m_tiles[0].w; }
+    int getTileHeight() const { return m_tiles[0].h; }
 private:
 
     stl::array<SDL_Rect> m_tiles;

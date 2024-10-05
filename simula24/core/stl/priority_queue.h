@@ -3,10 +3,11 @@
 
 #include <core/types.h>
 #include <core/stl/copy_on_write.h>
-
+#include <utility>
 #include <stdio.h>
-namespace simula24
+namespace stl
 {
+using simula24::I32;
 
 template <class T, class IntType = I32>
 class priority_queue
@@ -67,6 +68,8 @@ public:
         for (int i = 0; i < m_idx; i++) printf("%ld ", m_heap.at(i).priority);
         putchar('\n');
     }
+
+    bool empty() { return m_idx == 0; }
 private:
     
     void resize()
@@ -74,7 +77,8 @@ private:
         if (m_idx >= m_current_size || m_current_size > m_heap.get_size())
         {
             m_heap.resize(m_current_size + 4); // 4 new children
-            for (; m_current_size < m_current_size + 4; m_current_size++)
+            int end = m_current_size + 4;
+            for (; m_current_size < end; m_current_size++)
             {
                 m_heap.at_m(m_current_size).priority = EMPTY_CHILD;
             }

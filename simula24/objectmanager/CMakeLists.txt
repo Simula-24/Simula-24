@@ -1,0 +1,6 @@
+
+set(OBJECT_MANAGER_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ObjectTable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ObjectManager.cpp
+    PARENT_SCOPE
+)
