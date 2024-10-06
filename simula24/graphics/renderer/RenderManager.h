@@ -5,7 +5,7 @@
 #include <graphics/tile/TileSheet.h>
 #include <graphics/AppWindow.h>
 #include <core/stl/smart_ptr.h>
-
+#include <core/error/error.h>
 
 namespace simula24
 {
@@ -20,8 +20,20 @@ class RenderManager
 {
 public:
 
-    RenderManager();
-    ~RenderManager();
+    /// 
+    /// @brief
+    ///     Initialize SDL/SDL Image
+    /// @returns    
+    ///     OK on success
+    ///     ERR_LIB_INIT on fail
+    /// 
+    Status init();
+    
+    ///
+    /// @brief
+    ///     Tears down SDL/SDL_Image
+    /// 
+    Status terminate();
 
     void setWindow(AppWindow* win);
 
@@ -35,6 +47,14 @@ public:
         m_mainWindow->present(); 
     }
     
+public:
+    RenderManager(const RenderManager&) = delete;
+    RenderManager& operator=(const RenderManager&) = delete;
+    constexpr static RenderManager& get() { return s_instance; }
+private:
+    RenderManager();
+    static RenderManager s_instance;
+
 private:
 
     AppWindow* m_mainWindow;
@@ -53,5 +73,7 @@ private:
 
 
 } // simula24
+
+using RM = simula24::RenderManager;
 
 #endif // GRAPHICS_RENDERER_RENDER_MANAGER_H_

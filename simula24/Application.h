@@ -36,7 +36,6 @@ private:
 
     bool m_shouldRun{ false };
 
-    RenderManager m_rendermgr;
     Simulation m_activeSim;
 };
 
