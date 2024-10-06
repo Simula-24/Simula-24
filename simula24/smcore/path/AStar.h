@@ -7,6 +7,8 @@
 namespace simula24
 {
 
+using PointList = stl::array<Point>;
+
 bool AStarPathFind(const Point& start, const Point& end, stl::array<Point>& out, const ObjectMap& map);
 
 } // simula24

@@ -48,4 +48,14 @@ public:
     }
 };
 
+
+template <>
+struct std::hash<simula24::Point>
+{
+    std::size_t operator()(const simula24::Point& k) const
+    {
+        return (hash<int>()(k.x) ^ (hash<int>()(k.y) << 1));
+    }
+};
+
 #endif // MATH_POINT_H_

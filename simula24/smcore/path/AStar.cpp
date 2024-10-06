@@ -7,14 +7,6 @@
 using simula24::Point;
 
 
-template <>
-struct std::hash<Point>
-{
-    std::size_t operator()(const Point& k) const
-    {
-        return (hash<int>()(k.x) ^ (hash<int>()(k.y) << 1));
-    }
-};
 
 static int heuristic(const Point& goal, const Point& n)
 {
@@ -63,12 +55,19 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, stl::array<Po
         out.push_back(it);
         it = came_from[it];
     }
+    out.push_back(start);
+    for (auto& i : out) printf("%d %d\n", i.x, i.y);
 
-    auto outb = out.begin();
-    auto oute = out.end();
+    auto outstart = out.begin();
+    auto outend = out.end();
 
-    while (outb != oute && outb != --oute)
-        std::iter_swap(++outb, oute);
+    while (outstart != outend && outstart != --outend) {
+
+        std::iter_swap(outstart, outend);
+        ++outstart;
+    }
+
+    for (auto& i : out) printf("%d %d\n",i.x,i.y);
 
 ;    return true;
 }

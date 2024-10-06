@@ -23,13 +23,11 @@ Simulation::Simulation() : m_objectMap(80, 60)
     m_objectMap.set(1, 3, f);
     m_objectMap.set(1, 2, f);
     AStarPathFind(m_civvie.getLocation(), { 20,20 }, m_path, m_objectMap);
+    m_civvie.setPath(m_path);
 }
 
 void simula24::Simulation::update()
 {
-    if (m_pathIndex >= m_path.size()) return;
-    if (m_pathIndex > 0)
-        m_objectMap.set(m_path[m_pathIndex - 1].x, m_path[m_pathIndex - 1].y, -1);
-    Point i = m_path[m_pathIndex++];
-    m_objectMap.set(i.x, i.y, 1);
+    m_civvie.update();
+    m_objectMap.set(m_civvie.getLocation().x, m_civvie.getLocation().y, 1);
 }
