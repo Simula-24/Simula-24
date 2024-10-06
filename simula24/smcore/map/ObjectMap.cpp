@@ -1,7 +1,7 @@
 #include "ObjectMap.h"
+#include <smcore/path/AStar.h>
 #include <objectmanager/ObjectManager.h>
 #include <smcore/map/NeighborMap.h>
-
 using simula24::ObjectMap;
 using simula24::Point;
 
@@ -25,10 +25,10 @@ int ObjectMap::getNeighbors(Point& n, stl::array<Point>& out) const
     return x;
 }
 
-int simula24::ObjectMap::getPassableNeighbors(Point& n, stl::array<Point>& out) const
+int simula24::ObjectMap::getPassableNeighbors(Point& n, PointList& out) const
 {
     int x = 0;
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 4; i++)
     {
 
         int nx = (n.x + NeighborMap[i][0]);
@@ -37,8 +37,8 @@ int simula24::ObjectMap::getPassableNeighbors(Point& n, stl::array<Point>& out) 
         if (nx >= 0 && nx < m_szx &&
             ny >= 0 && ny < m_szy)
         {
-            int oid = m_oidMap[(ny * m_szx) + nx];
-            if (oid == -1 || OM::getObjectTable().isPassable(oid)) {
+            int oid = m_oidMap[(nx * m_szx) + ny];
+            if (oid == -1) {
                 out[x++] = Point{ nx, ny };
             }
         }

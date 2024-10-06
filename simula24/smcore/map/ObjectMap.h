@@ -28,7 +28,7 @@ public:
 
     int getNeighbors(Point& n, stl::array<Point>&) const;
 
-    int getPassableNeighbors(Point& n, stl::array<Point>&) const;
+    int getPassableNeighbors(Point& n, PointList&) const;
 
 private:
     stl::array<int> m_oidMap;

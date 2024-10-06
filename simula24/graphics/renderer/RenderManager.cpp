@@ -11,10 +11,13 @@
 #include <objectmanager/ObjectManager.h>
 #include <core/log/log.h>
 
+#include <smcore/entity/Civilian.h>
+
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
 using simula24::Status;
+using simula24::Civilian;
 
 RenderManager RenderManager::s_instance;
 
@@ -91,6 +94,22 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
                     &g);
             }
         }
+
+    }
+}
+
+void RenderManager::renderCivilianList(const stl::array<Civilian>& cl)
+{
+    for (int i = 0; i < cl.size(); i++)
+    {
+        auto& loc = cl[i].getLocation();
+        SDL_Rect location = { 
+            loc.x + (m_globTileHeight * loc.x) ,
+            loc.y + (m_globTileHeight * loc.y) ,
+            m_globTileWidth, 
+            m_globTileHeight
+        };
+        m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(2), &location);
 
     }
 }

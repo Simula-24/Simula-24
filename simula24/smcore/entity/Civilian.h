@@ -10,17 +10,18 @@ class Civilian
 {
 public:
     
-    Civilian() {}
+    Civilian() :m_path{} {}
     
     void setLocation(const Point& p) { m_location = p; }
     const Point& getLocation() const { return m_location; }
 
     void setPath(PointList& p) 
     { 
-        m_path = p;
+        m_path = std::move(p);
         m_pathIndex = 0;
     }
 
+    PointList& getPath() { return m_path; }
 
     void update();
 

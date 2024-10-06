@@ -3,13 +3,12 @@
 
 #include <math/Point.h>
 #include <core/stl/array.h>
+#include <vector>
 #include <smcore/map/ObjectMap.h>
 namespace simula24
 {
 
-using PointList = stl::array<Point>;
-
-bool AStarPathFind(const Point& start, const Point& end, stl::array<Point>& out, const ObjectMap& map);
+bool AStarPathFind(const Point& start, const Point& end, PointList& out, const ObjectMap& map);
 
 } // simula24
 

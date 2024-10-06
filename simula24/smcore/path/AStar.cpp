@@ -1,9 +1,12 @@
 #include "AStar.h"
-
+#include <cassert>
 #include <core/stl/priority_queue.h>
 #include <core/stl/unordered_map.h>
 #include <unordered_map>
 #include <algorithm>
+#include <vector>
+#include <core/log/log.h>
+#include <queue>
 using simula24::Point;
 
 
@@ -12,27 +15,32 @@ static int heuristic(const Point& goal, const Point& n)
 {
     int dx = abs(goal.x - n.x);
     int dy = abs(goal.y - n.y);
-    return 1 * (dx + dy) + 1 * ((dx > dy) * dy + (dy > dx) * dx);
+    return dx - dy;
+    //return 1 * (dx + dy) + 1 * ((dx > dy) * dy + (dy > dx) * dx);
 }
 
 
-bool simula24::AStarPathFind(const Point& start, const Point& end, stl::array<Point>& out, const ObjectMap& map)
+bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& out, const ObjectMap& map)
 {
-    stl::priority_queue<Point> frontier(100);
+    CLIENT_INFO("AStar begin: (%d, %d) -> (%d, %d)",
+        start.x, start.y,
+        end.x, end.y
+    );
+    stl::priority_queue<Point> frontier;
     std::unordered_map<Point, Point> came_from;
     std::unordered_map<Point, int> cost_so_far;
     
-    frontier.push(start, 0);
-    came_from.insert({ start, start });
-    cost_so_far.insert({ start, 0 });
-
-    stl::array<Point> n;
+    frontier.push(start, 1);
+    came_from[start] = start;
+    PointList n;
     
-    n.resize(10);
+    n.resize(5);
+    int iter = 0;
     
     while (!frontier.empty())
     {
         Point cur = frontier.pop().object;
+        //frontier.pop();
         if (cur == end)
             break;
         
@@ -40,34 +48,37 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, stl::array<Po
         
         for (int i = 0; i < x; i++)
         {
-            if(!came_from.contains(n[i]))
-            {
-                frontier.push(n[i], 0);
-                came_from.insert({ n[i], cur });
+            Point& next = n[i];
+            if (came_from.find(next) == came_from.end()) {
+                frontier.push(next, 1 );
+                came_from[next] = cur;
             }
         }
 
     }
-
+    if (!came_from.contains(end))
+    {
+        CLIENT_ERROR("No path found between (%d, %d) and (%d, %d)",
+            start.x, start.y,
+            end.x, end.y
+        );
+        return false;
+    }
     Point it = end;
+
     while (it != start)
     {
         out.push_back(it);
         it = came_from[it];
+
+        if (it == start)
+            break;
+
+
     }
     out.push_back(start);
-    for (auto& i : out) printf("%d %d\n", i.x, i.y);
 
-    auto outstart = out.begin();
-    auto outend = out.end();
-
-    while (outstart != outend && outstart != --outend) {
-
-        std::iter_swap(outstart, outend);
-        ++outstart;
-    }
-
-    for (auto& i : out) printf("%d %d\n",i.x,i.y);
+    std::reverse(out.begin(), out.end());
 
 ;    return true;
 }
