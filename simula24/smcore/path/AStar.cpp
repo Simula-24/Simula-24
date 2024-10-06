@@ -26,11 +26,11 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& ou
         start.x, start.y,
         end.x, end.y
     );
-    stl::priority_queue<Point> frontier;
+    std::queue<Point> frontier;
     std::unordered_map<Point, Point> came_from;
     std::unordered_map<Point, int> cost_so_far;
     
-    frontier.push(start, 1);
+    frontier.push(start);
     came_from[start] = start;
     PointList n;
     
@@ -39,7 +39,8 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& ou
     
     while (!frontier.empty())
     {
-        Point cur = frontier.pop().object;
+        Point cur = frontier.front();
+            frontier.pop();
         //frontier.pop();
         if (cur == end)
             break;
@@ -50,7 +51,7 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& ou
         {
             Point& next = n[i];
             if (came_from.find(next) == came_from.end()) {
-                frontier.push(next, 1 );
+                frontier.push(next);
                 came_from[next] = cur;
             }
         }
