@@ -28,7 +28,7 @@ int ObjectMap::getNeighbors(Point& n, stl::array<Point>& out) const
 int simula24::ObjectMap::getPassableNeighbors(Point& n, PointList& out) const
 {
     int x = 0;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 8; i++)
     {
 
         int nx = (n.x + NeighborMap[i][0]);

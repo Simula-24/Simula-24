@@ -62,7 +62,7 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& ou
     cost_so_far[start] = 0;
     PointList n;
     
-    n.resize(5);
+    n.resize(8);
 #ifdef _DEBUG
     int iter = 0;
 #endif
