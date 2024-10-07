@@ -10,8 +10,12 @@ class Civilian
 {
 public:
     
-    Civilian() :m_path{} {}
-    
+    Civilian() : m_path() {}
+    Civilian& operator=(const Civilian& o)
+    {
+        m_path = o.m_path;
+        return *this;
+    }
     void setLocation(const Point& p) { m_location = p; }
     const Point& getLocation() const { return m_location; }
 
