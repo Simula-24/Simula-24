@@ -20,14 +20,32 @@ public:
         m_oidMap.fill(-1);
     }
     
+    /// Set (x,y) as ID
     constexpr void set(int x, int y, int id) { m_oidMap[y * m_szx + x] = id; }
+    
+    /// Get ID at (x,y)
     constexpr int get(int x, int y) const { return m_oidMap[y * m_szx + x]; }
 
     constexpr size_t getSizeX() const { return m_szx; }
     constexpr size_t getSizeY() const { return m_szy; }
 
+    /// 
+    /// @brief
+    ///     Get neighbors around point N
+    ///     Will get all points that are not set to empty
+    ///                     NW  N  NE 
+    ///                       \ | /
+    ///                    W -- n -- S
+    ///                       / | \
+    ///                     SW  S  SE
+    ///     
     int getNeighbors(Point& n, stl::array<Point>&) const;
 
+    ///
+    /// @brief
+    ///     Get all points are 'n' that are not empty and 
+    ///     are marked as passable in ObjectManager::ObjectTable
+    /// 
     int getPassableNeighbors(Point& n, PointList&) const;
 
 private:

@@ -38,7 +38,7 @@ int simula24::ObjectMap::getPassableNeighbors(Point& n, PointList& out) const
             ny >= 0 && ny < m_szy)
         {
             int oid = m_oidMap[(nx * m_szx) + ny];
-            if (oid == -1) {
+            if (oid == -1 || OM::getObjectTable().isPassable(oid)) {
                 out[x++] = Point{ nx, ny };
             }
         }
