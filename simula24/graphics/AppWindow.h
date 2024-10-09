@@ -59,6 +59,8 @@ public:
     inline void present() { SDL_RenderPresent(m_renderer); }
 
     inline TextureManager& getTextureManager() { return m_texManager; }
+
+    constexpr SDL_Renderer* getRenderer() const { return m_renderer; }
 private:
 
     SDL_Window* m_window;
