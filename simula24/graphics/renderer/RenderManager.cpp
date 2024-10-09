@@ -11,13 +11,13 @@
 #include <objectmanager/ObjectManager.h>
 #include <core/log/log.h>
 
-#include <smcore/entity/Civilian.h>
+#include <smcore/entity/CrewMember.h>
 
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
 using simula24::Status;
-using simula24::Civilian;
+using simula24::CrewMember;
 
 RenderManager RenderManager::s_instance;
 
@@ -98,7 +98,7 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
     }
 }
 
-void RenderManager::renderCivilianList(const stl::array<Civilian>& cl)
+void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
 {
     for (int i = 0; i < cl.size(); i++)
     {

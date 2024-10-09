@@ -1,17 +1,17 @@
-#ifndef SMCORE_ENTITY_CIVILIAN_H_
-#define SMCORE_ENTITY_CIVILIAN_H_
+#ifndef SMCORE_ENTITY_CREW_MEMBER_H_
+#define SMCORE_ENTITY_CREW_MEMBER_H_
 
 #include <math/Point.h>
 #include <smcore/path/AStar.h>
 namespace simula24 
 {
 
-class Civilian 
+class CrewMember 
 {
 public:
     
-    Civilian() : m_path() {}
-    Civilian& operator=(const Civilian& o)
+    CrewMember() : m_path() {}
+    CrewMember& operator=(const CrewMember& o)
     {
         m_path = o.m_path;
         return *this;
@@ -44,4 +44,4 @@ private:
 
 
 
-#endif // GAME_ENTITY_CIVILIAN_H_
+#endif // GAME_ENTITY_CREW_MEMBER_H_

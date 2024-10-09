@@ -1,8 +1,8 @@
-#include "Civilian.h"
+#include "CrewMember.h"
 
-using simula24::Civilian;
+using simula24::CrewMember;
 
-void Civilian::update()
+void CrewMember::update()
 {
     if (m_pathIndex < m_path.size())
     {

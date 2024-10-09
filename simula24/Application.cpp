@@ -65,7 +65,7 @@ void Application::run()
         m_mainWindow->clear();
         m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
-        RM::get().renderCivilianList(m_activeSim.getCivilianList());
+        RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
         RM::get().present();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }

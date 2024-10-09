@@ -11,7 +11,7 @@ namespace simula24
 {
 
 class ObjectMap;
-class Civilian;
+class CrewMember;
 ///
 /// @brief
 ///     Manages rendering to the main window
@@ -40,7 +40,7 @@ public:
     void addTileSheet(const stl::string& configLoc);
 
     void renderFromObjectMap(const ObjectMap& om);
-    void renderCivilianList(const stl::array<Civilian>& cl);
+    void renderCivilianList(const stl::array<CrewMember>& cl);
     inline void present() 
     { 
         assert(m_mainWindow);

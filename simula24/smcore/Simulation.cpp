@@ -4,7 +4,7 @@
 #include <objectmanager/ObjectManager.h>
 using simula24::Simulation;
 
-Simulation::Simulation() : m_objectMap(80, 60), m_civilians{}
+Simulation::Simulation() : m_objectMap(80, 60), m_CrewMembers{}
 {
    
     int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
@@ -23,11 +23,11 @@ Simulation::Simulation() : m_objectMap(80, 60), m_civilians{}
     //m_objectMap.set(1, 4, f);
     //m_objectMap.set(1, 3, f);
     //m_objectMap.set(1, 2, f);
-    m_civilians.resize(4);
-    m_civilians.push_back({});
-    m_civilians.push_back({});
-    m_civilians.push_back({});
-    m_civilians.push_back({});
+    m_CrewMembers.resize(4);
+    m_CrewMembers.push_back({});
+    m_CrewMembers.push_back({});
+    m_CrewMembers.push_back({});
+    m_CrewMembers.push_back({});
     
 
     stl::array<Point> startLocations;
@@ -44,7 +44,7 @@ Simulation::Simulation() : m_objectMap(80, 60), m_civilians{}
 
     for (int i = 0; i < 4; i++)
     {
-        auto& civvie = m_civilians[i];
+        auto& civvie = m_CrewMembers[i];
         civvie.setLocation(startLocations[i]);
         PointList path;
         AStarPathFind(civvie.getLocation(),endLocations[i], path, m_objectMap);
@@ -55,6 +55,6 @@ Simulation::Simulation() : m_objectMap(80, 60), m_civilians{}
 
 void simula24::Simulation::update()
 {
-    for (auto& i : m_civilians)
+    for (auto& i : m_CrewMembers)
         i.update();
 }
