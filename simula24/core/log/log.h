@@ -45,9 +45,9 @@ public:
 
     /// the init-list code duplication IS necessary otherwise setSink will NOT work.
     explicit Logger(const stl::string& name)
-        : m_sink{ nullptr }, m_name(name.c_str()), m_lowestLevel(LogLevel::INFO)
+        : m_sink{ nullptr }, m_name(name.c_str()), m_lowestLevel(LogLevel::DEBUG)
     {}
-    explicit Logger(const char* name) : m_sink{ nullptr }, m_name(name), m_lowestLevel(LogLevel::INFO) {}
+    explicit Logger(const char* name) : m_sink{ nullptr }, m_name(name), m_lowestLevel(LogLevel::DEBUG) {}
     ~Logger();
 
     ///

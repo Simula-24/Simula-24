@@ -43,12 +43,20 @@ if(WIN32)
         "${CMAKE_SOURCE_DIR}/build/SDL2main.lib"
         "${CMAKE_SOURCE_DIR}/build/SDL2_image.lib"
     )
+    # vv I don't care if CMake makes something uppercase
     add_compile_options("/wd9025")
+
+    ## Release PDB Generation
+    target_compile_options(simula24 PRIVATE "$<$<CONFIG:Release>:/Zi>")
+    target_link_options(simula24 PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
+    target_link_options(simula24 PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
+    target_link_options(simula24 PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
+
 elseif(UNIX)
     find_package(SDL2 REQUIRED)
     target_include_directories(simula24 PRIVATE ${SDL2_INCLUDE_DIRS})
     target_compile_options(simula24 PRIVATE "-ggdb")
-    set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} ${SDL2_LIBRARIES} "ncursesw" "SDL2_image")
+    set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} ${SDL2_LIBRARIES} "SDL2_image")
     
 endif()
 

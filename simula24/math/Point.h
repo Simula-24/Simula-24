@@ -2,7 +2,8 @@
 #define MATH_POINT_H_
 
 #include <core/stl/hash.h>
-
+#include <vector>
+#include <core/stl/array.h>
 namespace simula24
 {
 
@@ -33,7 +34,7 @@ bool operator!=(const Point& l, const Point& r);
 bool operator<(const Point& l, const Point& r);
 bool operator>(const Point& l, const Point& r);
 
-
+using PointList = stl::array<Point>;
 
 } // simula24
 
@@ -45,6 +46,16 @@ public:
     {
         return (stl::hash<uint32_t>().run((uint32_t)p.x)) ^ 
               ((stl::hash<uint32_t>().run((uint32_t)p.x) << 1));
+    }
+};
+
+
+template <>
+struct std::hash<simula24::Point>
+{
+    std::size_t operator()(const simula24::Point& k) const
+    {
+        return std::hash<int>()(k.x ^ (k.y << 16));
     }
 };
 

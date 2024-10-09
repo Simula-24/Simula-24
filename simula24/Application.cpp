@@ -1,6 +1,5 @@
 #include "Application.h"
 
-#include <graphics/Graphics.h>
 #include <core/log/log.h>
 #include <cassert>
 #include <graphics/tile/TileSheetParser.h>
@@ -27,7 +26,7 @@ Status Application::init()
 {
     Status stat = OK;
     
-    if ((stat = Graphics::get().init()) != OK)
+    if ((stat = RM::get().init()) != OK)
     {
         ENGINE_CRITICAL("Failed to initialize graphic subsystem");
         return stat;
@@ -41,8 +40,8 @@ Status Application::init()
 
     m_mainWindow = m_wm.getAppWindow('main');
 
-    m_rendermgr.setWindow(m_mainWindow);
-    m_rendermgr.addTileSheet("../data/tileset/cp437/tileset.inf");
+    RM::get().setWindow(m_mainWindow);
+    RM::get().addTileSheet("../data/tileset/cp437/tileset.inf");
     
   
     m_shouldRun = true;
@@ -65,8 +64,9 @@ void Application::run()
         }
         m_mainWindow->clear();
         m_activeSim.update();
-        m_rendermgr.renderFromObjectMap(m_activeSim.getObjectMap());
-        m_rendermgr.present();
+        RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
+        RM::get().renderCivilianList(m_activeSim.getCivilianList());
+        RM::get().present();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }

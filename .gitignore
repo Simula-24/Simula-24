@@ -27,3 +27,5 @@ thirdparty/pdcurses/x64
 *.lib
 *.dll
 *.bkp
+bin/
+lib/

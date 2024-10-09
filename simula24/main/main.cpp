@@ -2,7 +2,6 @@
 #include <core/log/log.h>
 #include <core/error/seh.h>
 
-#include <graphics/Graphics.h>
 #include <Application.h>
 using namespace simula24;
 
@@ -12,7 +11,6 @@ int main(int argc, char** argv)
     setSEHHandler();
     ENGINE_INFO("SEH Handler set");
     
-    Graphics::get().terminate();
     Application app;
     if (app.init() != OK)
         return -1;
