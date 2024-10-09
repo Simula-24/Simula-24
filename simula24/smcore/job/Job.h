@@ -9,6 +9,14 @@ namespace simula24
 
 struct LocalJob
 {
+    LocalJob& operator=(const LocalJob& j)
+    {
+        m_type = j.m_type;
+        m_location = j.m_location;
+
+        return *this;
+    }
+
     JobType m_type;
     Point   m_location;
 };
