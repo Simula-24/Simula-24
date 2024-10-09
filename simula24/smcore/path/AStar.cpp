@@ -118,7 +118,12 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& ou
     }
     out.push_back(start);
 
-    std::reverse(out.begin(), out.end());
+    auto outstart = out.begin();
+    auto outend = out.end();
+    while (outstart != outend && outstart != --outend) {
 
+        std::iter_swap(outstart, outend);
+        ++outstart;
+    }
 ;    return true;
 }
