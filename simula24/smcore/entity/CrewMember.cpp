@@ -1,5 +1,4 @@
 #include "CrewMember.h"
-#include <smcore/path/AStar.h>
 using simula24::CrewMember;
 
 
@@ -28,7 +27,12 @@ void CrewMember::update()
     if (m_pathIndex < m_path.size())
     {
         m_location = m_path[m_pathIndex++];
+        if (m_pathIndex >= m_path.size())
+            m_state = EntityState::PERFORMING_JOB;
+        return;
     }
+
+
 }
 
 void CrewMember::setPath(PointList& p)
@@ -41,6 +45,5 @@ void CrewMember::setJob(LocalJob& j)
 {
     m_currentJob = j;
     m_state = EntityState::TRAVELLING_TO_JOB;
-    AStarPathFind(m_location, m_currentJob.m_location, m_path, ObjectMap{80,60});
 
 }
