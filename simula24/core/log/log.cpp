@@ -139,17 +139,15 @@ void Logger::logMemorySection(const void* start, int length, const char* msg, ..
 
 void Logger::writeMetaData(stl::string& output)
 {
-    char timeBuffer[25];
+    char timeBuffer[27];
 
     time_t timeOfLog = time(NULL);
     struct tm* timeInfo = nullptr;
     timeInfo = localtime(&timeOfLog);
 
-    strftime(timeBuffer, 24, "[%F %T]", timeInfo);
-    timeBuffer[24] = 0;
+    int written = strftime(timeBuffer, 27, "[%F %T] [ ", timeInfo);
+    timeBuffer[written] = 0;
     output += timeBuffer;
-
-    output += " [";
     output += m_name;
     output += "] ";
 
