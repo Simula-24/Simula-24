@@ -55,7 +55,6 @@ Status Application::init()
 void Application::run()
 {
     SDL_Event event;
-    LocalCluster l("hello", 100);
     while (m_shouldRun)
     {
         while (SDL_PollEvent(&event))
@@ -68,23 +67,10 @@ void Application::run()
         }
         m_mainWindow->clear();
         
-        SDL_Renderer* r = m_mainWindow->getRenderer();
+        
 
-        for(auto& i : l.getStarSystemMap())
-        {
-            drawCircle(r, i.first, i.second);
-        }
-
-        SDL_SetRenderDrawColor(r, 0xff,0xff, 0xff, 0xff);
-
-        for (auto& i : l.getRandomStarMap())
-        {
-            SDL_RenderDrawPoint(r, i.x, i.y);
-        }
-        SDL_SetRenderDrawColor(r, 0,0,0,0);
-
-        //m_activeSim.update();
-        //RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
+        m_activeSim.update();
+        RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         //RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
         RM::get().present();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));

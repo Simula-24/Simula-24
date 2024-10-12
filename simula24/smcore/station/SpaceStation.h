@@ -15,11 +15,14 @@ class SpaceStation
 {
 public:
 
-    
+    SpaceStation(const stl::string& name, size_t size_x, size_t size_y);
 
     const ObjectMap& getObjectMap() const { return m_objectMap; }
 
 private:
+    
+    void loadDefaultMap();
+
     ObjectMap m_objectMap;
 };
 

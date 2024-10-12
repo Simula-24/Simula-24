@@ -68,7 +68,6 @@ if(ENABLE_TESTS)
     gtest_discover_tests(simula24)
 endif()
 
-
 target_link_libraries(simula24 PRIVATE ${SIMULA24_LIBRARIES})
 target_include_directories(simula24 PUBLIC 
     "${CMAKE_SOURCE_DIR}/"

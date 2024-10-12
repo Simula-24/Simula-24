@@ -3,6 +3,7 @@
 
 #include <core/stl/array.h>
 #include <math/Point.h>
+#include <core/types.h>
 #include <core/log/log.h>
 namespace simula24
 {

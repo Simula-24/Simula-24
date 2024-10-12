@@ -4,7 +4,7 @@
 #include <objectmanager/ObjectManager.h>
 using simula24::Simulation;
 
-Simulation::Simulation() : m_objectMap(80, 60), m_CrewMembers{}
+Simulation::Simulation() : m_station("",80, 60), m_CrewMembers{}
 {
    
     int f = OM::getObjectTable().insert("ferrite_wall", 219, false);
