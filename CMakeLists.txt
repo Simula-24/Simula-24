@@ -45,7 +45,7 @@ if(WIN32)
     )
     # vv I don't care if CMake makes something uppercase
     add_compile_options("/wd9025")
-
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS=1)
     ## Release PDB Generation
     target_compile_options(simula24 PRIVATE "$<$<CONFIG:Release>:/Zi>")
     target_link_options(simula24 PRIVATE "$<$<CONFIG:Release>:/DEBUG>")

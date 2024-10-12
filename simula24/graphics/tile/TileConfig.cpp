@@ -66,8 +66,8 @@ bool TileConfig::parseConfig(const stl::string& cfg)
 {
     TileSheetConfig tsc{};
 
-    int nameStart = cfg.find('[');
-    int nameEnd = cfg.find(']');
+    size_t nameStart = cfg.find('[');
+    size_t nameEnd = cfg.find(']');
 
     if (nameStart == stl::string::npos || nameEnd == stl::string::npos)
         return false;
@@ -76,7 +76,7 @@ bool TileConfig::parseConfig(const stl::string& cfg)
 
 
     // make sure we dont start ON a newline
-    int pos = cfg.find(nameEnd,'\n') + 1;
+    size_t pos = cfg.find(nameEnd,'\n') + 1;
 
     while (pos < cfg.length())
     {
@@ -89,8 +89,8 @@ bool TileConfig::parseConfig(const stl::string& cfg)
         ///pos~~^  ^     ^~~nextnl
         ///        \ nexteq
         /// 
-        int nexteq = cfg.find(pos, '=');
-        int nextnl = cfg.find(pos, '\n');
+        size_t nexteq = cfg.find(pos, '=');
+        size_t nextnl = cfg.find(pos, '\n');
 
         if (nexteq == stl::string::npos || nextnl == stl::string::npos)
             break;

@@ -8,7 +8,7 @@ using simula24::LocalJob;
 Simulation::Simulation() : m_station("",80, 60), m_CrewMembers{}
 {
    
-    int f = OM::getObjectTable().insert("ferrite_wall", 176, false);
+    OM::getObjectTable().insert("ferrite_wall", 176, false);
     
     OM::getObjectTable().insert("hooman", 2, false);
     

@@ -280,11 +280,10 @@ void copy_on_write<T>::unref()
 template <class T>
 void copy_on_write<T>::resize(size_t n)
 {
-    uint32_t rc = create_copy();
+    create_copy();
 
     T* new_buffer = static_cast<T*>(simula24::alloc_static((n * sizeof(T)) + sizeof(CowHdr)));
 
-    T* old_buffer = m_ptr;
     T* old_data = get_data();
     size_t old_size = get_total_size();
 

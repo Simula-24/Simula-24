@@ -145,7 +145,7 @@ void Logger::writeMetaData(stl::string& output)
     struct tm* timeInfo = nullptr;
     timeInfo = localtime(&timeOfLog);
 
-    int written = strftime(timeBuffer, 27, "[%F %T] [ ", timeInfo);
+    size_t written = strftime(timeBuffer, sizeof(timeBuffer), "[%F %T] [ ", timeInfo);
     timeBuffer[written] = 0;
     output += timeBuffer;
     output += m_name;
