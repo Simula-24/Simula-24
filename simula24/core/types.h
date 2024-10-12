@@ -30,4 +30,10 @@ using byte = unsigned char;
 
 }
 
+#ifdef _MSC_VER
+# define FORCEINLINE __forceinline
+#else
+# pragma message("No force inline for platform")
+# define FORCEINLINE inline
+#endif
 #endif // SIMULA24_TYPES_H_
