@@ -66,14 +66,14 @@ public:
         _int_store->_refcount++;
     }
 
-    shared_ptr& operator=(const shared_ptr& other)
+    FORCEINLINE shared_ptr& operator=(const shared_ptr& other)
     {
         _int_store = other._int_store;
         other._int_store->_refcount++;
         return *this;
     }
 
-    shared_ptr& operator=(shared_ptr&& other)
+    FORCEINLINE shared_ptr& operator=(shared_ptr&& other)
     {
 
         _int_store = stl::move(other._int_store);
@@ -83,7 +83,7 @@ public:
     }
 
     /// get the pointer
-    T* operator->()
+    FORCEINLINE T* operator->()
     {
         if (_int_store)
             return static_cast<T*>(_int_store->_ptr);
@@ -92,7 +92,7 @@ public:
     }
 
     /// dereference the pointer
-    T& operator*()
+    FORCEINLINE T& operator*()
     {
         assert(_int_store);
         return *static_cast<T*>(_int_store->_ptr);
@@ -123,12 +123,12 @@ public:
         return x;
     }
 
-    bool isSame(const shared_ptr& other) const
+    FORCEINLINE bool isSame(const shared_ptr& other) const
     {
         return other._int_store == _int_store;
     }
 
-    bool isValid() const { return _int_store != nullptr; }
+    FORCEINLINE bool isValid() const { return _int_store != nullptr; }
 
     ///
     /// @brief
@@ -157,7 +157,7 @@ public:
             _int_store->_refcount--;
     }
 
-    uint32_t reference_count() const
+    FORCEINLINE uint32_t reference_count() const
     {
         return _int_store->_refcount;
     }
@@ -244,13 +244,13 @@ public:
         return *this;
     }
 
-    T& operator*()
+    FORCEINLINE T& operator*()
     {
         assert(m_ptr);
         return *m_ptr;
     }
 
-    T* operator->()
+    FORCEINLINE T* operator->()
     {
         return m_ptr;
     }
