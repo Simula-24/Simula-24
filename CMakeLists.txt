@@ -61,7 +61,10 @@ elseif(UNIX)
 endif()
 
 
-
+target_compile_options(simula24 PRIVATE
+  $<$<CXX_COMPILER_ID:MSVC>: /W4 /WX >
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+)
 if(ENABLE_TESTS)
     set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} PUBLIC GTest::gtest_main)
     include(GoogleTest)
