@@ -73,16 +73,16 @@ void RenderManager::addTileSheet(const stl::string& configLoc)
 
 void RenderManager::renderFromObjectMap(const ObjectMap& om)
 {
-    for (int i = 0; i < 80; i++)
+    for (int i = 0; i < om.getSizeX(); i++)
     {
-        for (int j = 0; j < 60; j++)
+        for (int j = 0; j < om.getSizeY(); j++)
         {
             SDL_Rect g;
             g.w = 16;
             g.h = 8;
-            g.y = (i + j) * (8 / 2) - -om.get(i,j)* 3;
+            g.y = (i + j) * (8 / 2) - 0* 3;
             g.x = (i - j) * (16 / 2);
-
+            g.x+=50;
             if (om.get(i, j) != -1)
             {
                 m_mainWindow->copyTexture(m_mainTexture,
@@ -103,12 +103,13 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
     for (int i = 0; i < cl.size(); i++)
     {
         auto& loc = cl[i].getLocation();
-        SDL_Rect location = { 
-            loc.x + (15 * loc.x) ,
-            loc.y + (15* loc.y) ,
-            15, 
-            15
+        SDL_Rect location = {
+            .x = (loc.x - loc.y) * (16 / 2) ,
+            .y = (loc.x + loc.y) * (8 / 2),
+            .w = 16, 
+            .h = 8
         };
+        location.x += 50;
         m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(1), &location);
 
     }
