@@ -125,6 +125,8 @@ public:
 
     /// return a substring
     basic_string<T> substr(size_t pos = 0, size_t count = npos) const;
+    
+    basic_string<T> substr_from_to(size_t from = 0, size_t to = npos) const;
 
     void setPos(size_t pos)
     {
@@ -219,16 +221,34 @@ private:
 template<class T>
 basic_string<T> basic_string<T>::substr(size_t pos, size_t count) const
 {
-
-
     if (count > length())
-        count = length();
+        count = length() - pos;
 
     basic_string<T> newString;
-    newString.resize(count - pos + 1);
+    newString.resize(count + 1);
 
     size_t idx = 0;
-    for (size_t i = pos; i < count; i++)
+    for (size_t i = 0; i < count; i++)
+    {
+        newString[idx++] = m_chars.at(pos + i);
+    }
+    newString[idx] = 0;
+    newString.m_length = idx + 1;
+    return newString;
+}
+
+template<class T>
+basic_string<T> basic_string<T>::substr_from_to(size_t from, size_t to) const
+{
+
+    if (to > length())
+        to = length();
+
+    basic_string<T> newString;
+    newString.resize(to - from + 1);
+
+    size_t idx = 0;
+    for (size_t i = from; i < to; i++)
     {
         newString[idx++] = m_chars.at(i);
     }

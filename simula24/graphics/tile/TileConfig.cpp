@@ -1,5 +1,5 @@
 #include "TileConfig.h"
-
+#include <core/log/log.h>
 #include <graphics/tile/TileSheet.h>
 #include <stdio.h>
 using simula24::TileConfig;
@@ -30,10 +30,20 @@ Status TileConfig::load(const stl::string& configFileName)
     contents.setPos(config.getSize());
     
     contents += '\0';
-    printf("%s\n",contents.c_str());
 
-    if(!parseConfig(contents))
-        return ERR_INVALID_PARAMETER;
+    int offset = 0;
+    int idx = 0;
+    stl::string substr;
+    
+    while ((idx = contents.find(offset+1, '[')) != stl::string::npos)
+    {
+        substr = contents.substr(offset, (idx - offset));
+        if (!parseConfig(substr))
+            return ERR_INVALID_PARAMETER;
+        offset = idx;
+    }
+
+
     return OK;
 }
 
@@ -57,8 +67,6 @@ bool simula24::TileConfig::extractDimensions(const stl::string& source, int& w_o
     
     w_out = atoi(width);
     h_out = atoi(source.c_str() + pivot + 1);
-
-    printf("%d x %d\n", w_out, h_out);
     return true;
 }
 
@@ -72,7 +80,7 @@ bool TileConfig::parseConfig(const stl::string& cfg)
     if (nameStart == stl::string::npos || nameEnd == stl::string::npos)
         return false;
 
-    tsc.filename = cfg.substr(nameStart + 1, nameEnd);
+    tsc.filename = cfg.substr_from_to(nameStart + 1, nameEnd);
 
 
     // make sure we dont start ON a newline
@@ -99,8 +107,8 @@ bool TileConfig::parseConfig(const stl::string& cfg)
         while (cfg[pos] == ' ' && pos < cfg.length())
             ++pos;
 
-        stl::string keyName = cfg.substr(pos, nexteq).c_str();
-        stl::string value = cfg.substr(nexteq + 1, nextnl);
+        stl::string keyName = cfg.substr_from_to(pos, nexteq).c_str();
+        stl::string value = cfg.substr_from_to(nexteq + 1, nextnl);
         
         if (keyName == "tile_size")
         {
@@ -116,6 +124,10 @@ bool TileConfig::parseConfig(const stl::string& cfg)
         // skip over newline
         pos = nextnl + 1;
     }
+    CLIENT_DEBUG("Found tile sub-config, len = %d bytes", cfg.length());
+    CLIENT_DEBUG("Filename=%s | image_size=%dx%d | indiv. tile_size = %dx%d",
+        tsc.filename.c_str(), tsc.imageWidth, tsc.imageHeight, tsc.tileWidth, tsc.tileHeight
+    );
 
     m_sheetConfigs.push_back(tsc);
     return true;

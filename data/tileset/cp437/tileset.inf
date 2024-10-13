@@ -1,4 +1,11 @@
 [test.png]
     size=192x32
     tile_size=64x32
-    comment="Original IBM character set"
+    comment="Test tiles"
+
+[medium-world-tiles.png]
+    size=64x64
+    tile_size=64x64
+    comment="Medium sized world tiles"
+ 
+[end.png]

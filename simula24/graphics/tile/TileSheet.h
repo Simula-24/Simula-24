@@ -5,6 +5,7 @@
 #include <core/stl/array.h>
 #include <core/types.h>
 #include <cassert>
+#include <core/stl/string.h>
 namespace simula24
 {
 
@@ -48,7 +49,7 @@ private:
     stl::array<SDL_Rect> m_tiles;
     
     SDL_Texture* m_sheet;
-    const stl::string& m_name;
+    stl::string m_name;
 };
 
 }
