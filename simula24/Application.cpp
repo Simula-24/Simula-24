@@ -54,6 +54,8 @@ Status Application::init()
 
 void Application::run()
 {
+    SDL_RenderSetScale(m_mainWindow->getRenderer(), 3, 3);
+
     SDL_Event event;
     while (m_shouldRun)
     {

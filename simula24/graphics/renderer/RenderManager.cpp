@@ -43,7 +43,6 @@ Status RenderManager::init()
     }
 
     ENGINE_INFO("SDL_image Initialized");
-
     return OK;
 }
 
@@ -79,10 +78,11 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
         for (int j = 0; j < 60; j++)
         {
             SDL_Rect g;
-            g.w = 15;
-            g.h = 15;
-            g.y = i + (15 * i);
-            g.x = j + (15 * j);
+            g.w = 16;
+            g.h = 8;
+            g.y = (i + j) * (8 / 2) - -om.get(i,j)* 3;
+            g.x = (i - j) * (16 / 2);
+
             if (om.get(i, j) != -1)
             {
                 m_mainWindow->copyTexture(m_mainTexture,
