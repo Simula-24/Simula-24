@@ -8,9 +8,10 @@ using simula24::LocalJob;
 Simulation::Simulation() : m_station("",80, 60), m_CrewMembers{}
 {
    
-    OM::getObjectTable().insert("ferrite_wall", 176, false);
+    OM::getObjectTable().insert("ferrite_wall", 0, false);
     
-    OM::getObjectTable().insert("hooman", 2, false);
+    OM::getObjectTable().insert("hooman", 1, false);
+    OM::getObjectTable().insert("basic_floor", 2, true);
     
     m_CrewMembers.push_back({});
     m_CrewMembers[0].setLocation({ 15, 15 });

@@ -67,7 +67,7 @@ void RenderManager::addTileSheet(const stl::string& configLoc)
         return;
 
     m_mainTileSheet = tsp.getNextSheet();
-    m_mainTexture = m_mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
+    m_mainTexture = m_mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/test.png");
     m_globTileHeight = m_mainTileSheet->getTileHeight();
     m_globTileWidth = m_mainTileSheet->getTileWidth();
 }
@@ -79,10 +79,10 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
         for (int j = 0; j < 60; j++)
         {
             SDL_Rect g;
-            g.w = 10;
-            g.h = 10;
-            g.y = i + (10 * i);
-            g.x = j + (10 * j);
+            g.w = 15;
+            g.h = 15;
+            g.y = i + (15 * i);
+            g.x = j + (15 * j);
             if (om.get(i, j) != -1)
             {
                 m_mainWindow->copyTexture(m_mainTexture,
@@ -104,12 +104,12 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
     {
         auto& loc = cl[i].getLocation();
         SDL_Rect location = { 
-            loc.x + (m_globTileHeight * loc.x) ,
-            loc.y + (m_globTileHeight * loc.y) ,
-            m_globTileWidth, 
-            m_globTileHeight
+            loc.x + (15 * loc.x) ,
+            loc.y + (15* loc.y) ,
+            15, 
+            15
         };
-        m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(2), &location);
+        m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(1), &location);
 
     }
 }

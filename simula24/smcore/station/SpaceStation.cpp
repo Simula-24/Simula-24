@@ -13,7 +13,6 @@ SpaceStation::SpaceStation(const stl::string& name, size_t size_x, size_t size_y
 
 void SpaceStation::loadDefaultMap()
 {
-
     for (int i = 0; i < 40; i++)
     {
         m_objectMap.set(10, i + 10, 0);
@@ -26,7 +25,14 @@ void SpaceStation::loadDefaultMap()
         m_objectMap.set(10 + i, 49, 0);
     }
 
+    for (int i = 1; i < 30; i++)
+    {
+        for (int j = 1; j < 39; j++)
+        {
+            m_objectMap.set(10 + i, 10 + j, 2);
 
+        }
+    }
 }
 
 
