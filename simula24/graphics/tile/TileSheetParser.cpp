@@ -32,7 +32,7 @@ stl::shared_ptr<TileSheet> TileSheetParser::getNextSheet()
         return stl::shared_ptr<TileSheet>();
     
     auto ts = stl::make_shared<TileSheet>();
-
+    
     if(!generateTileCoordinates(*m_cfgIter, *ts))
         return stl::shared_ptr<TileSheet>();
 
