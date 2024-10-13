@@ -4,7 +4,7 @@
 #include "TileConfig.h"
 #include <core/stl/string.h>
 #include <core/stl/smart_ptr.h>
-
+#include <optional>
 namespace simula24
 {
 
@@ -16,7 +16,7 @@ public:
 
     Status loadConfig(const stl::string& name);
 
-    stl::shared_ptr<TileSheet> getNextSheet();
+    std::optional<TileSheet> getNextSheet();
 
     bool good() const { return m_isGood; }
 

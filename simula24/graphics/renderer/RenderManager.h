@@ -61,7 +61,7 @@ private:
     
     SDL_Texture* m_mainTexture;
     
-    stl::shared_ptr<TileSheet> m_mainTileSheet;
+    TileSheet m_mainTileSheet;
 
     int m_globTileWidth;
     int m_globTileHeight;

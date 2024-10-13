@@ -26,15 +26,15 @@ Status TileSheetParser::loadConfig(const stl::string& name)
     return stat;
 }
 
-stl::shared_ptr<TileSheet> TileSheetParser::getNextSheet()
+std::optional<TileSheet> TileSheetParser::getNextSheet()
 {
     if (m_cfgIter > m_cfgIterEnd)
-        return stl::shared_ptr<TileSheet>();
+        return std::nullopt;
+
+    TileSheet ts;
     
-    auto ts = stl::make_shared<TileSheet>();
-    
-    if(!generateTileCoordinates(*m_cfgIter, *ts))
-        return stl::shared_ptr<TileSheet>();
+    if (!generateTileCoordinates(*m_cfgIter, ts))
+        return std::nullopt;
 
     if (m_cfgIter <= m_cfgIterEnd)
         ++m_cfgIter;

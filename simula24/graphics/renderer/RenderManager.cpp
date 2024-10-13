@@ -65,10 +65,14 @@ void RenderManager::addTileSheet(const stl::string& configLoc)
     if (tsp.loadConfig(configLoc) != OK)
         return;
 
-    m_mainTileSheet = tsp.getNextSheet();
+
+    auto ret = tsp.getNextSheet();
+    if (!ret.has_value())
+        assert(false);
+    m_mainTileSheet = std::move(ret.value());
     m_mainTexture = m_mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/test.png");
-    m_globTileHeight = m_mainTileSheet->getTileHeight();
-    m_globTileWidth = m_mainTileSheet->getTileWidth();
+    m_globTileHeight = m_mainTileSheet.getTileHeight();
+    m_globTileWidth = m_mainTileSheet.getTileWidth();
 }
 
 void RenderManager::renderFromObjectMap(const ObjectMap& om)
@@ -86,7 +90,7 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             if (om.get(i, j) != -1)
             {
                 m_mainWindow->copyTexture(m_mainTexture,
-                    &m_mainTileSheet->getTile(
+                    &m_mainTileSheet.getTile(
                         OM::getObjectTable().getTileId(
                             om.get(i, j)
                         )
@@ -110,7 +114,7 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
             .h = 8
         };
         location.x += 50;
-        m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(1), &location);
+        m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet.getTile(1), &location);
 
     }
 }

@@ -20,6 +20,10 @@ class TileSheet
 {
 public:
     TileSheet();
+
+    TileSheet(TileSheet&& other);
+    TileSheet& operator=(TileSheet&& other);
+
     ~TileSheet();
 
     FORCEINLINE const SDL_Rect& getTile(size_t id) const
