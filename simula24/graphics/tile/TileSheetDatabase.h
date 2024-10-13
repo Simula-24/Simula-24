@@ -1,11 +1,13 @@
 #ifndef GRAPHICS_TILE_TILE_SHEET_DATABASE
-#define GRAPHICS_TILE_TILE_SHEET_DATABSE
+#define GRAPHICS_TILE_TILE_SHEET_DATABASE
 
 #include <core/stl/array.h>
 #include "TileSheet.h"
 
 namespace simula24
 {
+
+using TileSheetList = stl::array<TileSheet>;
 
 ///
 /// @brief
@@ -15,8 +17,8 @@ struct TileSheetDatabase
     TileSheetDatabase();
     ~TileSheetDatabase();
 
-    stl::array<TileSheet> worldTiles;
-    stl::array<TileSheet> creatureTiles;
+    TileSheetList worldTiles;
+    TileSheetList creatureTiles;
 
 };
 

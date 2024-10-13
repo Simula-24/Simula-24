@@ -12,7 +12,7 @@
 #include <core/log/log.h>
 
 #include <smcore/entity/CrewMember.h>
-
+#include <graphics/tile/SheetLoader.h>
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
@@ -43,6 +43,8 @@ Status RenderManager::init()
     }
 
     ENGINE_INFO("SDL_image Initialized");
+
+
     return OK;
 }
 
@@ -65,6 +67,8 @@ void RenderManager::addTileSheet(const stl::string& configLoc)
     if (tsp.loadConfig(configLoc) != OK)
         return;
 
+    SheetLoader loader(m_tileDB, m_mainWindow->getTextureManager());
+    loader.loadWorldTiles(configLoc);
 
     auto ret = tsp.getNextSheet();
     if (!ret.has_value())

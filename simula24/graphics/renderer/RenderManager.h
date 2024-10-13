@@ -6,7 +6,7 @@
 #include <graphics/AppWindow.h>
 #include <core/stl/smart_ptr.h>
 #include <core/error/error.h>
-
+#include <graphics/tile/TileSheetDatabase.h>
 namespace simula24
 {
 
@@ -69,6 +69,7 @@ private:
     int m_tilesPerRow;
     int m_tilesPerColumn;
 
+    TileSheetDatabase m_tileDB;
 };
 
 

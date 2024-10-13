@@ -23,7 +23,8 @@ public:
 
     TileSheet(TileSheet&& other);
     TileSheet& operator=(TileSheet&& other);
-
+    TileSheet(const TileSheet&);
+    TileSheet& operator=(const TileSheet& other);
     ~TileSheet();
 
     FORCEINLINE const SDL_Rect& getTile(size_t id) const
@@ -38,22 +39,30 @@ public:
         m_tiles.push_back(tileLoc);
     }
     
-    void setTexture(SDL_Texture* texture)
+    inline void setTexture(SDL_Texture* texture)
     {
         if (!m_sheet) 
             m_sheet = texture;
     }
+    FORCEINLINE SDL_Texture* getTexture()
+    {
+        return m_sheet;
+    }
 
     FORCEINLINE size_t getNumTiles() const { return m_tiles.size(); }
+
     FORCEINLINE int getTileWidth() const { return m_tiles[0].w; }
     FORCEINLINE int getTileHeight() const { return m_tiles[0].h; }
 
+    FORCEINLINE void setLocation(const stl::string& location) { m_location = location; }
+
+    FORCEINLINE const stl::string& getLocation() const { return m_location; }
 private:
 
     stl::array<SDL_Rect> m_tiles;
     
     SDL_Texture* m_sheet;
-    stl::string m_name;
+    stl::string m_location;
 };
 
 }

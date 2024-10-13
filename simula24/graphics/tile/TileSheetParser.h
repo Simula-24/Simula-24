@@ -27,7 +27,7 @@ private:
     TileConfig m_tcfg;
     TileConfig::TileCfgIter m_cfgIter;
     TileConfig::TileCfgIter m_cfgIterEnd;
-
+    
     bool m_isGood;
 };
 

@@ -28,7 +28,7 @@ Status TileSheetParser::loadConfig(const stl::string& name)
 
 std::optional<TileSheet> TileSheetParser::getNextSheet()
 {
-    if (m_cfgIter > m_cfgIterEnd)
+    if (m_cfgIter >= m_cfgIterEnd)
         return std::nullopt;
 
     TileSheet ts;
@@ -58,7 +58,7 @@ bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc, TileSh
             dest.addTile(rect);
         }
     }
-
+    dest.setLocation(tsc.filename);
     return true;
 }
 
