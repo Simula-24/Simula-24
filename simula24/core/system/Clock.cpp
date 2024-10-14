@@ -1,5 +1,5 @@
 #include <core/system/Clock.h>
-#include <SDL_Timer.h>
+#include <SDL.h>
 #include <core/types.h>
 
 using simula24::Clock;
@@ -11,7 +11,7 @@ Clock::Clock()
     m_secPerCount(0.0f),
     paused(false), m_endTime(0)
 {
-    m_secPerCount = 1000.0f / (double)SDL_GetPerformanceFrequency();
+    m_secPerCount = 1.0f / (double)SDL_GetPerformanceFrequency();
 }
 
 float Clock::getTotal() const

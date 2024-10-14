@@ -12,6 +12,13 @@ stl::shared_ptr<Logger> simula24::DebugLoggers::m_clientLogger;
 
 void simula24::DebugLoggers::init()
 {
+#ifdef _WIN32
+   HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    GetConsoleMode(hOut, &dwMode);
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    SetConsoleMode(hOut, dwMode);
+#endif
     m_engineLogger = stl::make_shared<Logger>("ENGINE");
     m_engineLogger->setSink<ConsoleSink>();
     m_clientLogger = stl::make_shared<Logger>("CLIENT");

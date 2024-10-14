@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <graphics/tile/TileSheet.h>
 #include <graphics/AppWindow.h>
+#include <graphics/AppWindowMgr.h>
 #include <core/stl/smart_ptr.h>
 #include <core/error/error.h>
 #include <graphics/tile/TileSheetDatabase.h>
@@ -37,15 +38,12 @@ public:
     /// 
     Status terminate();
 
-    /// set our app window
-    void setWindow(AppWindow* win);
-
     ///
     /// @brief
     ///     Parse the games tile sheets
-    ///     TODO: rename and make parameter point to directory location
     /// 
-    void addTileSheet(const stl::string& configLoc);
+    Status loadTileDatabase(const stl::string& directory);
+
 
     ///
     /// @brief
@@ -61,6 +59,10 @@ public:
     /// 
     void renderCivilianList(const stl::array<CrewMember>& cl);
 
+
+    void newFrame();
+    void endFrame();
+
     /// Present/swap buffers
     inline void present() 
     { 
@@ -72,6 +74,8 @@ public:
 
 private:
 
+    /// Window Manager
+    AppWindowMgr m_wm;
     /// Primary window
     AppWindow* m_mainWindow;
     /// Database containing all of our tilesheets

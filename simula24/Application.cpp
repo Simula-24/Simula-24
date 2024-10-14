@@ -47,18 +47,12 @@ Status Application::init()
         ENGINE_CRITICAL("Failed to initialize graphic subsystem");
         return stat;
     }
-    
-    if (!m_wm.createWindow('main', "Simula 24", 1280, 720))
-    {
-        ENGINE_CRITICAL("Failed to create new window");
-        return ERR_DEVICE_OR_OBJECT_FAILED_TO_CREATE;
-    }
-
-    m_mainWindow = m_wm.getAppWindow('main');
-
-    RM::get().setWindow(m_mainWindow);
-    RM::get().addTileSheet("../data/tileset/cp437/tileset.inf");
-    
+#if defined(SIMULA24_DEBUG)
+    RM::get().loadTileDatabase("../data/tileset/cp437/");
+#else 
+#pragma message("hello")
+    RM::get().loadTileDatabase("./data/tileset/cp437/");
+#endif
   
     m_shouldRun = true;
 
@@ -72,17 +66,19 @@ void Application::run()
     cam.incX(50);
     
     SDL_Event event;
-    SDL_RenderSetVSync(m_mainWindow->getRenderer(), 1);
     
     Clock gameClock;
     gameClock.reset();
 
     gameClock.start();
+    U64 frames = 0;
+    double fps = 0;
     while (m_shouldRun)
     {
         while (SDL_PollEvent(&event))
         {
             ImGui_ImplSDL2_ProcessEvent(&event);
+
             if (event.type == SDL_QUIT)
             {
                 m_shouldRun = false;
@@ -94,38 +90,35 @@ void Application::run()
                 switch (event.key.keysym.sym)
                 {
                     case SDLK_UP:
-                        cam.incY(gameClock.getDelta());
+                        cam.incY(1000*gameClock.getDelta());
                         break;
                     case SDLK_DOWN:
-                        cam.incY(-gameClock.getDelta());
+                        cam.incY(-1000 * gameClock.getDelta());
                         break;
                     case SDLK_LEFT:
-                        cam.incX(gameClock.getDelta());
+                        cam.incX(1000 * gameClock.getDelta());
                         break;
                     case SDLK_RIGHT:
-                        cam.incX(-gameClock.getDelta());
+                        cam.incX(-1000 * gameClock.getDelta());
                         break;
                 }
             }
-   
         }
 
-        ImGui_ImplSDLRenderer2_NewFrame();
-        ImGui_ImplSDL2_NewFrame();
-        ImGui::NewFrame();
-        bool t = true;
-        ImGui::ShowDemoWindow(&t);
+        RM::get().newFrame();
+
         gameClock.tick();
-        m_mainWindow->clear();
-        
+        fps = 1 / gameClock.getDelta();
+        ImGui::Text("DELTA: %lf", gameClock.getDelta());
+        ImGui::Text("FPS: %lf", fps);
+        ImGui::Text("Total uptime: %lf", gameClock.getTotal());
+
         m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
-        
-        ImGui::Render();
-        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), m_mainWindow->getRenderer());
-        RM::get().present();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        RM::get().endFrame();
+
+        //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 }
 

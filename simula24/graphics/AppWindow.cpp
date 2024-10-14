@@ -37,7 +37,7 @@ bool AppWindow::create(const stl::string& name, int w, int h, int x, int y)
         return false;
     }
 
-    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (!m_renderer)
     {

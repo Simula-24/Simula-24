@@ -20,6 +20,7 @@
 #include <imgui.h>
 #include <backends/imgui_impl_sdlrenderer2.h>
 #include <backends/imgui_impl_sdl2.h>
+
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
@@ -59,6 +60,17 @@ Status RenderManager::init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 
+
+    if (!m_wm.createWindow('main', "Simula 24", 1280, 720))
+    {
+        ENGINE_CRITICAL("Failed to create new window");
+        return ERR_DEVICE_OR_OBJECT_FAILED_TO_CREATE;
+    }
+
+    m_mainWindow = m_wm.getAppWindow('main');
+    ImGui_ImplSDL2_InitForSDLRenderer(m_mainWindow->getWindow(), m_mainWindow->getRenderer());
+    ImGui_ImplSDLRenderer2_Init(m_mainWindow->getRenderer());
+
     return OK;
 }
 
@@ -69,20 +81,16 @@ Status RenderManager::terminate()
     return OK;
 }
 
-void RenderManager::setWindow(AppWindow* win)
+Status RenderManager::loadTileDatabase(const stl::string& directory)
 {
-    assert(win);
-    m_mainWindow = win;
 
-    ImGui_ImplSDL2_InitForSDLRenderer(win->getWindow(), win->getRenderer());
-    ImGui_ImplSDLRenderer2_Init(win->getRenderer());
+    CLIENT_INFO("Loading tile database at %s", directory.c_str());
 
-}
-
-void RenderManager::addTileSheet(const stl::string& configLoc)
-{
     SheetLoader loader(m_tileDB, m_mainWindow->getTextureManager());
-    loader.loadWorldTiles(configLoc);
+    if (!loader.loadWorldTiles(directory))
+        return FAILED;
+    return OK;
+
 }
 
 void RenderManager::renderFromObjectMap(const ObjectMap& om)
@@ -138,4 +146,20 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
         m_mainWindow->copyTexture(m_tileDB.worldTiles[0].getTexture(),tile, &location);
 
     }
+}
+
+void RenderManager::newFrame()
+{
+    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+    m_mainWindow->clear();
+}
+
+void RenderManager::endFrame()
+{
+
+    ImGui::Render();
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), m_mainWindow->getRenderer());
+    m_mainWindow->present();
 }

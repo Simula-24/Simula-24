@@ -7,11 +7,12 @@
 using simula24::SheetLoader;
 using simula24::TileSheetParser;
 
-bool SheetLoader::loadWorldTiles(const stl::string& cfgLoc)
+bool SheetLoader::loadWorldTiles(const stl::string& cfgDir)
 {
     TileSheetParser tsp;
-    
-    if (tsp.loadConfig(cfgLoc) != OK)
+    stl::string cfgFile = cfgDir;
+    cfgFile += "tileset.inf";
+    if (tsp.loadConfig(cfgFile) != OK)
         return false;
 
     m_activeList = &m_tdb.worldTiles;
@@ -20,7 +21,7 @@ bool SheetLoader::loadWorldTiles(const stl::string& cfgLoc)
     while (sheet.has_value())
     {
         TileSheet& ts = sheet.value();
-        stl::string location = "../data/tileset/cp437/";
+        stl::string location = cfgDir;
         location += ts.getLocation();
         ts.setTexture(
             m_texmgr.loadFromFile(
