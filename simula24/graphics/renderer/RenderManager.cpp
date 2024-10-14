@@ -15,8 +15,11 @@
 #include <smcore/entity/CrewMember.h>
 
 #include <objectmanager/ObjectManager.h>
-
 #include <cassert>
+
+#include <imgui.h>
+#include <backends/imgui_impl_sdlrenderer2.h>
+#include <backends/imgui_impl_sdl2.h>
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
@@ -48,6 +51,13 @@ Status RenderManager::init()
 
     ENGINE_INFO("SDL_image Initialized");
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
 
     return OK;
 }
@@ -63,6 +73,10 @@ void RenderManager::setWindow(AppWindow* win)
 {
     assert(win);
     m_mainWindow = win;
+
+    ImGui_ImplSDL2_InitForSDLRenderer(win->getWindow(), win->getRenderer());
+    ImGui_ImplSDLRenderer2_Init(win->getRenderer());
+
 }
 
 void RenderManager::addTileSheet(const stl::string& configLoc)

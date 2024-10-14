@@ -23,10 +23,13 @@ else()
     add_subdirectory("simula24/main/")
 endif()
 
+add_subdirectory("thirdparty")
 add_subdirectory("simula24")
 add_executable(simula24
+    ${IMGUI_SOURCES}
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
+
     "simula24/core/stl/priority_queue.h"
  "simula24/core/stl/max_heap.h")
 
@@ -70,6 +73,7 @@ target_link_libraries(simula24 PRIVATE ${SIMULA24_LIBRARIES})
 target_include_directories(simula24 PUBLIC 
     "${CMAKE_SOURCE_DIR}/"
     "${CMAKE_SOURCE_DIR}/simula24/"
+    "${CMAKE_SOURCE_DIR}/thirdparty/imgui/"
 )
 
 target_compile_definitions(simula24 PRIVATE

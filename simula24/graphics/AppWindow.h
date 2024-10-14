@@ -61,6 +61,7 @@ public:
     inline TextureManager& getTextureManager() { return m_texManager; }
 
     FORCEINLINE SDL_Renderer* getRenderer() const { return m_renderer; }
+    FORCEINLINE SDL_Window* getWindow() { return m_window; }
 private:
 
     SDL_Window* m_window;

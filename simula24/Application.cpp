@@ -18,6 +18,11 @@
 
 #include <objectmanager/ObjectManager.h>
 
+
+#include <imgui.h>
+#include <backends/imgui_impl_sdl2.h>
+#include <backends/imgui_impl_sdlrenderer2.h>
+
 using simula24::Application;
 using simula24::Status;
 void drawCircle(SDL_Renderer* r, simula24::Point p, int radius);
@@ -77,6 +82,7 @@ void Application::run()
     {
         while (SDL_PollEvent(&event))
         {
+            ImGui_ImplSDL2_ProcessEvent(&event);
             if (event.type == SDL_QUIT)
             {
                 m_shouldRun = false;
@@ -103,12 +109,21 @@ void Application::run()
             }
    
         }
+
+        ImGui_ImplSDLRenderer2_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+        bool t = true;
+        ImGui::ShowDemoWindow(&t);
         gameClock.tick();
         m_mainWindow->clear();
         
         m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
+        
+        ImGui::Render();
+        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), m_mainWindow->getRenderer());
         RM::get().present();
         //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
