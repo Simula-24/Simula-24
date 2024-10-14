@@ -9,6 +9,7 @@
 
 #include <core/log/log.h>
 #include <math/Point.h>
+#include <core/system/Clock.h>
 
 #include <graphics/renderer/Camera.h>
 #include <graphics/tile/TileSheetParser.h>
@@ -64,14 +65,14 @@ void Application::run()
     Camera cam{};
     RM::get().setCamera(&cam);
     cam.incX(50);
-
-    U64 now = SDL_GetPerformanceCounter();
-    U64 last = 0;
-    double delta = 0.0f;
+    
+    Clock gameClock;
+    gameClock.reset();
 
     SDL_Event event;
     float scaleY = 0;
     SDL_RenderSetVSync(m_mainWindow->getRenderer(), 1);
+    gameClock.start();
     while (m_shouldRun)
     {
         while (SDL_PollEvent(&event))
@@ -87,16 +88,16 @@ void Application::run()
                 switch (event.key.keysym.sym)
                 {
                     case SDLK_UP:
-                        cam.incY(delta);
+                        cam.incY(gameClock.getDelta());
                         break;
                     case SDLK_DOWN:
-                        cam.incY(-delta);
+                        cam.incY(-gameClock.getDelta());
                         break;
                     case SDLK_LEFT:
-                        cam.incX(delta);
+                        cam.incX(gameClock.getDelta());
                         break;
                     case SDLK_RIGHT:
-                        cam.incX(-delta);
+                        cam.incX(-gameClock.getDelta());
                         break;
                 }
             }
@@ -109,9 +110,7 @@ void Application::run()
             }
 
         }
-        last = now;
-        now = SDL_GetPerformanceCounter();
-        delta = (double)(now - last) * 1000 / ((double)SDL_GetPerformanceFrequency());
+        gameClock.tick();
         m_mainWindow->clear();
         
         m_activeSim.update();
