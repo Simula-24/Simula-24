@@ -94,18 +94,8 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             
             SDL_Rect g;
             int h, w;
-            if (height == 0)
-            {
-                h = 8; w = 16;
-                g.y = (i + j) * (h / 2);// -(height * 4) * d->h;
-
-            }
-            else
-            {
-                h = 16; w = 16;
-                g.y = (i + j) * (8 / 2) - height * 8;
-    
-            }
+                h = d->h; w = d->w;
+                g.y = (i + j) * ((w/2) / 2) - height * (w/2);
             g.w = w;
             g.h = h;
             g.x = (i - j) * (w / 2);

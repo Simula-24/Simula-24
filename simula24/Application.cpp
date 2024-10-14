@@ -61,16 +61,17 @@ Status Application::init()
 
 void Application::run()
 {
-    SDL_RenderSetScale(m_mainWindow->getRenderer(), 2, 2);
-
-    int scaleX = 2;
-    int scaleY = 2;
-
     Camera cam{};
     RM::get().setCamera(&cam);
     cam.incX(50);
-    
+
+    U64 now = SDL_GetPerformanceCounter();
+    U64 last = 0;
+    double delta = 0.0f;
+
     SDL_Event event;
+    float scaleY = 0;
+    SDL_RenderSetVSync(m_mainWindow->getRenderer(), 1);
     while (m_shouldRun)
     {
         while (SDL_PollEvent(&event))
@@ -86,35 +87,38 @@ void Application::run()
                 switch (event.key.keysym.sym)
                 {
                     case SDLK_UP:
-                        cam.incY(10);
+                        cam.incY(delta);
                         break;
                     case SDLK_DOWN:
-                        cam.incY(-10);
+                        cam.incY(-delta);
                         break;
                     case SDLK_LEFT:
-                        cam.incX(10);
+                        cam.incX(delta);
                         break;
                     case SDLK_RIGHT:
-                        cam.incX(-10);
+                        cam.incX(-delta);
                         break;
                 }
             }
             else if (event.type == SDL_MOUSEWHEEL)
             {
                 printf("%d | %d\n",event.wheel.x, event.wheel.y);
-                scaleY += event.wheel.y * .25;
+                scaleY += event.wheel.y * 0.25;
                 SDL_RenderSetScale(m_mainWindow->getRenderer(), scaleY, scaleY);
                 
             }
 
         }
+        last = now;
+        now = SDL_GetPerformanceCounter();
+        delta = (double)(now - last) * 1000 / ((double)SDL_GetPerformanceFrequency());
         m_mainWindow->clear();
         
         m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
         RM::get().present();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
