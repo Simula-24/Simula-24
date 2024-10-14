@@ -111,16 +111,17 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
 {
     for (int i = 0; i < cl.size(); i++)
     {
+        auto* tile = &m_tileDB.worldTiles[0].getTile(1);
         auto& loc = cl[i].getLocation();
         SDL_Rect location = {
-            .x = (loc.x - loc.y) * (16 / 2) ,
-            .y = (loc.x + loc.y) * (8 / 2),
-            .w = 16, 
-            .h = 8
+            .x = (loc.x - loc.y) * (tile->w / 2) ,
+            .y = (loc.x + loc.y) * (tile->h/ 2),
+            .w = tile->w, 
+            .h = tile->h
         };
         location.x += m_camera->getX();
         location.y += m_camera->getY();
-        m_mainWindow->copyTexture(m_tileDB.worldTiles[0].getTexture(), &m_tileDB.worldTiles[0].getTile(1), &location);
+        m_mainWindow->copyTexture(m_tileDB.worldTiles[0].getTexture(),tile, &location);
 
     }
 }
