@@ -2,16 +2,16 @@
 
 #include <smcore/path/AStar.h>
 #include "job/Job.h"
+#include <graphics/tile/TileSize.h>
 #include <objectmanager/ObjectManager.h>
 using simula24::Simulation;
 using simula24::LocalJob;
 Simulation::Simulation() : m_station("",80, 60), m_CrewMembers{}
 {
    
-    OM::getObjectTable().insert("ferrite_wall", 0, false);
-    
-    OM::getObjectTable().insert("hooman", 1, false);
-    OM::getObjectTable().insert("basic_floor", 2, true);
+    OM::getObjectTable().insert("ferrite_wall", 0, false, TileSize::MEDIUM);
+    OM::getObjectTable().insert("hooman", 1, false, TileSize::FLAT);
+    OM::getObjectTable().insert("basic_floor", 2, true, TileSize::FLAT);
     
     m_CrewMembers.push_back({});
     m_CrewMembers[0].setLocation({ 15, 15 });

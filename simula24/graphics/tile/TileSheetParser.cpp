@@ -39,12 +39,12 @@ std::optional<TileSheet> TileSheetParser::getNextSheet()
     if (m_cfgIter <= m_cfgIterEnd)
         ++m_cfgIter;
 
-    return ts;
+    return { std::move(ts) };
 }
 
 bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc, TileSheet& dest)
 {
-    SDL_Rect rect;
+    SDL_Rect rect; 
     for (int y = 0; y < tsc.imageHeight; y += tsc.tileHeight)
     {
         for (int x = 0; x < tsc.imageWidth; x += tsc.tileWidth)

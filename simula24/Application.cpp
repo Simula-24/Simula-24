@@ -54,7 +54,7 @@ Status Application::init()
 
 void Application::run()
 {
-    SDL_RenderSetScale(m_mainWindow->getRenderer(), 3, 3);
+    SDL_RenderSetScale(m_mainWindow->getRenderer(), 2, 2);
 
     SDL_Event event;
     while (m_shouldRun)
@@ -69,8 +69,6 @@ void Application::run()
         }
         m_mainWindow->clear();
         
-        
-
         m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());

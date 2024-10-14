@@ -19,15 +19,16 @@ bool SheetLoader::loadWorldTiles(const stl::string& cfgLoc)
     auto sheet = tsp.getNextSheet();
     while (sheet.has_value())
     {
+        TileSheet& ts = sheet.value();
         stl::string location = "../data/tileset/cp437/";
-        location += sheet.value().getLocation();
-        sheet.value().setTexture(
+        location += ts.getLocation();
+        ts.setTexture(
             m_texmgr.loadFromFile(
                 location
             )
         );
     
-        m_activeList->push_back(std::move(sheet.value()));
+        m_activeList->push_back(std::move(ts));
         sheet = tsp.getNextSheet();
     }
 

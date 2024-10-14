@@ -42,7 +42,6 @@ TileSheet& TileSheet::operator=(const TileSheet& other)
 
 TileSheet::~TileSheet()
 {
-    if (m_sheet)
-        SDL_DestroyTexture(m_sheet);
+
 }
 

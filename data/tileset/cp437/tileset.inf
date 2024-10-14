@@ -1,5 +1,5 @@
 [test.png]
-    size=192x32
+    size=192x64
     tile_size=64x32
     comment="Test tiles"
 
