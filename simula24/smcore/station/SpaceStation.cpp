@@ -6,7 +6,6 @@ namespace simula24
 SpaceStation::SpaceStation(const stl::string& name, size_t size_x, size_t size_y)
     : m_objectMap(size_x, size_y)
 {
-    UNREFERENCED_PARAMETER(name);
     loadDefaultMap();
 
 }

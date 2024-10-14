@@ -71,3 +71,8 @@ target_include_directories(simula24 PUBLIC
     "${CMAKE_SOURCE_DIR}/"
     "${CMAKE_SOURCE_DIR}/simula24/"
 )
+
+target_compile_definitions(simula24 PRIVATE
+    "$<$<CONFIG:Release>:SIMULA24_RELEASE=1>"
+    "$<$<CONFIG:Debug>:SIMULA24_DEBUG=1>"
+)

@@ -7,9 +7,6 @@ using namespace simula24;
 
 int main(int argc, char** argv)
 {
-    UNREFERENCED_PARAMETER(argc);
-    UNREFERENCED_PARAMETER(argv);
-
     DebugLoggers::init();
     setSEHHandler();
     ENGINE_INFO("SEH Handler set");
