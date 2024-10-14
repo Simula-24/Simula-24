@@ -66,12 +66,12 @@ void Application::run()
     RM::get().setCamera(&cam);
     cam.incX(50);
     
+    SDL_Event event;
+    SDL_RenderSetVSync(m_mainWindow->getRenderer(), 1);
+    
     Clock gameClock;
     gameClock.reset();
 
-    SDL_Event event;
-    float scaleY = 0;
-    SDL_RenderSetVSync(m_mainWindow->getRenderer(), 1);
     gameClock.start();
     while (m_shouldRun)
     {
@@ -101,14 +101,7 @@ void Application::run()
                         break;
                 }
             }
-            else if (event.type == SDL_MOUSEWHEEL)
-            {
-                printf("%d | %d\n",event.wheel.x, event.wheel.y);
-                scaleY += event.wheel.y * 0.25;
-                SDL_RenderSetScale(m_mainWindow->getRenderer(), scaleY, scaleY);
-                
-            }
-
+   
         }
         gameClock.tick();
         m_mainWindow->clear();

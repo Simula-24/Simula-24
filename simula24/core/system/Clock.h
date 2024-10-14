@@ -9,7 +9,7 @@ namespace simula24
 ///
 /// @brief
 ///     Time keeper
-///     Impl. found in /platform
+///
 class Clock
 {
 public:
