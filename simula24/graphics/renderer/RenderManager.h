@@ -12,6 +12,8 @@ namespace simula24
 
 class ObjectMap;
 class CrewMember;
+class Camera;
+
 ///
 /// @brief
 ///     Manages rendering to the main window
@@ -35,18 +37,61 @@ public:
     /// 
     Status terminate();
 
+    /// set our app window
     void setWindow(AppWindow* win);
 
+    ///
+    /// @brief
+    ///     Parse the games tile sheets
+    ///     TODO: rename and make parameter point to directory location
+    /// 
     void addTileSheet(const stl::string& configLoc);
 
+    ///
+    /// @brief
+    ///     Render objects found in an object map
+    ///     Will skip over empty (-1) entries
+    /// 
     void renderFromObjectMap(const ObjectMap& om);
+    
+    ///
+    /// @brief
+    ///     Render a list of crew members
+    ///     TODO: see if this should be general, as in renderCreatures() or something
+    /// 
     void renderCivilianList(const stl::array<CrewMember>& cl);
+
+    /// Present/swap buffers
     inline void present() 
     { 
         assert(m_mainWindow);
         m_mainWindow->present(); 
     }
     
+    inline void setCamera(Camera* cam) { m_camera = cam; }
+
+private:
+
+    /// Primary window
+    AppWindow* m_mainWindow;
+    /// Database containing all of our tilesheets
+    TileSheetDatabase m_tileDB;
+    
+    Camera* m_camera;
+
+    int m_globTileWidth;
+    int m_globTileHeight;
+
+    int m_tilesPerRow;
+    int m_tilesPerColumn;
+
+
+    
+    
+    ///////////////////////////////////////////
+    ////////// SINGLETON BOILERPLATE //////////
+    ///////////////////////////////////////////
+
 public:
     RenderManager(const RenderManager&) = delete;
     RenderManager& operator=(const RenderManager&) = delete;
@@ -55,21 +100,6 @@ private:
     RenderManager();
     static RenderManager s_instance;
 
-private:
-
-    AppWindow* m_mainWindow;
-    
-    SDL_Texture* m_mainTexture;
-    
-    TileSheet m_mainTileSheet;
-
-    int m_globTileWidth;
-    int m_globTileHeight;
-
-    int m_tilesPerRow;
-    int m_tilesPerColumn;
-
-    TileSheetDatabase m_tileDB;
 };
 
 

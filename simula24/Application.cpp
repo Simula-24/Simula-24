@@ -1,15 +1,22 @@
 #include "Application.h"
 
-#include <core/log/log.h>
 #include <cassert>
-#include <graphics/tile/TileSheetParser.h>
-#include <SDL.h>
-#include <stdio.h>
-#include <objectmanager/ObjectManager.h>
-#include <thread>
 #include <chrono>
+#include <thread>
+#include <stdio.h>
+
+#include <SDL.h>
+
+#include <core/log/log.h>
 #include <math/Point.h>
+
+#include <graphics/renderer/Camera.h>
+#include <graphics/tile/TileSheetParser.h>
+
 #include <smcore/localsystem/LocalCluster.h>
+
+#include <objectmanager/ObjectManager.h>
+
 using simula24::Application;
 using simula24::Status;
 void drawCircle(SDL_Renderer* r, simula24::Point p, int radius);
@@ -56,6 +63,13 @@ void Application::run()
 {
     SDL_RenderSetScale(m_mainWindow->getRenderer(), 2, 2);
 
+    int scaleX = 2;
+    int scaleY = 2;
+
+    Camera cam{};
+    RM::get().setCamera(&cam);
+    cam.incX(50);
+    
     SDL_Event event;
     while (m_shouldRun)
     {
@@ -66,6 +80,33 @@ void Application::run()
                 m_shouldRun = false;
                 break;
             }
+
+            else if(event.type == SDL_KEYDOWN)
+            {
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_UP:
+                        cam.incY(10);
+                        break;
+                    case SDLK_DOWN:
+                        cam.incY(-10);
+                        break;
+                    case SDLK_LEFT:
+                        cam.incX(10);
+                        break;
+                    case SDLK_RIGHT:
+                        cam.incX(-10);
+                        break;
+                }
+            }
+            else if (event.type == SDL_MOUSEWHEEL)
+            {
+                printf("%d | %d\n",event.wheel.x, event.wheel.y);
+                scaleY += event.wheel.y * .25;
+                SDL_RenderSetScale(m_mainWindow->getRenderer(), scaleY, scaleY);
+                
+            }
+
         }
         m_mainWindow->clear();
         

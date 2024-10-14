@@ -3,16 +3,20 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include <graphics/tile/TileSheetParser.h>
-#include <graphics/tile/TileConfig.h>
-#include <core/error/error.h>
-#include <cassert>
-#include <smcore/map/ObjectMap.h>
-#include <objectmanager/ObjectManager.h>
 #include <core/log/log.h>
+#include <core/error/error.h>
 
-#include <smcore/entity/CrewMember.h>
+#include <graphics/tile/TileConfig.h>
+#include <graphics/renderer/Camera.h>
 #include <graphics/tile/SheetLoader.h>
+#include <graphics/tile/TileSheetParser.h>
+
+#include <smcore/map/ObjectMap.h>
+#include <smcore/entity/CrewMember.h>
+
+#include <objectmanager/ObjectManager.h>
+
+#include <cassert>
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
@@ -22,7 +26,7 @@ using simula24::CrewMember;
 RenderManager RenderManager::s_instance;
 
 RenderManager::RenderManager()
-    : m_mainWindow(nullptr), m_mainTexture(nullptr), m_mainTileSheet{ }
+    : m_mainWindow(nullptr), m_tileDB{}, m_camera(nullptr)
 {
 }
 
@@ -105,7 +109,8 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             g.w = w;
             g.h = h;
             g.x = (i - j) * (w / 2);
-            g.x += 50;
+            g.x += m_camera->getX();
+            g.y += m_camera->getY();
             m_mainWindow->copyTexture(tex, d, &g);
         }
 
@@ -123,8 +128,8 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
             .w = 16, 
             .h = 8
         };
-        location.x += 50;
-
+        location.x += m_camera->getX();
+        location.y += m_camera->getY();
         m_mainWindow->copyTexture(m_tileDB.worldTiles[0].getTexture(), &m_tileDB.worldTiles[0].getTile(1), &location);
 
     }
