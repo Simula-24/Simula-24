@@ -21,14 +21,12 @@
 
 #include <imgui.h>
 #include <backends/imgui_impl_sdl2.h>
-#include <backends/imgui_impl_sdlrenderer2.h>
 
 using simula24::Application;
 using simula24::Status;
 void drawCircle(SDL_Renderer* r, simula24::Point p, int radius);
 void drawTriangle(SDL_Renderer* r, simula24::Point p, int radius);
 Application::Application()
-    : m_wm{}, m_mainWindow(nullptr), m_objectMap(80, 60)
 {
 
 }
@@ -50,7 +48,6 @@ Status Application::init()
 #if defined(SIMULA24_DEBUG)
     RM::get().loadTileDatabase("../data/tileset/cp437/");
 #else 
-#pragma message("hello")
     RM::get().loadTileDatabase("./data/tileset/cp437/");
 #endif
   
@@ -112,7 +109,6 @@ void Application::run()
         ImGui::Text("DELTA: %lf", gameClock.getDelta());
         ImGui::Text("FPS: %lf", fps);
         ImGui::Text("Total uptime: %lf", gameClock.getTotal());
-
         m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
