@@ -4,14 +4,17 @@
 #include <SDL.h>
 #include <graphics/tile/TileSheet.h>
 #include <graphics/AppWindow.h>
+#include <graphics/AppWindowMgr.h>
 #include <core/stl/smart_ptr.h>
 #include <core/error/error.h>
-
+#include <graphics/tile/TileSheetDatabase.h>
 namespace simula24
 {
 
 class ObjectMap;
-class Civilian;
+class CrewMember;
+class Camera;
+
 ///
 /// @brief
 ///     Manages rendering to the main window
@@ -35,18 +38,64 @@ public:
     /// 
     Status terminate();
 
-    void setWindow(AppWindow* win);
+    ///
+    /// @brief
+    ///     Parse the games tile sheets
+    /// 
+    Status loadTileDatabase(const stl::string& directory);
 
-    void addTileSheet(const stl::string& configLoc);
 
+    ///
+    /// @brief
+    ///     Render objects found in an object map
+    ///     Will skip over empty (-1) entries
+    /// 
     void renderFromObjectMap(const ObjectMap& om);
-    void renderCivilianList(const stl::array<Civilian>& cl);
+    
+    ///
+    /// @brief
+    ///     Render a list of crew members
+    ///     TODO: see if this should be general, as in renderCreatures() or something
+    /// 
+    void renderCivilianList(const stl::array<CrewMember>& cl);
+
+
+    void newFrame();
+    void endFrame();
+
+    /// Present/swap buffers
     inline void present() 
     { 
         assert(m_mainWindow);
         m_mainWindow->present(); 
     }
     
+    inline void setCamera(Camera* cam) { m_camera = cam; }
+
+private:
+
+    /// Window Manager
+    AppWindowMgr m_wm;
+    /// Primary window
+    AppWindow* m_mainWindow;
+    /// Database containing all of our tilesheets
+    TileSheetDatabase m_tileDB;
+    
+    Camera* m_camera;
+
+    int m_globTileWidth;
+    int m_globTileHeight;
+
+    int m_tilesPerRow;
+    int m_tilesPerColumn;
+
+
+    
+    
+    ///////////////////////////////////////////
+    ////////// SINGLETON BOILERPLATE //////////
+    ///////////////////////////////////////////
+
 public:
     RenderManager(const RenderManager&) = delete;
     RenderManager& operator=(const RenderManager&) = delete;
@@ -54,20 +103,6 @@ public:
 private:
     RenderManager();
     static RenderManager s_instance;
-
-private:
-
-    AppWindow* m_mainWindow;
-    
-    SDL_Texture* m_mainTexture;
-    
-    stl::shared_ptr<TileSheet> m_mainTileSheet;
-
-    int m_globTileWidth;
-    int m_globTileHeight;
-
-    int m_tilesPerRow;
-    int m_tilesPerColumn;
 
 };
 

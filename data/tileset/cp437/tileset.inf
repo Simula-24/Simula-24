@@ -1,4 +1,5 @@
-[cp437.png]
-    size=160x160
-    tile_size=10x10
-    comment="Original IBM character set"
+[test.png]
+    size=192x64
+    tile_size=64x64
+    comment="Test tiles"
+[end.png]

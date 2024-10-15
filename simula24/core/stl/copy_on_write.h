@@ -3,6 +3,7 @@
 
 #include <simula24/core/memory/memory.h>
 #include <simula24/core/stl/utility.h>
+#include <core/types.h>
 #include <stdint.h>
 #include <string.h>
 namespace stl
@@ -64,7 +65,7 @@ public:
     }
 
     /// data[where] without a copy
-    constexpr const T& at(size_t where) const;
+    FORCEINLINE const T& at(size_t where) const;
 
     /// data[where] with a copy
     T& at_m(size_t where);
@@ -76,7 +77,7 @@ public:
     uint32_t get_size() const;
 
     /// obtain a reference to the data
-    constexpr const T& reference() const;
+    FORCEINLINE const T& reference() const;
     
     /// obtain a reference to the data and create a copy
     constexpr T& copy();
@@ -109,12 +110,12 @@ public:
         uint32_t data_size;
     };
 
-    constexpr uint32_t get_reference_count() const
+    FORCEINLINE uint32_t get_reference_count() const
     {
         return get_cow_header()->ref_count;
     }
 
-    constexpr uint32_t get_data_size() const
+    FORCEINLINE uint32_t get_data_size() const
     {
         return get_cow_header()->data_size;
     }
@@ -279,11 +280,10 @@ void copy_on_write<T>::unref()
 template <class T>
 void copy_on_write<T>::resize(size_t n)
 {
-    uint32_t rc = create_copy();
+    create_copy();
 
     T* new_buffer = static_cast<T*>(simula24::alloc_static((n * sizeof(T)) + sizeof(CowHdr)));
 
-    T* old_buffer = m_ptr;
     T* old_data = get_data();
     size_t old_size = get_total_size();
 
@@ -319,7 +319,8 @@ void copy_on_write<T>::create_empty()
 }
 
 template<class T>
-constexpr const T& copy_on_write<T>::at(size_t where) const
+FORCEINLINE
+const T& copy_on_write<T>::at(size_t where) const
 {
     const T* _ptr = get_data();
     return _ptr[where];
@@ -333,7 +334,8 @@ T& copy_on_write<T>::at_m(size_t where)
     return _ptr[where];
 }
 template<class T>
-constexpr const T& copy_on_write<T>::reference() const
+FORCEINLINE
+const T& copy_on_write<T>::reference() const
 {
     return *(m_ptr + DATA_OFFSET);
 }

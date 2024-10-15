@@ -1,0 +1,5 @@
+set(JOB_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/JobQueue.cpp
+    PARENT_SCOPE
+    
+)

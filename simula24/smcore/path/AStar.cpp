@@ -76,13 +76,13 @@ bool simula24::AStarPathFind(const Point& start, const Point& end, PointList& ou
         int x = map.getPassableNeighbors(cur, n);
         for (int i = 0; i < x; i++)
         {
-#ifdef _DEBUG
-            iter++;
-#endif
             Point& next = n[i];
             int new_cost = cost_so_far[cur] + heuristic(cur, next);
             if (!came_from.contains(next) ||
                 new_cost < cost_so_far[next]) {
+#ifdef _DEBUG
+            iter++;
+#endif
                 cost_so_far[next] = new_cost;
                 frontier.push(next, new_cost + heuristic(next, end ));
                 came_from[next] = cur;

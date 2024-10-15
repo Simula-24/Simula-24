@@ -1,5 +1,6 @@
 #include "TileSheet.h"
 #include <cassert>
+#include <utility>
 using simula24::TileSheet;
 
 
@@ -8,21 +9,39 @@ TileSheet::TileSheet()
 {
 }
 
+TileSheet::TileSheet(TileSheet&& other)
+    : m_sheet(std::exchange(other.m_sheet, nullptr)), 
+      m_tiles(std::move(other.m_tiles)),
+      m_location(std::move(other.m_location))
+{
+}
+
+TileSheet& TileSheet::operator=(TileSheet&& other)
+{
+    m_sheet = std::exchange(other.m_sheet, nullptr);
+    m_tiles = std::move(other.m_tiles);
+    m_location=std::move(other.m_location);
+
+    return *this;
+}
+
+TileSheet::TileSheet(const TileSheet& other)
+{
+    m_location = other.m_location;
+    m_sheet = other.m_sheet;
+    m_tiles = other.m_tiles;
+}
+
+TileSheet& TileSheet::operator=(const TileSheet& other)
+{
+    m_location = other.m_location;
+    m_sheet = other.m_sheet;
+    m_tiles = other.m_tiles;
+    return *this;
+}
+
 TileSheet::~TileSheet()
 {
-    if (m_sheet)
-        SDL_DestroyTexture(m_sheet);
-}
 
-const SDL_Rect& TileSheet::getTile(size_t id) const
-{
-    assert(id < m_tiles.size());
-
-    return m_tiles[id];
-}
-
-void TileSheet::addTile(const SDL_Rect& tileLoc)
-{
-    m_tiles.push_back(tileLoc);
 }
 

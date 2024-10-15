@@ -1,0 +1,57 @@
+<mxfile host="Electron" modified="2024-10-12T19:06:23.665Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="FS6XhZhbGr-64lK0aJxr" version="22.1.2" type="device">
+  <diagram name="Page-1" id="dPlw40Szbq0Onw6-TG6Z">
+    <mxGraphModel dx="1050" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XrAqslGaaH_NpfY0bBGF-2" target="XrAqslGaaH_NpfY0bBGF-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-7" value="Completes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XrAqslGaaH_NpfY0bBGF-6">
+          <mxGeometry x="0.0941" y="-3" relative="1" as="geometry">
+            <mxPoint y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="XrAqslGaaH_NpfY0bBGF-2" target="XrAqslGaaH_NpfY0bBGF-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-11" value="Job Receipt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XrAqslGaaH_NpfY0bBGF-9">
+          <mxGeometry x="-0.0167" y="-1" relative="1" as="geometry">
+            <mxPoint x="36" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-2" value="John Civilian" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="200" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-5" value="Job" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XrAqslGaaH_NpfY0bBGF-8" target="XrAqslGaaH_NpfY0bBGF-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-14" value="Sends Receipt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XrAqslGaaH_NpfY0bBGF-13">
+          <mxGeometry x="-0.04" y="2" relative="1" as="geometry">
+            <mxPoint x="5" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-8" value="Simulation Core" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="225" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XrAqslGaaH_NpfY0bBGF-12" target="XrAqslGaaH_NpfY0bBGF-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-19" value="Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XrAqslGaaH_NpfY0bBGF-18">
+          <mxGeometry x="0.0545" y="3" relative="1" as="geometry">
+            <mxPoint y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-12" value="Target Colony (e.g. space station)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XrAqslGaaH_NpfY0bBGF-17" value="Map / Stocks / Resource / etc" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

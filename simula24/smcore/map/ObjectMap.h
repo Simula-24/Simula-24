@@ -3,6 +3,8 @@
 
 #include <core/stl/array.h>
 #include <math/Point.h>
+#include <core/types.h>
+#include <core/log/log.h>
 namespace simula24
 {
 
@@ -20,14 +22,33 @@ public:
         m_oidMap.fill(-1);
     }
     
+    ObjectMap() : m_szx(0), m_szy(0) {};
+
+    void init(size_t x, size_t y)
+    {
+        if (m_szx > 0 || m_szy > 0)
+            CLIENT_ERROR("Attempt to overwire Object map at %p already initialized with %dx%d. Values=%dx%d",
+                this, m_szx, m_szy, x, y    
+            );
+        else
+        {
+            m_szx = x; m_szy = y;
+            m_oidMap.resize(x * y);
+            m_oidMap.fill(-1);
+        }
+
+    }
+
     /// Set (x,y) as ID
-    constexpr void set(int x, int y, int id) { m_oidMap[y * m_szx + x] = id; }
+    FORCEINLINE void set(int x, int y, int id) { m_oidMap[y * m_szx + x] = id; }
     
     /// Get ID at (x,y)
-    constexpr int get(int x, int y) const { return m_oidMap[y * m_szx + x]; }
+    FORCEINLINE int get(int x, int y) const { return m_oidMap[y * m_szx + x]; }
 
-    constexpr size_t getSizeX() const { return m_szx; }
-    constexpr size_t getSizeY() const { return m_szy; }
+    FORCEINLINE size_t getSizeX() const { return m_szx; }
+    FORCEINLINE size_t getSizeY() const { return m_szy; }
+
+
 
     /// 
     /// @brief

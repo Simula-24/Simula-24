@@ -47,8 +47,8 @@ TEST(stl_test, str_substr)
 {
     stl::string test = "#######privet komrad#######";
 
-    stl::string test2 = test.substr(7, 20);
-
+    stl::string test2 = test.substr(7, 13);
+    printf("%s\n",test2.c_str());
     EXPECT_NE(test.c_str(), test2.c_str());
 
     EXPECT_EQ(test2, "privet komrad");

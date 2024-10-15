@@ -26,25 +26,25 @@ Status TileSheetParser::loadConfig(const stl::string& name)
     return stat;
 }
 
-stl::shared_ptr<TileSheet> TileSheetParser::getNextSheet()
+std::optional<TileSheet> TileSheetParser::getNextSheet()
 {
-    if (m_cfgIter > m_cfgIterEnd)
-        return stl::shared_ptr<TileSheet>();
-    
-    auto ts = stl::make_shared<TileSheet>();
+    if (m_cfgIter >= m_cfgIterEnd)
+        return std::nullopt;
 
-    if(!generateTileCoordinates(*m_cfgIter, *ts))
-        return stl::shared_ptr<TileSheet>();
+    TileSheet ts;
+    
+    if (!generateTileCoordinates(*m_cfgIter, ts))
+        return std::nullopt;
 
     if (m_cfgIter <= m_cfgIterEnd)
         ++m_cfgIter;
 
-    return ts;
+    return { std::move(ts) };
 }
 
 bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc, TileSheet& dest)
 {
-    SDL_Rect rect;
+    SDL_Rect rect; 
     for (int y = 0; y < tsc.imageHeight; y += tsc.tileHeight)
     {
         for (int x = 0; x < tsc.imageWidth; x += tsc.tileWidth)
@@ -58,7 +58,7 @@ bool TileSheetParser::generateTileCoordinates(const TileSheetConfig& tsc, TileSh
             dest.addTile(rect);
         }
     }
-
+    dest.setLocation(tsc.filename);
     return true;
 }
 

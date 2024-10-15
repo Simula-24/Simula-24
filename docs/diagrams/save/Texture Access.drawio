@@ -1,33 +1,17 @@
-<mxfile host="Electron" modified="2024-10-03T14:15:39.050Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="_mdDouQH4TdFAB2J_h9y" version="22.1.2" type="device">
+<mxfile host="Electron" modified="2024-10-13T16:38:03.791Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="Fr_d2Z-zJHXaGi24IWzQ" version="22.1.2" type="device">
   <diagram name="Page-1" id="Da1O9McQN_pWQTq5HIfL">
-    <mxGraphModel dx="600" dy="382" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+    <mxGraphModel dx="819" dy="505" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="-7-g7e8WMSvehqwrfY04-13" value="SDL_Texture&lt;br&gt;List" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="130" y="480" width="100" height="50" as="geometry" />
+        <mxCell id="Vn2m_hbOdkRy9cRwPzvx-2" value="Render Manager" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="630" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="-7-g7e8WMSvehqwrfY04-14" value="Tile ID List" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="130" y="590" width="100" height="50" as="geometry" />
+        <mxCell id="Vn2m_hbOdkRy9cRwPzvx-3" value="Texture &quot;Database&quot;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="920" y="630" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="-7-g7e8WMSvehqwrfY04-15" value="Texture Manager" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="380" y="510" width="120" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="-7-g7e8WMSvehqwrfY04-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=57;entryPerimeter=0;" edge="1" parent="1" source="-7-g7e8WMSvehqwrfY04-13" target="-7-g7e8WMSvehqwrfY04-15">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="340" y="505" />
-              <mxPoint x="340" y="567" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="-7-g7e8WMSvehqwrfY04-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=57;entryPerimeter=0;" edge="1" parent="1" source="-7-g7e8WMSvehqwrfY04-14" target="-7-g7e8WMSvehqwrfY04-15">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="340" y="615" />
-              <mxPoint x="340" y="567" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="Vn2m_hbOdkRy9cRwPzvx-4" value="Texture &quot;Database&quot;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="630" width="120" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -28,12 +28,6 @@ private:
     void update();
     
 private:
-    AppWindowMgr m_wm;
-    AppWindow* m_mainWindow;
-
-    ObjectMap m_objectMap;
-    ObjectTable m_objectTable;
-
     bool m_shouldRun{ false };
 
     Simulation m_activeSim;

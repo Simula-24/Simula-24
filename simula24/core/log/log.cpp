@@ -12,6 +12,13 @@ stl::shared_ptr<Logger> simula24::DebugLoggers::m_clientLogger;
 
 void simula24::DebugLoggers::init()
 {
+#ifdef _WIN32
+   HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    GetConsoleMode(hOut, &dwMode);
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    SetConsoleMode(hOut, dwMode);
+#endif
     m_engineLogger = stl::make_shared<Logger>("ENGINE");
     m_engineLogger->setSink<ConsoleSink>();
     m_clientLogger = stl::make_shared<Logger>("CLIENT");
@@ -139,17 +146,15 @@ void Logger::logMemorySection(const void* start, int length, const char* msg, ..
 
 void Logger::writeMetaData(stl::string& output)
 {
-    char timeBuffer[25];
+    char timeBuffer[27];
 
     time_t timeOfLog = time(NULL);
     struct tm* timeInfo = nullptr;
     timeInfo = localtime(&timeOfLog);
 
-    strftime(timeBuffer, 24, "[%F %T]", timeInfo);
-    timeBuffer[24] = 0;
+    size_t written = strftime(timeBuffer, sizeof(timeBuffer), "[%F %T] [ ", timeInfo);
+    timeBuffer[written] = 0;
     output += timeBuffer;
-
-    output += " [";
     output += m_name;
     output += "] ";
 

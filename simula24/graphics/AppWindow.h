@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <core/stl/string.h>
 #include <graphics/TextureManager.h>
-
+#include <core/types.h>
 namespace simula24
 {
 
@@ -59,6 +59,9 @@ public:
     inline void present() { SDL_RenderPresent(m_renderer); }
 
     inline TextureManager& getTextureManager() { return m_texManager; }
+
+    FORCEINLINE SDL_Renderer* getRenderer() const { return m_renderer; }
+    FORCEINLINE SDL_Window* getWindow() { return m_window; }
 private:
 
     SDL_Window* m_window;

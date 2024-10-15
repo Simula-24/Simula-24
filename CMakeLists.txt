@@ -23,10 +23,13 @@ else()
     add_subdirectory("simula24/main/")
 endif()
 
+add_subdirectory("thirdparty")
 add_subdirectory("simula24")
 add_executable(simula24
+    ${IMGUI_SOURCES}
     ${MAIN_SOURCES}
     ${ENGINE_SOURCES}
+
     "simula24/core/stl/priority_queue.h"
  "simula24/core/stl/max_heap.h")
 
@@ -45,7 +48,7 @@ if(WIN32)
     )
     # vv I don't care if CMake makes something uppercase
     add_compile_options("/wd9025")
-
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS=1)
     ## Release PDB Generation
     target_compile_options(simula24 PRIVATE "$<$<CONFIG:Release>:/Zi>")
     target_link_options(simula24 PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
@@ -60,17 +63,20 @@ elseif(UNIX)
     
 endif()
 
-
-
 if(ENABLE_TESTS)
     set(SIMULA24_LIBRARIES ${SIMULA24_LIBRARIES} PUBLIC GTest::gtest_main)
     include(GoogleTest)
     gtest_discover_tests(simula24)
 endif()
 
-
 target_link_libraries(simula24 PRIVATE ${SIMULA24_LIBRARIES})
 target_include_directories(simula24 PUBLIC 
     "${CMAKE_SOURCE_DIR}/"
     "${CMAKE_SOURCE_DIR}/simula24/"
+    "${CMAKE_SOURCE_DIR}/thirdparty/imgui/"
+)
+
+target_compile_definitions(simula24 PRIVATE
+    "$<$<CONFIG:Release>:SIMULA24_RELEASE>"
+    "$<$<CONFIG:Debug>:SIMULA24_DEBUG>"
 )

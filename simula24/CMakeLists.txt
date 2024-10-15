@@ -4,6 +4,7 @@ add_subdirectory(platform)
 add_subdirectory(graphics)
 add_subdirectory(objectmanager)
 add_subdirectory(smcore)
+add_subdirectory(ui)
 
 
 set(ENGINE_SOURCES 
@@ -11,6 +12,7 @@ set(ENGINE_SOURCES
     ${MATH_SOURCES}
     ${PLATFORM_SOURCES}
     ${GRAPHICS_SOURCES}
+    ${UI_SOURCES}
     ${OBJECT_MANAGER_SOURCES}
     ${SIMULATION_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Application.cpp

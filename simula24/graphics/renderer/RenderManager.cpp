@@ -3,26 +3,34 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include <graphics/tile/TileSheetParser.h>
-#include <graphics/tile/TileConfig.h>
-#include <core/error/error.h>
-#include <cassert>
-#include <smcore/map/ObjectMap.h>
-#include <objectmanager/ObjectManager.h>
 #include <core/log/log.h>
+#include <core/error/error.h>
 
-#include <smcore/entity/Civilian.h>
+#include <graphics/tile/TileConfig.h>
+#include <graphics/renderer/Camera.h>
+#include <graphics/tile/SheetLoader.h>
+#include <graphics/tile/TileSheetParser.h>
+
+#include <smcore/map/ObjectMap.h>
+#include <smcore/entity/CrewMember.h>
+
+#include <objectmanager/ObjectManager.h>
+#include <cassert>
+
+#include <imgui.h>
+#include <backends/imgui_impl_sdlrenderer2.h>
+#include <backends/imgui_impl_sdl2.h>
 
 using simula24::RenderManager;
 using simula24::TileSheetParser;
 using simula24::TileConfig;
 using simula24::Status;
-using simula24::Civilian;
+using simula24::CrewMember;
 
 RenderManager RenderManager::s_instance;
 
 RenderManager::RenderManager()
-    : m_mainWindow(nullptr), m_mainTexture(nullptr), m_mainTileSheet{ }
+    : m_mainWindow(nullptr), m_tileDB{}, m_camera(nullptr)
 {
 }
 
@@ -44,6 +52,24 @@ Status RenderManager::init()
 
     ENGINE_INFO("SDL_image Initialized");
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+
+
+    if (!m_wm.createWindow('main', "Simula 24", 1280, 720))
+    {
+        ENGINE_CRITICAL("Failed to create new window");
+        return ERR_DEVICE_OR_OBJECT_FAILED_TO_CREATE;
+    }
+
+    m_mainWindow = m_wm.getAppWindow('main');
+    ImGui_ImplSDL2_InitForSDLRenderer(m_mainWindow->getWindow(), m_mainWindow->getRenderer());
+    ImGui_ImplSDLRenderer2_Init(m_mainWindow->getRenderer());
     return OK;
 }
 
@@ -54,62 +80,90 @@ Status RenderManager::terminate()
     return OK;
 }
 
-void RenderManager::setWindow(AppWindow* win)
+Status RenderManager::loadTileDatabase(const stl::string& directory)
 {
-    assert(win);
-    m_mainWindow = win;
-}
 
-void RenderManager::addTileSheet(const stl::string& configLoc)
-{
-    TileSheetParser tsp;
-    if (tsp.loadConfig(configLoc) != OK)
-        return;
+    CLIENT_INFO("Loading tile database at %s", directory.c_str());
 
-    m_mainTileSheet = tsp.getNextSheet();
-    m_mainTexture = m_mainWindow->getTextureManager().loadFromFile("../data/tileset/cp437/cp437.png");
-    m_globTileHeight = m_mainTileSheet->getTileHeight();
-    m_globTileWidth = m_mainTileSheet->getTileWidth();
+    SheetLoader loader(m_tileDB, m_mainWindow->getTextureManager());
+    if (!loader.loadWorldTiles(directory))
+        return FAILED;
+    return OK;
+
 }
 
 void RenderManager::renderFromObjectMap(const ObjectMap& om)
 {
-    for (int i = 0; i < 80; i++)
+    int scale = m_camera->getScale();
+    for (int j = 0; j < om.getSizeY(); j++)
     {
-        for (int j = 0; j < 60; j++)
+        for (int i = 0; i < om.getSizeX(); i++)
         {
+
+            int id = om.get(i, j);
+            if (id == -1)
+                continue;
+
+            int height = OM::getObjectTable().getTileSize(id);
+
+         
+            SDL_Texture* tex = m_tileDB.worldTiles[0].getTexture();
+            const SDL_Rect* d = &m_tileDB.worldTiles[0].getTile(
+                OM::getObjectTable().getTileId(
+                    id
+                )
+            );
+            
             SDL_Rect g;
-            g.w = 10;
-            g.h = 10;
-            g.y = i + (10 * i);
-            g.x = j + (10 * j);
-            if (om.get(i, j) != -1)
-            {
-                m_mainWindow->copyTexture(m_mainTexture,
-                    &m_mainTileSheet->getTile(
-                        OM::getObjectTable().getTileId(
-                            om.get(i, j)
-                        )
-                    ),
-                    &g);
-            }
+            int h, w;
+                h = d->h/scale; w = d->w/scale;
+            g.w = w;
+            g.h = h;
+            g.x = i + (i*w);
+            g.y = j + (j*h);
+            g.x += m_camera->getX();
+            g.y += m_camera->getY();
+            m_mainWindow->copyTexture(tex, d, &g);
         }
 
     }
 }
 
-void RenderManager::renderCivilianList(const stl::array<Civilian>& cl)
+void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
 {
+    int scale = m_camera->getScale();
+
     for (int i = 0; i < cl.size(); i++)
     {
+        auto* tile = &m_tileDB.worldTiles[0].getTile(1);
         auto& loc = cl[i].getLocation();
-        SDL_Rect location = { 
-            loc.x + (m_globTileHeight * loc.x) ,
-            loc.y + (m_globTileHeight * loc.y) ,
-            m_globTileWidth, 
-            m_globTileHeight
+        int w = tile->w / scale;
+        int h = tile->h / scale;
+        SDL_Rect location = {
+            .x = loc.x + (loc.x*(w)),
+            .y = loc.y + (loc.y*(h)),
+            .w = w, 
+            .h = h
         };
-        m_mainWindow->copyTexture(m_mainTexture, &m_mainTileSheet->getTile(2), &location);
+        location.x += m_camera->getX();
+        location.y += m_camera->getY();
+        m_mainWindow->copyTexture(m_tileDB.worldTiles[0].getTexture(),tile, &location);
 
     }
+}
+
+void RenderManager::newFrame()
+{
+    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+    m_mainWindow->clear();
+}
+
+void RenderManager::endFrame()
+{
+
+    ImGui::Render();
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), m_mainWindow->getRenderer());
+    m_mainWindow->present();
 }
