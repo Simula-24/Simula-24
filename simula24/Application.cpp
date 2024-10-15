@@ -103,6 +103,10 @@ void Application::run()
                         break;
                 }
             }
+            else if (event.type == SDL_MOUSEWHEEL)
+            {
+                cam.incScale(-event.wheel.y);
+            }
         }
 
         RM::get().newFrame();
@@ -112,6 +116,7 @@ void Application::run()
         ImGui::Text("DELTA: %lf", gameClock.getDelta());
         ImGui::Text("FPS: %lf", fps);
         ImGui::Text("Total uptime: %lf", gameClock.getTotal());
+        ImGui::Text("Zoom: x%d", 7-cam.getScale());
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
         RM::get().endFrame();

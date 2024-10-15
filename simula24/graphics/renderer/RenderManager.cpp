@@ -94,6 +94,7 @@ Status RenderManager::loadTileDatabase(const stl::string& directory)
 
 void RenderManager::renderFromObjectMap(const ObjectMap& om)
 {
+    int scale = m_camera->getScale();
     for (int i = 0; i < om.getSizeX(); i++)
     {
         for (int j = 0; j < om.getSizeY(); j++)
@@ -115,13 +116,14 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             
             SDL_Rect g;
             int h, w;
-                h = d->h; w = d->w;
-            g.w = w/4;
-            g.h = h/4;
-            g.y = j + (j*w/4);
-            g.x = i + (i*h/4);
+                h = d->h/scale; w = d->w/scale;
+            g.w = w;
+            g.h = h;
+            g.x = i + (i*w);
+            g.y = j + (j*h);
             g.x += m_camera->getX();
             g.y += m_camera->getY();
+
             m_mainWindow->copyTexture(tex, d, &g);
         }
 
@@ -130,15 +132,19 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
 
 void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
 {
+    int scale = m_camera->getScale();
+
     for (int i = 0; i < cl.size(); i++)
     {
         auto* tile = &m_tileDB.worldTiles[0].getTile(1);
         auto& loc = cl[i].getLocation();
+        int w = tile->w / scale;
+        int h = tile->h / scale;
         SDL_Rect location = {
-            .x = loc.x + ((tile->w/4)*loc.x),
-            .y = loc.y + ((tile->w/4)*loc.y),
-            .w = tile->w/4, 
-            .h = tile->h/4
+            .x = loc.x + (loc.x*(w)),
+            .y = loc.y + (loc.y*(h)),
+            .w = w, 
+            .h = h
         };
         location.x += m_camera->getX();
         location.y += m_camera->getY();
