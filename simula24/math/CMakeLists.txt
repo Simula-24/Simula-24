@@ -1,0 +1,5 @@
+set(MATH_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/Point.cpp
+
+    PARENT_SCOPE
+)

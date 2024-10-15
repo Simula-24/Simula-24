@@ -1,5 +1,6 @@
 #ifndef SIMULA24_CORE_MEMORY_MEMORY_H_
 #define SIMULA24_CORE_MEMORY_MEMORY_H_
+#include <stddef.h>
 
 
 namespace simula24

@@ -30,4 +30,18 @@ using byte = unsigned char;
 
 }
 
+#ifdef _MSC_VER
+# define FORCEINLINE __forceinline
+#elif defined(__GNUC__) || defined(__GNUG__)
+# define FORCEINLINE __attribute__((always_inline))
+#else
+# pragma message("No force inline for platform")
+# define FORCEINLINE inline
+#endif
+
+// make debugging easier
+#ifdef SIMULA24_DEBUG
+#undef FORCEINLINE
+#define FORCEINLINE
+#endif
 #endif // SIMULA24_TYPES_H_

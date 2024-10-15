@@ -1,0 +1,5 @@
+[test.png]
+    size=192x64
+    tile_size=64x64
+    comment="Test tiles"
+[end.png]

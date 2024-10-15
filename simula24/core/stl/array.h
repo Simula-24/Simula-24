@@ -4,7 +4,7 @@
 #include <simula24/core/stl/utility.h>
 #include <simula24/core/stl/copy_on_write.h>
 #include <simula24/core/stl/iterator.h>
-
+#include <core/types.h>
 namespace stl
 {
 
@@ -39,7 +39,7 @@ public:
                 operator[](i).~T();
         }
     }
-    void resize(size_t n)
+    FORCEINLINE void resize(size_t n)
     {
         m_data.resize(n);
     }
@@ -47,7 +47,7 @@ public:
     /// Fill with T
     void fill(T value)
     {
-        auto _end = m_data.get_num_data();
+        auto _end = m_data.get_size();
         for (size_t i = 0; i < _end; i++)
         {
             m_data.at_m(i) = value;
@@ -56,7 +56,7 @@ public:
 
     void fill_remaining(T value)
     {
-        auto _end = m_data.get_num_data();
+        auto _end = m_data.get_size();
 
         for (size_t i = m_index; i < _end; i++)
         {
@@ -84,17 +84,17 @@ public:
     }
 
 
-    void pop_back()
+    FORCEINLINE void pop_back()
     {
         m_index--;
     }
 
-    T& operator[](size_t index)
+    FORCEINLINE T& operator[](size_t index)
     {
         return m_data.at_m(index);
     }
 
-    const T& operator[](size_t index) const
+    FORCEINLINE const T& operator[](size_t index) const
     {
         return m_data.at(index);
     }
@@ -112,22 +112,22 @@ public:
     }
 
 
-    constexpr size_t size() const { return m_index; }
-    constexpr size_t max_size() const { return m_data.get_num_data(); }
+    FORCEINLINE size_t size() const { return m_index; }
+    FORCEINLINE size_t max_size() const { return m_data.get_size(); }
 
 
-    constexpr const T& front() const { return m_data.at(0); }
-    constexpr const T& back() const { return  m_data.at(m_index - 1); }
+    FORCEINLINE const T& front() const { return m_data.at(0); }
+    FORCEINLINE const T& back() const { return  m_data.at(m_index - 1); }
 
-    constexpr T& front() { return m_data.at_m(0); }
-    constexpr T& back() { return m_data.at_m(m_index - 1); }
+    FORCEINLINE T& front() { return m_data.at_m(0); }
+    FORCEINLINE T& back() { return m_data.at_m(m_index - 1); }
 
 
-    inline iterator begin() { return iterator(&operator[](0)); }
-    inline iterator end() { return iterator(&operator[](m_index)); }
+    FORCEINLINE iterator begin() { return iterator(&operator[](0)); }
+    FORCEINLINE iterator end() { return iterator(&operator[](m_index)); }
 
-    inline const_iterator cbegin() const { return const_iterator(&operator[](0)); }
-    inline const_iterator cend()   const { return const_iterator(&operator[](m_index)); }
+    FORCEINLINE const_iterator cbegin() const { return const_iterator(&operator[](0)); }
+    FORCEINLINE const_iterator cend()   const { return const_iterator(&operator[](m_index)); }
 
 private:
     /// Holds our data. 
@@ -136,7 +136,7 @@ private:
     /// Pointer to last element
     size_t m_index;
 
-    constexpr bool should_resize()
+    FORCEINLINE bool should_resize()
     {
         return (m_index >= m_data.get_data_size());
     }

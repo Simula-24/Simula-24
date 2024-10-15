@@ -78,7 +78,51 @@ TEST(stl_test, unordered_map_remove_adt)
     // testing to make sure our ADTs don't get corrupted during moves
     EXPECT_STREQ(test["name"].c_str(), "a");
     EXPECT_STREQ(test["cat_name"].c_str(), "cat");
-
-
 }
+
+TEST(stl_test, unordered_map_iter_primitive)
+{
+    stl::unordered_map<int, int> test;
+    test.resize(20);
+    for (int i = 0; i < 10; i++)
+    {
+        test.insert({ i, i });
+    }
+
+    for (auto& s : test)
+    {
+        EXPECT_GE(s.first, 0);
+        EXPECT_GE(s.second, 0);    
+        EXPECT_LT(s.first, 10);
+        EXPECT_LT(s.second, 10); 
+    }
+
+    for (const auto& t : test)
+    {
+        EXPECT_GE(t.first, 0);
+        EXPECT_GE(t.second, 0);
+        EXPECT_LT(t.first, 10);
+        EXPECT_LT(t.second, 10);
+    }
+}
+
+TEST(stl_test, unordereed_map_iter_adt)
+{
+
+    stl::unordered_map<stl::string, stl::string> test;
+    test["bob"] = "privet komrad";
+    test["name"] = "privet komrad";
+    test["cat_name"] = "privet komrad";
+
+    for (auto& i : test)
+    {
+        EXPECT_TRUE(i.second == "privet komrad");
+    }
+
+    for (const auto& i : test)
+    {
+        EXPECT_TRUE(i.second == "privet komrad");
+    }
+}
+
 #endif // RTL_unordered_map_TEST_H_

@@ -1,0 +1,19 @@
+<mxfile host="Electron" modified="2024-10-13T16:38:03.791Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="Fr_d2Z-zJHXaGi24IWzQ" version="22.1.2" type="device">
+  <diagram name="Page-1" id="Da1O9McQN_pWQTq5HIfL">
+    <mxGraphModel dx="819" dy="505" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Vn2m_hbOdkRy9cRwPzvx-2" value="Render Manager" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="630" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Vn2m_hbOdkRy9cRwPzvx-3" value="Texture &quot;Database&quot;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="920" y="630" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Vn2m_hbOdkRy9cRwPzvx-4" value="Texture &quot;Database&quot;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="630" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

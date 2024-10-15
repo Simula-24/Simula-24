@@ -17,7 +17,7 @@ public:
 
     static constexpr size_t npos = UINT64_MAX;
 
-    basic_string() : m_length(1) { }
+    basic_string() : m_length(0) { }
     ~basic_string()
     {
 
@@ -84,7 +84,7 @@ public:
     basic_string& operator+=(T other)
     {
         if (should_resize()) resize(m_length + 1);
-        m_chars.at_m(m_length - 1) = other;
+        m_chars.at_m(m_length) = other;
         m_length++;
 
         return *this;
@@ -97,12 +97,13 @@ public:
         size_t olen = strlen(other) + 1;
         size_t newsize = length() + (olen)-1;
         size_t oldlen = length();
+
         m_length = newsize;
         if (should_resize())
             resize(newsize + 1);
 
         // -2 to copy over old data's null
-        m_chars.copydata(other, olen, oldlen - 1);
+        m_chars.copydata(other, olen, oldlen == 0 ? 0 : oldlen - 1);
 
         return *this;
     }
@@ -123,11 +124,13 @@ public:
     }
 
     /// return a substring
-    basic_string<T> substr(size_t pos = 0, size_t count = npos);
+    basic_string<T> substr(size_t pos = 0, size_t count = npos) const;
+    
+    basic_string<T> substr_from_to(size_t from = 0, size_t to = npos) const;
 
     void setPos(size_t pos)
     {
-        if (m_chars.get_num_data() < pos) pos = m_chars.get_num_data();
+        if (m_chars.get_size() < pos) pos = m_chars.get_size();
         m_length = pos;
     }
     inline void resize(size_t n)
@@ -146,7 +149,7 @@ public:
     /// returns raw data from string
     constexpr T* data()
     {
-        return m_chars.copy();
+        return &m_chars.copy();
     }
 
     /// returns a const c array
@@ -161,6 +164,22 @@ public:
         return m_length;
     }
 
+    /// 
+    /// @brief
+    ///     Find first occurense of 'ch'
+    ///     
+    /// @returns index of ch or npos if not found
+    /// 
+    size_t find(T ch) const;
+
+    /// 
+    /// @brief
+    ///     Find first occurense of 'ch' starting at offset
+    ///     
+    /// @returns index of ch or npos if not found
+    /// 
+    size_t find(size_t offset, T ch) const;
+
     /// get reference character at pos
     constexpr T& operator[](size_t pos) { return m_chars.at_m(pos); }
 
@@ -170,9 +189,7 @@ public:
     /// Get the length of a string
     static size_t strlen(const T* other)
     {
-        size_t size = 0;
-        while (*other++ != 0) size++;
-        return size;
+        return ::strlen(other);
     }
 
     /// get a const reference to the first character
@@ -195,25 +212,43 @@ private:
     constexpr bool should_resize()
     {
 
-        return m_length >= m_chars.get_data_size() - 1;
+        return m_length >= m_chars.get_size();
     }
 };
 
 
 
 template<class T>
-basic_string<T> basic_string<T>::substr(size_t pos, size_t count)
+basic_string<T> basic_string<T>::substr(size_t pos, size_t count) const
 {
-
-
     if (count > length())
-        count = length();
+        count = length() - pos;
 
     basic_string<T> newString;
-    newString.resize(count - pos + 1);
+    newString.resize(count + 1);
 
     size_t idx = 0;
-    for (size_t i = pos; i < count; i++)
+    for (size_t i = 0; i < count; i++)
+    {
+        newString[idx++] = m_chars.at(pos + i);
+    }
+    newString[idx] = 0;
+    newString.m_length = idx + 1;
+    return newString;
+}
+
+template<class T>
+basic_string<T> basic_string<T>::substr_from_to(size_t from, size_t to) const
+{
+
+    if (to > length())
+        to = length();
+
+    basic_string<T> newString;
+    newString.resize(to - from + 1);
+
+    size_t idx = 0;
+    for (size_t i = from; i < to; i++)
     {
         newString[idx++] = m_chars.at(i);
     }
@@ -222,9 +257,29 @@ basic_string<T> basic_string<T>::substr(size_t pos, size_t count)
     return newString;
 }
 
+template <class T>
+size_t basic_string<T>::find(T ch) const
+{
+    for (size_t i = 0; i < m_length; i++)
+    {
+        if (m_chars.at(i) == ch)
+            return i;
+    }
+    
+    return npos;
+}
 
+template <class T>
+size_t basic_string<T>::find(size_t offset, T ch) const
+{
+    for (size_t i = offset; i < m_length; i++)
+    {
+        if (m_chars.at(i) == ch)
+            return i;
+    }
 
-
+    return npos;
+}
 
 } // simula24
 

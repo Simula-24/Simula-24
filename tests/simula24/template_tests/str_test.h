@@ -47,8 +47,8 @@ TEST(stl_test, str_substr)
 {
     stl::string test = "#######privet komrad#######";
 
-    stl::string test2 = test.substr(7, 20);
-
+    stl::string test2 = test.substr(7, 13);
+    printf("%s\n",test2.c_str());
     EXPECT_NE(test.c_str(), test2.c_str());
 
     EXPECT_EQ(test2, "privet komrad");
@@ -72,4 +72,16 @@ TEST(stl_test, str_misc)
 
 
 }
+
+TEST(stl_test, str_find)
+{
+    stl::string test = "dfgosehrt348hgsdf;klsdfg;sdfgpioehgsdjkgblsdfjkg";
+
+    EXPECT_NE(test.find(';'), stl::string::npos);
+    EXPECT_NE(test.find(20, ';'), stl::string::npos);
+    EXPECT_EQ(test.find('|'), stl::string::npos);
+    EXPECT_EQ(test.find(2000,'a'), stl::string::npos);
+
+}
+
 #endif // RTL_STR_TEST_H_

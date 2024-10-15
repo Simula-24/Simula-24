@@ -43,11 +43,41 @@ class Logger
 {
 public:
 
-    Logger(const stl::string& name)
-        : m_name(name.c_str()), m_sink{ nullptr }, m_lowestLevel(LogLevel::INFO)
+    /// the init-list code duplication IS necessary otherwise setSink will NOT work.
+    explicit Logger(const stl::string& name)
+        : m_sink{ nullptr }, m_name(name.c_str()), m_lowestLevel(LogLevel::DEBUG)
     {}
-    Logger(const char* name) : m_name(name), m_sink{ nullptr } {}
+    explicit Logger(const char* name) : m_sink{ nullptr }, m_name(name), m_lowestLevel(LogLevel::DEBUG) {}
     ~Logger();
+
+    ///
+    /// @brief 
+    ///     Construct a logger with a sink
+    /// 
+    template <class SinkType>
+    static Logger createLogger(const stl::string& name)
+        requires(std::is_base_of_v<simula24::BaseSink, SinkType>)
+    {
+        Logger newLogger(name);
+        newLogger.setSink<SinkType>();
+        return newLogger;
+    }
+
+    ///
+    /// @brief 
+    ///     Construct a logger with a sink and pass arguments to the sink's constructor
+    /// 
+    template <class SinkType, class... ConstructionArgs>
+    static Logger createLogger(const stl::string& name, ConstructionArgs&&... args)
+        requires(std::is_base_of_v<simula24::BaseSink, SinkType>)
+    {
+        Logger newLogger(name);
+        newLogger.setSink<SinkType>(args...);
+        return newLogger;
+    }
+
+    Logger(const Logger& ) = default;
+    Logger& operator=(const Logger& ) = default;
 
     ///
     /// @brief
@@ -161,8 +191,10 @@ class DebugLoggers
 public:
     static void init();
     static stl::shared_ptr<Logger>& getEngineLogger() { return m_engineLogger; }
+    static stl::shared_ptr<Logger>& getClientLogger() { return m_clientLogger; }
 private:
     static stl::shared_ptr<Logger> m_engineLogger;
+    static stl::shared_ptr<Logger> m_clientLogger;
 };
 
 } // simula24
@@ -172,9 +204,12 @@ private:
 #define ENGINE_DEBUG(...)      simula24::DebugLoggers::getEngineLogger()->debug(__VA_ARGS__) 
 #define ENGINE_WARNING(...)    simula24::DebugLoggers::getEngineLogger()->warning(__VA_ARGS__)     
 #define ENGINE_ERROR(...)      simula24::DebugLoggers::getEngineLogger()->error(__VA_ARGS__) 
-#define ENGINE_CRITICAL(...)   simula24::DebugLoggers::getEngineLogger()->critical(__VA_ARGS__)     
+#define ENGINE_CRITICAL(...)   simula24::DebugLoggers::getEngineLogger()->critical(__VA_ARGS__)
 
-
-
+#define CLIENT_INFO(...)       simula24::DebugLoggers::getClientLogger()->info(__VA_ARGS__) 
+#define CLIENT_DEBUG(...)      simula24::DebugLoggers::getClientLogger()->debug(__VA_ARGS__) 
+#define CLIENT_WARNING(...)    simula24::DebugLoggers::getClientLogger()->warning(__VA_ARGS__)     
+#define CLIENT_ERROR(...)      simula24::DebugLoggers::getClientLogger()->error(__VA_ARGS__) 
+#define CLIENT_CRITICAL(...)   simula24::DebugLoggers::getClientLogger()->critical(__VA_ARGS__)
 
 #endif //SIMULA24_CORE_LOG_LOG_H_
