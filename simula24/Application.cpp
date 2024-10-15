@@ -10,6 +10,7 @@
 #include <core/log/log.h>
 #include <math/Point.h>
 #include <core/system/Clock.h>
+#include <core/system/Scheduler.h>
 
 #include <graphics/renderer/Camera.h>
 #include <graphics/tile/TileSheetParser.h>
@@ -70,6 +71,8 @@ void Application::run()
     gameClock.start();
     U64 frames = 0;
     double fps = 0;
+    Scheduler test(0.25, [&]() {m_activeSim.update(); });
+    test.start();
     while (m_shouldRun)
     {
         while (SDL_PollEvent(&event))
@@ -103,13 +106,12 @@ void Application::run()
         }
 
         RM::get().newFrame();
-
+        test.update();
         gameClock.tick();
         fps = 1 / gameClock.getDelta();
         ImGui::Text("DELTA: %lf", gameClock.getDelta());
         ImGui::Text("FPS: %lf", fps);
         ImGui::Text("Total uptime: %lf", gameClock.getTotal());
-        m_activeSim.update();
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
         RM::get().endFrame();
