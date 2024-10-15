@@ -1,4 +1,5 @@
 #include "SpaceStation.h"
+#include <smcore/job/Job.h>
 
 namespace simula24 
 {
@@ -34,5 +35,10 @@ void SpaceStation::loadDefaultMap()
     }
 }
 
+
+void SpaceStation::submitWork(const LocalJob& j)
+{
+    m_objectMap.set(j.m_location.x, j.m_location.y, 0);
+}
 
 }

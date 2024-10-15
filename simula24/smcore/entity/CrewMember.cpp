@@ -39,11 +39,15 @@ void CrewMember::setPath(PointList& p)
 {
     m_path = std::move(p);
     m_pathIndex = 0;
+    // remove last element, it is the goal, 
+    // stop right in front of the goal instead of on it
+
 }
 
 void CrewMember::setJob(LocalJob& j)
 {
     m_currentJob = j;
+    m_path.pop_back();
     m_state = EntityState::TRAVELLING_TO_JOB;
 
 }

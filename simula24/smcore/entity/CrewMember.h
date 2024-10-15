@@ -33,6 +33,7 @@ public:
 
     EntityState getCurrentState() const { return m_state; }
 
+    const LocalJob& getJob() const { return m_currentJob; }
 private:
     /// current location
     Point m_location;

@@ -16,13 +16,19 @@ Simulation::Simulation() : m_station("",80, 60), m_CrewMembers{}
     m_CrewMembers.push_back({});
     m_CrewMembers[0].setLocation({ 15, 15 });
     LocalJob x{ .m_type = JobType::CONSTRUCT_BUILDING, .m_location = {20,20} };
-    m_CrewMembers[0].setJob(x);
     AStarPathFind(m_CrewMembers[0].getLocation(), x.m_location, m_CrewMembers[0].getPath(), m_station.getObjectMap());
+    m_CrewMembers[0].setJob(x);
 }
 
 
 void simula24::Simulation::update()
 {
     for (auto& i : m_CrewMembers)
+    {
         i.update();
+        if (i.getCurrentState() == EntityState::PERFORMING_JOB)
+        {
+            m_station.submitWork(i.getJob());
+        }
+    }
 }

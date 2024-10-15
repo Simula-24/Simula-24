@@ -5,7 +5,7 @@
 
 namespace simula24
 {
-
+class LocalJob;
 
 ///
 /// @brief
@@ -18,7 +18,7 @@ public:
     SpaceStation(const stl::string& name, size_t size_x, size_t size_y);
 
     const ObjectMap& getObjectMap() const { return m_objectMap; }
-
+    void submitWork(const LocalJob&);
 private:
     
     void loadDefaultMap();
