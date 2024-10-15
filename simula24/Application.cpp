@@ -22,7 +22,7 @@
 
 #include <imgui.h>
 #include <backends/imgui_impl_sdl2.h>
-
+#include <ui/debug/console/DbgConsole.h>
 using simula24::Application;
 using simula24::Status;
 void drawCircle(SDL_Renderer* r, simula24::Point p, int radius);
@@ -62,7 +62,7 @@ void Application::run()
     Camera cam{};
     RM::get().setCamera(&cam);
     cam.incX(50);
-    
+    DebugConsoleGfx dbgc;
     SDL_Event event;
     
     Clock gameClock;
@@ -101,6 +101,10 @@ void Application::run()
                     case SDLK_RIGHT:
                         cam.incX(-1000 * gameClock.getDelta());
                         break;
+                    case SDLK_BACKQUOTE:
+                        dbgc.setActive(!dbgc.isActive());
+                        break;
+
                 }
             }
             else if (event.type == SDL_MOUSEWHEEL)
@@ -112,6 +116,7 @@ void Application::run()
         RM::get().newFrame();
         test.update();
         gameClock.tick();
+        dbgc.show();
         fps = 1 / gameClock.getDelta();
         ImGui::Text("DELTA: %lf", gameClock.getDelta());
         ImGui::Text("FPS: %lf", fps);
