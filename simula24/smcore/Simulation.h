@@ -18,7 +18,7 @@ class Simulation
 public:
     Simulation();
 
-    const ObjectMap& getObjectMap() const { return m_station.getObjectMap(); }
+    ObjectMap& getObjectMap() { return m_station.getObjectMap(); }
     const stl::array<CrewMember>& getCrewMemberList() const { return m_CrewMembers; }
     void update();
 

@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 #include <stdio.h>
-
+#include <cmath>
 #include <SDL.h>
 
 #include <core/log/log.h>
@@ -23,8 +23,9 @@
 #include <imgui.h>
 #include <backends/imgui_impl_sdl2.h>
 #include <ui/debug/console/DbgConsole.h>
-using simula24::Application;
-using simula24::Status;
+
+using namespace simula24;
+
 void drawCircle(SDL_Renderer* r, simula24::Point p, int radius);
 void drawTriangle(SDL_Renderer* r, simula24::Point p, int radius);
 Application::Application()
@@ -75,6 +76,8 @@ void Application::run()
     test.start();
     while (m_shouldRun)
     {
+        RM::get().newFrame();
+
         while (SDL_PollEvent(&event))
         {
             ImGui_ImplSDL2_ProcessEvent(&event);
@@ -85,12 +88,12 @@ void Application::run()
                 break;
             }
 
-            else if(event.type == SDL_KEYDOWN)
+            else if (event.type == SDL_KEYDOWN)
             {
                 switch (event.key.keysym.sym)
                 {
                     case SDLK_UP:
-                        cam.incY(1000*gameClock.getDelta());
+                        cam.incY(1000 * gameClock.getDelta());
                         break;
                     case SDLK_DOWN:
                         cam.incY(-1000 * gameClock.getDelta());
@@ -108,22 +111,45 @@ void Application::run()
                 }
             }
             else if (event.type == SDL_MOUSEWHEEL)
-            {
                 cam.incScale(-event.wheel.y);
-            }
-        }
+            else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == 1)
+            {
+                double wx = event.button.x - cam.getX();
+                double wy = event.button.y - cam.getY();
+                CLIENT_DEBUG("World Coordinates: %lf, %lf", wx, wy);
 
-        RM::get().newFrame();
+                wx /= (64.0f / (float)cam.getScale());
+                wy /= (64.0f / (float)cam.getScale());
+                
+                CLIENT_DEBUG("Scaled Coordinates: %lf, %lf", wx, wy);
+                if (cam.getScale() > 1 && wx - floor(wx) <= 0.25+(0.25/(cam.getScale()))) wx--;
+                if (cam.getScale() > 1 && wy - floor(wy) <= 0.25+(0.25/(cam.getScale()))) wy--;
+                int x = std::floor(wx);
+                int y = std::floor(wy);
+                CLIENT_DEBUG("Final Coordinates: %d, %d, %lf",x,y, 64.0f /cam.getScale());
+                m_activeSim.getObjectMap().set(x,y, -1);
+            }
+
+        }
+    
+
+        
         test.update();
         gameClock.tick();
+        
         dbgc.show();
+        int mx, my;
+        SDL_GetMouseState(&mx, &my);
         fps = 1 / gameClock.getDelta();
         ImGui::Text("DELTA: %lf", gameClock.getDelta());
         ImGui::Text("FPS: %lf", fps);
         ImGui::Text("Total uptime: %lf", gameClock.getTotal());
         ImGui::Text("Zoom: x%d", 7-cam.getScale());
+        ImGui::Text("Mouse: (%d, %d)", mx, my);
+        ImGui::Text("Camera: (%d, %d)", cam.getX(), cam.getY());
         RM::get().renderFromObjectMap(m_activeSim.getObjectMap());
         RM::get().renderCivilianList(m_activeSim.getCrewMemberList());
+        
         RM::get().endFrame();
 
         //std::this_thread::sleep_for(std::chrono::milliseconds(1000));

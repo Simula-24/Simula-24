@@ -95,9 +95,9 @@ Status RenderManager::loadTileDatabase(const stl::string& directory)
 void RenderManager::renderFromObjectMap(const ObjectMap& om)
 {
     int scale = m_camera->getScale();
-    for (int i = 0; i < om.getSizeX(); i++)
+    for (int j = 0; j < om.getSizeY(); j++)
     {
-        for (int j = 0; j < om.getSizeY(); j++)
+        for (int i = 0; i < om.getSizeX(); i++)
         {
 
             int id = om.get(i, j);
@@ -123,7 +123,7 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             g.y = j + (j*h);
             g.x += m_camera->getX();
             g.y += m_camera->getY();
-
+            ImGui::Text("Rect: %d, %d, %d, %d", g.x, g.y, g.w, g.h);
             m_mainWindow->copyTexture(tex, d, &g);
         }
 
