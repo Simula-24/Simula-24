@@ -123,7 +123,6 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             g.y = j + (j*h);
             g.x += m_camera->getX();
             g.y += m_camera->getY();
-            ImGui::Text("Rect: %d, %d, %d, %d", g.x, g.y, g.w, g.h);
             m_mainWindow->copyTexture(tex, d, &g);
         }
 
