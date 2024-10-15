@@ -70,7 +70,6 @@ Status RenderManager::init()
     m_mainWindow = m_wm.getAppWindow('main');
     ImGui_ImplSDL2_InitForSDLRenderer(m_mainWindow->getWindow(), m_mainWindow->getRenderer());
     ImGui_ImplSDLRenderer2_Init(m_mainWindow->getRenderer());
-
     return OK;
 }
 
@@ -107,8 +106,8 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             int height = OM::getObjectTable().getTileSize(id);
 
          
-            SDL_Texture* tex = m_tileDB.worldTiles[height].getTexture();
-            const SDL_Rect* d = &m_tileDB.worldTiles[height].getTile(
+            SDL_Texture* tex = m_tileDB.worldTiles[0].getTexture();
+            const SDL_Rect* d = &m_tileDB.worldTiles[0].getTile(
                 OM::getObjectTable().getTileId(
                     id
                 )
@@ -117,10 +116,10 @@ void RenderManager::renderFromObjectMap(const ObjectMap& om)
             SDL_Rect g;
             int h, w;
                 h = d->h; w = d->w;
-                g.y = (i + j) * ((w/2) / 2) - height * (w/2);
-            g.w = w;
-            g.h = h;
-            g.x = (i - j) * (w / 2);
+            g.w = w/4;
+            g.h = h/4;
+            g.y = j + (j*w/4);
+            g.x = i + (i*h/4);
             g.x += m_camera->getX();
             g.y += m_camera->getY();
             m_mainWindow->copyTexture(tex, d, &g);
@@ -136,10 +135,10 @@ void RenderManager::renderCivilianList(const stl::array<CrewMember>& cl)
         auto* tile = &m_tileDB.worldTiles[0].getTile(1);
         auto& loc = cl[i].getLocation();
         SDL_Rect location = {
-            .x = (loc.x - loc.y) * (tile->w / 2) ,
-            .y = (loc.x + loc.y) * (tile->h/ 2),
-            .w = tile->w, 
-            .h = tile->h
+            .x = loc.x + ((tile->w/4)*loc.x),
+            .y = loc.y + ((tile->w/4)*loc.y),
+            .w = tile->w/4, 
+            .h = tile->h/4
         };
         location.x += m_camera->getX();
         location.y += m_camera->getY();

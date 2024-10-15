@@ -1,11 +1,5 @@
 [test.png]
     size=192x64
-    tile_size=64x32
-    comment="Test tiles"
-
-[medium-world-tiles.png]
-    size=64x64
     tile_size=64x64
-    comment="Medium sized world tiles"
- 
+    comment="Test tiles"
 [end.png]
